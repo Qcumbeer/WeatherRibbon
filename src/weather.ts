@@ -48,6 +48,7 @@ export interface CityWeather {
   name: string
   region: string
   note: string
+  latitude: number
   current: CurrentConditions
   forecast: DayForecast[]
   hourly: HourlyPoint[]
@@ -59,6 +60,7 @@ export const WEATHER: Record<City, CityWeather> = {
     name: 'Seattle',
     region: 'Washington',
     note: 'Puget Sound, evergreen hills, and a working waterfront.',
+    latitude: 47.61,
     current: {
       temp: 68,
       feelsLike: 67,
@@ -126,6 +128,7 @@ export const WEATHER: Record<City, CityWeather> = {
     name: 'San Francisco',
     region: 'California',
     note: 'Fog, hills, and a bay that defines the city.',
+    latitude: 37.77,
     current: {
       temp: 61,
       feelsLike: 59,

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { ClimateChart } from './ClimateChart'
 import { CloudCoverChart } from './CloudCoverChart'
+import { DaylightChart } from './DaylightChart'
 import { HourlyChart } from './HourlyChart'
 import { PrecipChanceChart } from './PrecipChanceChart'
 import { RainfallChart } from './RainfallChart'
@@ -104,6 +105,7 @@ function App() {
             <PrecipChanceChart name={data.name} climate={data.climate} />
             <RainfallChart name={data.name} climate={data.climate} />
             <SnowfallChart name={data.name} climate={data.climate} />
+            <DaylightChart name={data.name} latitude={data.latitude} />
 
             <div className="duo">
               <SunshinePanel name={data.name} climate={data.climate} />

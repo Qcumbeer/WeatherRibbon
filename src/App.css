@@ -549,6 +549,64 @@
   stroke-width: 2;
 }
 
+.dl-area {
+  stroke: var(--bg);
+  stroke-width: 0.5;
+  stroke-linejoin: round;
+}
+
+.dl-area.daylight {
+  fill: var(--dl-daylight);
+}
+
+.dl-area.civil {
+  fill: var(--dl-civil);
+}
+
+.dl-area.nautical {
+  fill: var(--dl-nautical);
+}
+
+.dl-area.astro {
+  fill: var(--dl-astro);
+}
+
+.dl-area.night {
+  fill: var(--dl-night);
+}
+
+.dl-solstice {
+  stroke: var(--text-h);
+  stroke-width: 1;
+  stroke-dasharray: 3 4;
+  opacity: 0.35;
+}
+
+.swatch.dl-swatch {
+  height: 10px;
+  border-radius: 3px;
+}
+
+.swatch.dl-swatch.daylight {
+  background: var(--dl-daylight);
+}
+
+.swatch.dl-swatch.civil {
+  background: var(--dl-civil);
+}
+
+.swatch.dl-swatch.nautical {
+  background: var(--dl-nautical);
+}
+
+.swatch.dl-swatch.astro {
+  background: var(--dl-astro);
+}
+
+.swatch.dl-swatch.night {
+  background: var(--dl-night);
+}
+
 
 .heatmap-border {
   fill: none;
