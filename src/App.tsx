@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { AirQualityChart } from './AirQualityChart'
 import { ClimateChart } from './ClimateChart'
 import { ClimateOverviewChart } from './ClimateOverviewChart'
 import { CloudCoverChart } from './CloudCoverChart'
@@ -75,6 +76,12 @@ function App() {
             <SnowfallChart name={data.name} climate={data.climate} />
             <HumidityComfortChart name={data.name} climate={data.climate} />
             <CloudCoverChart name={data.name} climate={data.climate} />
+
+            <AirQualityChart
+              name={data.name}
+              latitude={data.latitude}
+              longitude={data.longitude}
+            />
 
             <div className="duo">
               <SunshinePanel name={data.name} climate={data.climate} />

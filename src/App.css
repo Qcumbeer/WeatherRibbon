@@ -1002,6 +1002,78 @@
   max-width: 42ch;
 }
 
+.aqi-band {
+  opacity: 0.14;
+  stroke: none;
+}
+
+.aqi-line {
+  fill: none;
+  stroke: var(--text-h);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.aqi-current-dot {
+  fill: var(--text-h);
+  stroke: var(--bg);
+  stroke-width: 2.5;
+}
+
+.aqi-marker-label {
+  fill: var(--text-h);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.aqi-swatch {
+  height: 10px;
+  border-radius: 3px;
+}
+
+.aqi-current-info {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.aqi-badge {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 4px 14px;
+  border-radius: 999px;
+}
+
+.aqi-badge-value {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.aqi-badge-label {
+  font-size: 13px;
+  opacity: 0.85;
+}
+
+.aqi-pollutants {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.aqi-advice {
+  margin-top: 10px;
+  max-width: 50ch;
+}
+
 @media (max-width: 640px) {
   .header {
     padding: 16px;
@@ -1028,7 +1100,8 @@
   }
 
   .hourly-tick-minor,
-  .climate-tick-minor {
+  .climate-tick-minor,
+  .aqi-tick-minor {
     display: none;
   }
 }

@@ -34,6 +34,12 @@
   --hc-muggy: #e0a83a;
   --hc-oppressive: #d46b3c;
   --hc-miserable: #b83d38;
+  --aqi-good: #4db847;
+  --aqi-moderate: #e8d23a;
+  --aqi-usg: #e89a3a;
+  --aqi-unhealthy: #d63a3a;
+  --aqi-very: #9148a0;
+  --aqi-hazardous: #8b1a3a;
   --shadow:
     rgba(22, 20, 28, 0.06) 0 10px 24px -8px,
     rgba(22, 20, 28, 0.04) 0 2px 6px -2px;
@@ -85,6 +91,12 @@
   --hc-muggy: #b08630;
   --hc-oppressive: #b05832;
   --hc-miserable: #9a3834;
+  --aqi-good: #5bc85b;
+  --aqi-moderate: #f0d84a;
+  --aqi-usg: #ee9a3a;
+  --aqi-unhealthy: #e04a4a;
+  --aqi-very: #a85ab8;
+  --aqi-hazardous: #b03040;
     --shadow:
       rgba(0, 0, 0, 0.35) 0 12px 28px -10px,
       rgba(0, 0, 0, 0.2) 0 2px 8px -2px;
