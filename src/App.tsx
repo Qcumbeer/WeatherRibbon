@@ -4,7 +4,6 @@ import { AqiCategoryDaysChart } from './AqiCategoryDaysChart'
 import { ClimateChart } from './ClimateChart'
 import { ClimateExtremes } from './ClimateExtremes'
 import { ClimateOverviewChart } from './ClimateOverviewChart'
-import { ClimateSkylineChart } from './ClimateSkylineChart'
 import { CloudCoverChart } from './CloudCoverChart'
 import { DaylightChart } from './DaylightChart'
 import { HourlyChart } from './HourlyChart'
@@ -16,7 +15,6 @@ import { SnowfallChart } from './SnowfallChart'
 import { HumidityComfortChart } from './HumidityComfortChart'
 import { SunriseSunsetChart } from './SunriseSunsetChart'
 import { WindChart } from './WindChart'
-import { WeatherWheelChart } from './WeatherWheelChart'
 import { CloudCoverPanel, SunshinePanel } from './SunCloudPanels'
 import { CityIndex } from './CityIndex'
 import { loadCity, type CityData, type CityRef } from './dataService'
@@ -74,8 +72,6 @@ function CityView({
           </section>
 
           <ClimateExtremes climate={data.climate} />
-          <ClimateSkylineChart name={data.name} climate={data.climate} />
-          <WeatherWheelChart name={data.name} climate={data.climate} />
           <SeasonalRibbonChart name={data.name} climate={data.climate} />
           <HourlyChart name={data.name} climate={data.climate} />
           <ClimateChart name={data.name} climate={data.climate} />
