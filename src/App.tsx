@@ -10,6 +10,7 @@ import { HumidityComfortChart } from './HumidityComfortChart'
 import { MoonChart } from './MoonChart'
 import { SolarElevationChart } from './SolarElevationChart'
 import { SunriseSunsetChart } from './SunriseSunsetChart'
+import { WindChart } from './WindChart'
 import { CloudCoverPanel, SunshinePanel } from './SunCloudPanels'
 import { WEATHER, type City } from './weather'
 import './App.css'
@@ -126,6 +127,7 @@ function App() {
               longitude={data.longitude}
             />
             <HumidityComfortChart name={data.name} climate={data.climate} />
+            <WindChart name={data.name} climate={data.climate} />
 
             <div className="duo">
               <SunshinePanel name={data.name} climate={data.climate} />

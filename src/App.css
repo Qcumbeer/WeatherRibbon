@@ -549,6 +549,38 @@
   stroke-width: 2;
 }
 
+.swatch.wind-avg {
+  height: 3px;
+  border-radius: 999px;
+  background: var(--wind);
+}
+
+.swatch.wind-pct {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--wind-fill);
+  border: 1px solid var(--border);
+}
+
+.wind-band {
+  fill: var(--wind-fill);
+  stroke: none;
+}
+
+.wind-avg-line {
+  fill: none;
+  stroke: var(--wind);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.wind-dot {
+  fill: var(--bg);
+  stroke: var(--wind);
+  stroke-width: 2;
+}
+
 .dl-area {
   stroke: var(--bg);
   stroke-width: 0.5;
