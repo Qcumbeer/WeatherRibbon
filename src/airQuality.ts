@@ -183,7 +183,7 @@ const PROFILES: Record<string, { pm25: number[]; pm10: number[]; ozone: number[]
   },
 }
 
-function profileSlug(city: CityRef): string | undefined {
+function profileSlugFn(city: CityRef): string | undefined {
   if (city.slug && PROFILES[city.slug]) return city.slug
   return FEATURED.find((f) => f.slug && PROFILES[f.slug] && sameCity(f, city))?.slug
 }
@@ -223,10 +223,30 @@ function generateMonthly(latitude: number, longitude: number): AirQualityMonth[]
   return monthsFromPollutants(pm25, pm10, ozone)
 }
 
-export function loadAirQuality(city: CityRef): AirQualityMonth[] {
-  const slug = profileSlug(city)
+// Eager-load pre-built AQI JSON files (small ~2-3 KB each).
+const aqiGlob = import.meta.glob('../data/aqi/*.json', { eager: true })
+
+const AQI_STATIC: Record<string, AirQualityMonth[]> = {}
+for (const [path, mod] of Object.entries(aqiGlob)) {
+  const slug = path.match(/\/([^/]+)\.json$/)?.[1]
   if (slug) {
-    const p = PROFILES[slug]
+    const data = (mod as { default: { months: AirQualityMonth[] } }).default
+    AQI_STATIC[slug] = data.months
+  }
+}
+
+function aqiSlug(city: CityRef): string | undefined {
+  if (city.slug && AQI_STATIC[city.slug]) return city.slug
+  return FEATURED.find((f) => f.slug && AQI_STATIC[f.slug] && sameCity(f, city))?.slug
+}
+
+export function loadAirQuality(city: CityRef): AirQualityMonth[] {
+  const slug = aqiSlug(city)
+  if (slug) return AQI_STATIC[slug]
+
+  const profileSlug = profileSlugFn(city)
+  if (profileSlug) {
+    const p = PROFILES[profileSlug]
     return monthsFromPollutants(p.pm25, p.pm10, p.ozone)
   }
   return generateMonthly(city.latitude, city.longitude)

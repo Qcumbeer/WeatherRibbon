@@ -9,6 +9,10 @@
     "lint": "oxlint",
     "validate": "node scripts/validate-cities.ts",
     "ribbons": "npx tsx scripts/generate-ribbon-svg.ts",
+    "fetch:climate": "npx tsx scripts/fetch/build-all-nasa.ts",
+    "fetch:climate:era5": "npx tsx scripts/fetch/build-all-cities.ts",
+    "fetch:aqi": "npx tsx scripts/fetch/build-air-quality.ts",
+    "fetch:all": "npx tsx scripts/fetch/build-all-nasa.ts && npx tsx scripts/fetch/build-air-quality.ts",
     "preview": "vite preview"
   },
   "dependencies": {
