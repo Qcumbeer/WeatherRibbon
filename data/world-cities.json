@@ -1,604 +1,1483 @@
 {
-  "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
-  "sourceTitle": "List of largest cities",
-  "populationField": "UN 2025 urban agglomeration estimates (cities exceeding 5 million)",
+  "sources": [
+    "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+    "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants"
+  ],
+  "description": "World cities: UN 2025 urban agglomerations (>5M) plus non-Chinese cities >2M (city proper)",
   "retrieved": "2026-08-21",
-  "count": 85,
+  "count": 173,
   "cities": [
     {
-      "rank": 1,
       "name": "Jakarta",
       "country": "Indonesia",
-      "un2025Population": 41913860,
-      "wikipediaAnchor": "Jakarta"
+      "population": 41913860,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 1
     },
     {
-      "rank": 2,
       "name": "Dhaka",
       "country": "Bangladesh",
-      "un2025Population": 36585479,
-      "wikipediaAnchor": "Dhaka"
+      "population": 36585479,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 2
     },
     {
-      "rank": 3,
       "name": "Tokyo",
       "country": "Japan",
-      "un2025Population": 33412512,
-      "wikipediaAnchor": "Tokyo"
+      "population": 33412512,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 3
     },
     {
-      "rank": 4,
       "name": "Delhi",
       "country": "India",
-      "un2025Population": 30222405,
-      "wikipediaAnchor": "Delhi"
+      "population": 30222405,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 4
     },
     {
-      "rank": 5,
       "name": "Shanghai",
       "country": "China",
-      "un2025Population": 29558908,
-      "wikipediaAnchor": "Shanghai"
+      "population": 29558908,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 5
     },
     {
-      "rank": 6,
       "name": "Guangzhou",
       "country": "China",
-      "un2025Population": 27563372,
-      "wikipediaAnchor": "Guangzhou"
+      "population": 27563372,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 6
     },
     {
-      "rank": 7,
       "name": "Cairo",
       "country": "Egypt",
-      "un2025Population": 25566102,
-      "wikipediaAnchor": "Cairo"
+      "population": 25566102,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 7
     },
     {
-      "rank": 8,
       "name": "Manila",
       "country": "Philippines",
-      "un2025Population": 24735305,
-      "wikipediaAnchor": "Manila"
+      "population": 24735305,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 8
     },
     {
-      "rank": 9,
       "name": "Kolkata",
       "country": "India",
-      "un2025Population": 22549738,
-      "wikipediaAnchor": "Kolkata"
+      "population": 22549738,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 9
     },
     {
-      "rank": 10,
       "name": "Seoul",
       "country": "South Korea",
-      "un2025Population": 22490482,
-      "wikipediaAnchor": "Seoul"
+      "population": 22490482,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 10
     },
     {
-      "rank": 11,
       "name": "Karachi",
       "country": "Pakistan",
-      "un2025Population": 21422590,
-      "wikipediaAnchor": "Karachi"
+      "population": 21422590,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 11
     },
     {
-      "rank": 12,
       "name": "Mumbai",
       "country": "India",
-      "un2025Population": 20203056,
-      "wikipediaAnchor": "Mumbai"
+      "population": 20203056,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 12
     },
     {
-      "rank": 13,
       "name": "S\u00e3o Paulo",
       "country": "Brazil",
-      "un2025Population": 18949790,
-      "wikipediaAnchor": "S\u00e3o_Paulo"
+      "population": 18949790,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 13
     },
     {
-      "rank": 14,
       "name": "Bangkok",
       "country": "Thailand",
-      "un2025Population": 18180280,
-      "wikipediaAnchor": "Bangkok"
+      "population": 18180280,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 14
     },
     {
-      "rank": 15,
       "name": "Mexico City",
       "country": "Mexico",
-      "un2025Population": 17734212,
-      "wikipediaAnchor": "Mexico_City"
+      "population": 17734212,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 15
     },
     {
-      "rank": 16,
       "name": "Beijing",
       "country": "China",
-      "un2025Population": 17013303,
-      "wikipediaAnchor": "Beijing"
+      "population": 17013303,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 16
     },
     {
-      "rank": 17,
       "name": "Lahore",
       "country": "Pakistan",
-      "un2025Population": 15156430,
-      "wikipediaAnchor": "Lahore"
+      "population": 15156430,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 17
     },
     {
-      "rank": 18,
       "name": "Istanbul",
       "country": "Turkey",
-      "un2025Population": 15014763,
-      "wikipediaAnchor": "Istanbul"
+      "population": 15014763,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 18
     },
     {
-      "rank": 19,
       "name": "Moscow",
       "country": "Russia",
-      "un2025Population": 14524753,
-      "wikipediaAnchor": "Moscow"
+      "population": 14524753,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 19
     },
     {
-      "rank": 20,
       "name": "Ho Chi Minh City",
       "country": "Vietnam",
-      "un2025Population": 14052713,
-      "wikipediaAnchor": "Ho_Chi_Minh_City"
+      "population": 14052713,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 20
     },
     {
-      "rank": 21,
       "name": "Buenos Aires",
       "country": "Argentina",
-      "un2025Population": 14017736,
-      "wikipediaAnchor": "Buenos_Aires"
+      "population": 14017736,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 21
     },
     {
-      "rank": 22,
       "name": "New York City",
       "country": "United States",
-      "un2025Population": 13920148,
-      "wikipediaAnchor": "New_York"
+      "population": 13920148,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 22
     },
     {
-      "rank": 23,
       "name": "Shenzhen",
       "country": "China",
-      "un2025Population": 13878396,
-      "wikipediaAnchor": "Shenzhen"
+      "population": 13878396,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 23
     },
     {
-      "rank": 24,
       "name": "Bengaluru",
       "country": "India",
-      "un2025Population": 13187098,
-      "wikipediaAnchor": "Bangalore"
+      "population": 13187098,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 24
     },
     {
-      "rank": 25,
       "name": "Osaka",
       "country": "Japan",
-      "un2025Population": 12964145,
-      "wikipediaAnchor": "Osaka"
+      "population": 12964145,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 25
     },
     {
-      "rank": 26,
       "name": "Lagos",
       "country": "Nigeria",
-      "un2025Population": 12791699,
-      "wikipediaAnchor": "Lagos"
+      "population": 12791699,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 26
     },
     {
-      "rank": 27,
       "name": "Los Angeles",
       "country": "United States",
-      "un2025Population": 12740420,
-      "wikipediaAnchor": "Los_Angeles"
+      "population": 12740420,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 27
     },
     {
-      "rank": 28,
       "name": "Chennai",
       "country": "India",
-      "un2025Population": 11153205,
-      "wikipediaAnchor": "Chennai"
+      "population": 11153205,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 28
     },
     {
-      "rank": 29,
       "name": "Kinshasa",
       "country": "DR Congo",
-      "un2025Population": 10943641,
-      "wikipediaAnchor": "Kinshasa"
+      "population": 10943641,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 29
     },
     {
-      "rank": 30,
       "name": "Bogot\u00e1",
       "country": "Colombia",
-      "un2025Population": 10624315,
-      "wikipediaAnchor": "Bogot\u00e1"
+      "population": 10624315,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 30
     },
     {
-      "rank": 31,
       "name": "Lima",
       "country": "Peru",
-      "un2025Population": 10580241,
-      "wikipediaAnchor": "Lima"
+      "population": 10580241,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 31
     },
     {
-      "rank": 32,
       "name": "London",
       "country": "United Kingdom",
-      "un2025Population": 10416420,
-      "wikipediaAnchor": "London"
+      "population": 10416420,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 32
     },
     {
-      "rank": 33,
       "name": "Rio de Janeiro",
       "country": "Brazil",
-      "un2025Population": 9500336,
-      "wikipediaAnchor": "Rio_de_Janeiro"
+      "population": 9500336,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 33
     },
     {
-      "rank": 34,
       "name": "Paris",
       "country": "France",
-      "un2025Population": 9381921,
-      "wikipediaAnchor": "Paris"
+      "population": 9381921,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 34
     },
     {
-      "rank": 35,
       "name": "Hyderabad",
       "country": "India",
-      "un2025Population": 9190795,
-      "wikipediaAnchor": "Hyderabad"
+      "population": 9190795,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 35
     },
     {
-      "rank": 36,
       "name": "Tehran",
       "country": "Iran",
-      "un2025Population": 9174964,
-      "wikipediaAnchor": "Tehran"
+      "population": 9174964,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 36
     },
     {
-      "rank": 37,
       "name": "Taipei",
       "country": "Taiwan",
-      "un2025Population": 9137000,
-      "wikipediaAnchor": "Taipei"
+      "population": 9137000,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 37
     },
     {
-      "rank": 38,
       "name": "Luanda",
       "country": "Angola",
-      "un2025Population": 9051000,
-      "wikipediaAnchor": "Luanda"
+      "population": 9051000,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 38
     },
     {
-      "rank": 39,
       "name": "Bandung",
       "country": "Indonesia",
-      "un2025Population": 8909104,
-      "wikipediaAnchor": "Bandung"
+      "population": 8909104,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 39
     },
     {
-      "rank": 40,
-      "name": "Kuala Lumpur",
-      "country": "Malaysia",
-      "un2025Population": 8443731,
-      "wikipediaAnchor": "Kuala_Lumpur"
-    },
-    {
-      "rank": 41,
-      "name": "Dar es Salaam",
-      "country": "Tanzania",
-      "un2025Population": 7795114,
-      "wikipediaAnchor": "Dar_es_Salaam"
-    },
-    {
-      "rank": 42,
-      "name": "Suzhou",
-      "country": "China",
-      "un2025Population": 7731101,
-      "wikipediaAnchor": "Suzhou"
-    },
-    {
-      "rank": 43,
-      "name": "Ahmedabad",
-      "country": "India",
-      "un2025Population": 7632408,
-      "wikipediaAnchor": "Ahmedabad"
-    },
-    {
-      "rank": 44,
-      "name": "Hangzhou",
-      "country": "China",
-      "un2025Population": 7500208,
-      "wikipediaAnchor": "Hangzhou"
-    },
-    {
-      "rank": 45,
-      "name": "Wuhan",
-      "country": "China",
-      "un2025Population": 7363548,
-      "wikipediaAnchor": "Wuhan"
-    },
-    {
-      "rank": 46,
-      "name": "Tianjin",
-      "country": "China",
-      "un2025Population": 7285342,
-      "wikipediaAnchor": "Tianjin"
-    },
-    {
-      "rank": 47,
-      "name": "Alexandria",
-      "country": "Egypt",
-      "un2025Population": 7266957,
-      "wikipediaAnchor": "Alexandria"
-    },
-    {
-      "rank": 48,
-      "name": "Nagoya",
-      "country": "Japan",
-      "un2025Population": 7146160,
-      "wikipediaAnchor": "Nagoya"
-    },
-    {
-      "rank": 49,
-      "name": "Johannesburg",
-      "country": "South Africa",
-      "un2025Population": 7077175,
-      "wikipediaAnchor": "Johannesburg"
-    },
-    {
-      "rank": 50,
-      "name": "Chongqing",
-      "country": "China",
-      "un2025Population": 7071073,
-      "wikipediaAnchor": "Chongqing"
-    },
-    {
-      "rank": 51,
-      "name": "Riyadh",
-      "country": "Saudi Arabia",
-      "un2025Population": 6916417,
-      "wikipediaAnchor": "Riyadh"
-    },
-    {
-      "rank": 52,
-      "name": "Surat",
-      "country": "India",
-      "un2025Population": 6908925,
-      "wikipediaAnchor": "Surat"
-    },
-    {
-      "rank": 53,
-      "name": "Surabaya",
-      "country": "Indonesia",
-      "un2025Population": 6843503,
-      "wikipediaAnchor": "Surabaya"
-    },
-    {
-      "rank": 54,
-      "name": "Pune",
-      "country": "India",
-      "un2025Population": 6817951,
-      "wikipediaAnchor": "Pune"
-    },
-    {
-      "rank": 55,
-      "name": "Khartoum",
-      "country": "Sudan",
-      "un2025Population": 6809355,
-      "wikipediaAnchor": "Khartoum"
-    },
-    {
-      "rank": 56,
-      "name": "Nanjing",
-      "country": "China",
-      "un2025Population": 6800676,
-      "wikipediaAnchor": "Nanjing"
-    },
-    {
-      "rank": 57,
-      "name": "Santiago",
-      "country": "Chile",
-      "un2025Population": 6726045,
-      "wikipediaAnchor": "Santiago"
-    },
-    {
-      "rank": 58,
       "name": "Chicago",
       "country": "United States",
-      "un2025Population": 8864000,
-      "wikipediaAnchor": "Chicago"
+      "population": 8864000,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 40
     },
     {
-      "rank": 59,
       "name": "Chengdu",
       "country": "China",
-      "un2025Population": 8813000,
-      "wikipediaAnchor": "Chengdu"
+      "population": 8813000,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 41
     },
     {
-      "rank": 60,
+      "name": "Hanoi",
+      "country": "Vietnam",
+      "population": 8807523,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 42
+    },
+    {
+      "name": "Kuala Lumpur",
+      "country": "Malaysia",
+      "population": 8443731,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 43
+    },
+    {
+      "name": "Dar es Salaam",
+      "country": "Tanzania",
+      "population": 7795114,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 44
+    },
+    {
+      "name": "Suzhou",
+      "country": "China",
+      "population": 7731101,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 45
+    },
+    {
+      "name": "Ahmedabad",
+      "country": "India",
+      "population": 7632408,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 46
+    },
+    {
+      "name": "Hangzhou",
+      "country": "China",
+      "population": 7500208,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 47
+    },
+    {
       "name": "Xi'an",
       "country": "China",
-      "un2025Population": 7444000,
-      "wikipediaAnchor": "Xi'an"
+      "population": 7444000,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 48
     },
     {
-      "rank": 61,
       "name": "Hong Kong",
       "country": "Hong Kong SAR",
-      "un2025Population": 7429000,
-      "wikipediaAnchor": "Hong_Kong"
+      "population": 7429000,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 49
     },
     {
-      "rank": 62,
+      "name": "Wuhan",
+      "country": "China",
+      "population": 7363548,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 50
+    },
+    {
       "name": "Dongguan",
       "country": "China",
-      "un2025Population": 7360000,
-      "wikipediaAnchor": "Dongguan"
+      "population": 7360000,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 51
     },
     {
-      "rank": 63,
+      "name": "Tianjin",
+      "country": "China",
+      "population": 7285342,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 52
+    },
+    {
+      "name": "Alexandria",
+      "country": "Egypt",
+      "population": 7266957,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 53
+    },
+    {
       "name": "Foshan",
       "country": "China",
-      "un2025Population": 7236000,
-      "wikipediaAnchor": "Foshan"
+      "population": 7236000,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 54
     },
     {
-      "rank": 64,
+      "name": "Nagoya",
+      "country": "Japan",
+      "population": 7146160,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 55
+    },
+    {
+      "name": "Johannesburg",
+      "country": "South Africa",
+      "population": 7077175,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 56
+    },
+    {
+      "name": "Chongqing",
+      "country": "China",
+      "population": 7071073,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 57
+    },
+    {
       "name": "Shenyang",
       "country": "China",
-      "un2025Population": 6921000,
-      "wikipediaAnchor": "Shenyang"
+      "population": 6921000,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 58
     },
     {
-      "rank": 65,
+      "name": "Riyadh",
+      "country": "Saudi Arabia",
+      "population": 6916417,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 59
+    },
+    {
+      "name": "Surat",
+      "country": "India",
+      "population": 6908925,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 60
+    },
+    {
+      "name": "Surabaya",
+      "country": "Indonesia",
+      "population": 6843503,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 61
+    },
+    {
+      "name": "Pune",
+      "country": "India",
+      "population": 6817951,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 62
+    },
+    {
       "name": "Baghdad",
       "country": "Iraq",
-      "un2025Population": 6812000,
-      "wikipediaAnchor": "Baghdad"
+      "population": 6812000,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 63
     },
     {
-      "rank": 66,
+      "name": "Khartoum",
+      "country": "Sudan",
+      "population": 6809355,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 64
+    },
+    {
+      "name": "Nanjing",
+      "country": "China",
+      "population": 6800676,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 65
+    },
+    {
+      "name": "Santiago",
+      "country": "Chile",
+      "population": 6726045,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 66
+    },
+    {
       "name": "Addis Ababa",
       "country": "Ethiopia",
-      "un2025Population": 6706000,
-      "wikipediaAnchor": "Addis_Ababa"
+      "population": 6706000,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 67
     },
     {
-      "rank": 67,
       "name": "Madrid",
       "country": "Spain",
-      "un2025Population": 6497000,
-      "wikipediaAnchor": "Madrid"
+      "population": 6497000,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 68
     },
     {
-      "rank": 68,
       "name": "Harbin",
       "country": "China",
-      "un2025Population": 6115000,
-      "wikipediaAnchor": "Harbin"
+      "population": 6115000,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 69
     },
     {
-      "rank": 69,
       "name": "Houston",
       "country": "United States",
-      "un2025Population": 6115000,
-      "wikipediaAnchor": "Houston"
+      "population": 6115000,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 70
     },
     {
-      "rank": 70,
       "name": "Dallas",
       "country": "United States",
-      "un2025Population": 6099000,
-      "wikipediaAnchor": "Dallas"
+      "population": 6099000,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 71
     },
     {
-      "rank": 71,
       "name": "Toronto",
       "country": "Canada",
-      "un2025Population": 6082000,
-      "wikipediaAnchor": "Toronto"
+      "population": 6082000,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 72
     },
     {
-      "rank": 72,
       "name": "Miami",
       "country": "United States",
-      "un2025Population": 6036000,
-      "wikipediaAnchor": "Miami"
+      "population": 6036000,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 73
     },
     {
-      "rank": 73,
       "name": "Belo Horizonte",
       "country": "Brazil",
-      "un2025Population": 5972000,
-      "wikipediaAnchor": "Belo_Horizonte"
+      "population": 5972000,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 74
     },
     {
-      "rank": 74,
       "name": "Singapore",
       "country": "Singapore",
-      "un2025Population": 5792000,
-      "wikipediaAnchor": "Singapore"
+      "population": 5792000,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 75
     },
     {
-      "rank": 75,
       "name": "Philadelphia",
       "country": "United States",
-      "un2025Population": 5695000,
-      "wikipediaAnchor": "Philadelphia"
+      "population": 5695000,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 76
     },
     {
-      "rank": 76,
+      "name": "Abidjan",
+      "country": "C\u00f4te d'Ivoire",
+      "population": 5616633,
+      "continent": "Africa",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 77
+    },
+    {
       "name": "Atlanta",
       "country": "United States",
-      "un2025Population": 5572000,
-      "wikipediaAnchor": "Atlanta"
+      "population": 5572000,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 78
     },
     {
-      "rank": 77,
       "name": "Fukuoka",
       "country": "Japan",
-      "un2025Population": 5551000,
-      "wikipediaAnchor": "Fukuoka"
+      "population": 5551000,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 79
     },
     {
-      "rank": 78,
       "name": "Barcelona",
       "country": "Spain",
-      "un2025Population": 5494000,
-      "wikipediaAnchor": "Barcelona"
+      "population": 5494000,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 80
     },
     {
-      "rank": 79,
       "name": "Saint Petersburg",
       "country": "Russia",
-      "un2025Population": 5383000,
-      "wikipediaAnchor": "Saint_Petersburg"
+      "population": 5383000,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 81
     },
     {
-      "rank": 80,
       "name": "Qingdao",
       "country": "China",
-      "un2025Population": 5381000,
-      "wikipediaAnchor": "Qingdao"
+      "population": 5381000,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 82
     },
     {
-      "rank": 81,
       "name": "Dalian",
       "country": "China",
-      "un2025Population": 5300000,
-      "wikipediaAnchor": "Dalian"
+      "population": 5300000,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 83
     },
     {
-      "rank": 82,
       "name": "Washington, D.C.",
       "country": "United States",
-      "un2025Population": 5207000,
-      "wikipediaAnchor": "Washington,_D.C."
+      "population": 5207000,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 84
     },
     {
-      "rank": 83,
+      "name": "Ankara",
+      "country": "Turkey",
+      "population": 5186002,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 85
+    },
+    {
       "name": "Yangon",
       "country": "Myanmar",
-      "un2025Population": 5157000,
-      "wikipediaAnchor": "Yangon"
+      "population": 5157000,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 86
     },
     {
-      "rank": 84,
       "name": "Jinan",
       "country": "China",
-      "un2025Population": 5052000,
-      "wikipediaAnchor": "Jinan"
+      "population": 5052000,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 87
     },
     {
-      "rank": 85,
       "name": "Guadalajara",
       "country": "Mexico",
-      "un2025Population": 5023000,
-      "wikipediaAnchor": "Guadalajara"
+      "population": 5023000,
+      "populationSource": "UN 2025 urban agglomeration estimate",
+      "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+      "rank": 88
+    },
+    {
+      "name": "Cape Town",
+      "country": "South Africa",
+      "population": 4772846,
+      "continent": "Africa",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 89
+    },
+    {
+      "name": "Nairobi",
+      "country": "Kenya",
+      "population": 4750100,
+      "continent": "Africa",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 90
+    },
+    {
+      "name": "Haiphong",
+      "country": "Vietnam",
+      "population": 4664124,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 91
+    },
+    {
+      "name": "Kano (city)",
+      "country": "Nigeria",
+      "population": 4648400,
+      "continent": "Africa",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 92
+    },
+    {
+      "name": "Giza",
+      "country": "Egypt",
+      "population": 4458135,
+      "continent": "Africa",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 93
+    },
+    {
+      "name": "Kabul",
+      "country": "Afghanistan",
+      "population": 4434600,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 94
+    },
+    {
+      "name": "EThekwini Metropolitan Municipality",
+      "country": "South Africa",
+      "population": 4239901,
+      "continent": "Africa",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 95
+    },
+    {
+      "name": "Bamako",
+      "country": "Mali",
+      "population": 4227569,
+      "continent": "Africa",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 96
+    },
+    {
+      "name": "Can Tho",
+      "country": "Vietnam",
+      "population": 4199824,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 97
+    },
+    {
+      "name": "Jaipur",
+      "country": "India",
+      "population": 4067826,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 98
+    },
+    {
+      "name": "City of Ekurhuleni Metropolitan Municipality",
+      "country": "South Africa",
+      "population": 4066691,
+      "continent": "Africa",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 99
+    },
+    {
+      "name": "City of Tshwane Metropolitan Municipality",
+      "country": "South Africa",
+      "population": 4040315,
+      "continent": "Africa",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 100
+    },
+    {
+      "name": "New Taipei City",
+      "country": "Taiwan",
+      "population": 4030954,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 101
+    },
+    {
+      "name": "Berlin",
+      "country": "Germany",
+      "population": 3913644,
+      "continent": "Europe",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 102
+    },
+    {
+      "name": "Ibadan",
+      "country": "Nigeria",
+      "population": 3875000,
+      "continent": "Africa",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 103
+    },
+    {
+      "name": "Abuja",
+      "country": "Nigeria",
+      "population": 3840000,
+      "continent": "Africa",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 104
+    },
+    {
+      "name": "Douala",
+      "country": "Cameroon",
+      "population": 3816500,
+      "continent": "Africa",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 105
+    },
+    {
+      "name": "Lucknow",
+      "country": "India",
+      "population": 3790274,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 106
+    },
+    {
+      "name": "Yaound\u00e9",
+      "country": "Cameroon",
+      "population": 3762900,
+      "continent": "Africa",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 107
+    },
+    {
+      "name": "Yokohama",
+      "country": "Japan",
+      "population": 3754840,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 108
+    },
+    {
+      "name": "Jeddah",
+      "country": "Saudi Arabia",
+      "population": 3712917,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 109
+    },
+    {
+      "name": "Faisalabad",
+      "country": "Pakistan",
+      "population": 3691999,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 110
+    },
+    {
+      "name": "Nagpur",
+      "country": "India",
+      "population": 3622000,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 111
+    },
+    {
+      "name": "Mashhad",
+      "country": "Iran",
+      "population": 3619000,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 112
+    },
+    {
+      "name": "Dubai",
+      "country": "United Arab Emirates",
+      "population": 3570099,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 113
+    },
+    {
+      "name": "Algiers",
+      "country": "Algeria",
+      "population": 3496000,
+      "continent": "Africa",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 114
+    },
+    {
+      "name": "Port Harcourt",
+      "country": "Nigeria",
+      "population": 3480000,
+      "continent": "Africa",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 115
+    },
+    {
+      "name": "Conakry",
+      "country": "Guinea",
+      "population": 3407327,
+      "continent": "Africa",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 116
+    },
+    {
+      "name": "Busan",
+      "country": "South Korea",
+      "population": 3235362,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 117
+    },
+    {
+      "name": "Chittagong",
+      "country": "Bangladesh",
+      "population": 3227246,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 118
+    },
+    {
+      "name": "Casablanca",
+      "country": "Morocco",
+      "population": 3218036,
+      "continent": "Africa",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 119
+    },
+    {
+      "name": "Ouagadougou",
+      "country": "Burkina Faso",
+      "population": 3204000,
+      "continent": "Africa",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 120
+    },
+    {
+      "name": "Kanpur",
+      "country": "India",
+      "population": 3203932,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 121
+    },
+    {
+      "name": "Pyongyang",
+      "country": "North Korea",
+      "population": 3133000,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 122
+    },
+    {
+      "name": "Tashkent",
+      "country": "Uzbekistan",
+      "population": 3112748,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 123
+    },
+    {
+      "name": "Incheon",
+      "country": "South Korea",
+      "population": 3093590,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 124
+    },
+    {
+      "name": "Quezon City",
+      "country": "Philippines",
+      "population": 3084270,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 125
+    },
+    {
+      "name": "Da Nang",
+      "country": "Vietnam",
+      "population": 3065628,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 126
+    },
+    {
+      "name": "Bras\u00edlia",
+      "country": "Brazil",
+      "population": 2982818,
+      "continent": "South America",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 127
+    },
+    {
+      "name": "Kyiv",
+      "country": "Ukraine",
+      "population": 2952301,
+      "continent": "Europe",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 128
+    },
+    {
+      "name": "\u0130zmir",
+      "country": "Turkey",
+      "population": 2948160,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 129
+    },
+    {
+      "name": "Kumasi",
+      "country": "Ghana",
+      "population": 2907000,
+      "continent": "Africa",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 130
+    },
+    {
+      "name": "Mbuji-Mayi",
+      "country": "DR Congo",
+      "population": 2892000,
+      "continent": "Africa",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 131
+    },
+    {
+      "name": "Taichung",
+      "country": "Taiwan",
+      "population": 2820787,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 132
+    },
+    {
+      "name": "Lubumbashi",
+      "country": "DR Congo",
+      "population": 2812000,
+      "continent": "Africa",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 133
+    },
+    {
+      "name": "Thane",
+      "country": "India",
+      "population": 2771000,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 134
+    },
+    {
+      "name": "Kaohsiung",
+      "country": "Taiwan",
+      "population": 2765932,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 135
+    },
+    {
+      "name": "Rome",
+      "country": "Italy",
+      "population": 2745062,
+      "continent": "Europe",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 136
+    },
+    {
+      "name": "Bhopal",
+      "country": "India",
+      "population": 2707000,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 137
+    },
+    {
+      "name": "Gazipur",
+      "country": "Bangladesh",
+      "population": 2674697,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 138
+    },
+    {
+      "name": "Guayaquil",
+      "country": "Ecuador",
+      "population": 2665392,
+      "continent": "South America",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 139
+    },
+    {
+      "name": "Baku",
+      "country": "Azerbaijan",
+      "population": 2640400,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 140
+    },
+    {
+      "name": "Damascus",
+      "country": "Syria",
+      "population": 2584771,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 141
+    },
+    {
+      "name": "Sanaa",
+      "country": "Yemen",
+      "population": 2545000,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 142
+    },
+    {
+      "name": "Patna",
+      "country": "India",
+      "population": 2534000,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 143
+    },
+    {
+      "name": "Medell\u00edn",
+      "country": "Colombia",
+      "population": 2519592,
+      "continent": "South America",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 144
+    },
+    {
+      "name": "Gujranwala",
+      "country": "Pakistan",
+      "population": 2511118,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 145
+    },
+    {
+      "name": "Bekasi",
+      "country": "Indonesia",
+      "population": 2468448,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 146
+    },
+    {
+      "name": "Indore",
+      "country": "India",
+      "population": 2463588,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 147
+    },
+    {
+      "name": "Medan",
+      "country": "Indonesia",
+      "population": 2435252,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 148
+    },
+    {
+      "name": "Fortaleza",
+      "country": "Brazil",
+      "population": 2428708,
+      "continent": "South America",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 149
+    },
+    {
+      "name": "Salvador (Bahia)",
+      "country": "Brazil",
+      "population": 2417678,
+      "continent": "South America",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 150
+    },
+    {
+      "name": "Omdurman",
+      "country": "Sudan",
+      "population": 2395159,
+      "continent": "Africa",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 151
+    },
+    {
+      "name": "Agra",
+      "country": "India",
+      "population": 2386000,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 152
+    },
+    {
+      "name": "Mecca",
+      "country": "Saudi Arabia",
+      "population": 2385509,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 153
+    },
+    {
+      "name": "Daegu",
+      "country": "South Korea",
+      "population": 2363643,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 154
+    },
+    {
+      "name": "Visakhapatnam",
+      "country": "India",
+      "population": 2358412,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 155
+    },
+    {
+      "name": "Almaty",
+      "country": "Kazakhstan",
+      "population": 2348103,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 156
+    },
+    {
+      "name": "Mogadishu",
+      "country": "Somalia",
+      "population": 2330700,
+      "continent": "Africa",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 157
+    },
+    {
+      "name": "Accra",
+      "country": "Ghana",
+      "population": 2291352,
+      "continent": "Africa",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 158
+    },
+    {
+      "name": "Rawalpindi",
+      "country": "Pakistan",
+      "population": 2284014,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 159
+    },
+    {
+      "name": "Phnom Penh",
+      "country": "Cambodia",
+      "population": 2281951,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 160
+    },
+    {
+      "name": "Manaus",
+      "country": "Brazil",
+      "population": 2279686,
+      "continent": "South America",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 161
+    },
+    {
+      "name": "Taoyuan, Taiwan",
+      "country": "Taiwan",
+      "population": 2268807,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 162
+    },
+    {
+      "name": "Cali",
+      "country": "Colombia",
+      "population": 2264427,
+      "continent": "South America",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 163
+    },
+    {
+      "name": "Lusaka",
+      "country": "Zambia",
+      "population": 2212301,
+      "continent": "Africa",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 164
+    },
+    {
+      "name": "Aleppo",
+      "country": "Syria",
+      "population": 2203025,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 165
+    },
+    {
+      "name": "Lom\u00e9",
+      "country": "Togo",
+      "population": 2188376,
+      "continent": "Africa",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 166
+    },
+    {
+      "name": "Isfahan",
+      "country": "Iran",
+      "population": 2178000,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 167
+    },
+    {
+      "name": "Multan",
+      "country": "Pakistan",
+      "population": 2169915,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 168
+    },
+    {
+      "name": "Brazzaville",
+      "country": "Republic of the Congo",
+      "population": 2145783,
+      "continent": "Africa",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 169
+    },
+    {
+      "name": "Havana",
+      "country": "Cuba",
+      "population": 2137847,
+      "continent": "North America",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 170
+    },
+    {
+      "name": "Caracas",
+      "country": "Venezuela",
+      "population": 2089012,
+      "continent": "South America",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 171
+    },
+    {
+      "name": "Bursa",
+      "country": "Turkey",
+      "population": 2051464,
+      "continent": "Asia",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 172
+    },
+    {
+      "name": "Vienna",
+      "country": "Austria",
+      "population": 2042036,
+      "continent": "Europe",
+      "populationSource": "city proper (Wikipedia)",
+      "source": "https://en.wikipedia.org/wiki/List_of_cities_with_over_1_million_inhabitants",
+      "rank": 173
     }
   ]
 }
