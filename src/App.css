@@ -155,12 +155,154 @@
   color: var(--text-h);
 }
 
-.forecast {
+.forecast,
+.hourly {
   border: 1px solid var(--border);
   border-radius: 16px;
   background: var(--bg);
   box-shadow: var(--shadow);
   padding: 20px 28px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.hourly-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  list-style: none;
+  margin: 0 0 12px;
+  padding: 0;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.hourly-legend li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.swatch {
+  width: 16px;
+  height: 8px;
+  border-radius: 999px;
+}
+
+.swatch.temp {
+  background: var(--text-h);
+}
+
+.swatch.precip {
+  background: var(--accent);
+  opacity: 0.55;
+}
+
+.hourly-chart-wrap {
+  width: 100%;
+}
+
+.hourly-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.hourly-grid {
+  stroke: var(--border);
+  stroke-width: 1;
+}
+
+.hourly-axis {
+  fill: var(--text);
+  font-size: 11px;
+}
+
+.hourly-bar {
+  fill: var(--accent);
+  opacity: 0.35;
+}
+
+.hourly-area {
+  fill: var(--text-h);
+  opacity: 0.06;
+}
+
+.hourly-line {
+  fill: none;
+  stroke: var(--text-h);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.hourly-dot {
+  fill: var(--bg);
+  stroke: var(--text-h);
+  stroke-width: 2;
+}
+
+.hourly-details {
+  margin-top: 12px;
+}
+
+.hourly-details summary {
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--accent);
+  width: fit-content;
+}
+
+.hourly-details summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.hourly-table-wrap {
+  overflow-x: auto;
+  margin-top: 12px;
+}
+
+.hourly-table-wrap:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.hourly-table-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.hourly-table-wrap th,
+.hourly-table-wrap td {
+  text-align: left;
+  padding: 8px 10px;
+  border-top: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.hourly-table-wrap thead th {
+  color: var(--text);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-top: none;
+}
+
+.hourly-table-wrap tbody th {
+  color: var(--text-h);
+  font-weight: 600;
 }
 
 .forecast-title {
@@ -250,8 +392,13 @@
 
   .hero-card,
   .card,
-  .forecast {
+  .forecast,
+  .hourly {
     padding: 20px;
+  }
+
+  .hourly-tick-minor {
+    display: none;
   }
 
   .stats {

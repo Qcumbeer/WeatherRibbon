@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { HourlyChart } from './HourlyChart'
 import { WEATHER, type City } from './weather'
 import './App.css'
 
@@ -86,6 +87,8 @@ function App() {
                 ))}
               </ul>
             </section>
+
+            <HourlyChart name={data.name} hourly={data.hourly} />
           </div>
         ) : (
           <article className="card muted">
