@@ -385,6 +385,66 @@
   text-align: left;
 }
 
+.duo {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.panel-compact {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--bg);
+  box-shadow: var(--shadow);
+}
+
+.panel-title {
+  margin: 0;
+  font-size: 16px;
+  color: var(--text-h);
+}
+
+.panel-note {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.mini-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.mini-grid {
+  stroke: var(--border);
+  stroke-width: 1;
+}
+
+.mini-axis {
+  fill: var(--text);
+  font-size: 10px;
+}
+
+.mini-bar.sun {
+  fill: var(--sun);
+  opacity: 0.55;
+}
+
+.mini-bar.cloud {
+  fill: var(--text);
+  opacity: 0.4;
+}
+
+.mini-bar.peak {
+  opacity: 1;
+}
+
 .card.muted h1,
 .card.muted p {
   color: var(--text);
@@ -415,6 +475,15 @@
   .hourly,
   .climate {
     padding: 20px;
+  }
+
+  .duo {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .panel-compact {
+    padding: 16px;
   }
 
   .hourly-tick-minor,

@@ -30,6 +30,8 @@ export interface ClimateMonth {
   high: number
   low: number
   precip: number
+  sunshine: number
+  cloud: number
 }
 
 export interface CityWeather {
@@ -96,18 +98,18 @@ export const WEATHER: Record<City, CityWeather> = {
       { hour: '11 PM', temp: 60, precip: 20 },
     ],
     climate: [
-      { month: 'Jan', high: 47, low: 37, precip: 5.6 },
-      { month: 'Feb', high: 50, low: 37, precip: 3.5 },
-      { month: 'Mar', high: 54, low: 39, precip: 3.7 },
-      { month: 'Apr', high: 59, low: 42, precip: 2.7 },
-      { month: 'May', high: 65, low: 47, precip: 1.9 },
-      { month: 'Jun', high: 70, low: 52, precip: 1.5 },
-      { month: 'Jul', high: 76, low: 56, precip: 0.7 },
-      { month: 'Aug', high: 76, low: 57, precip: 0.9 },
-      { month: 'Sep', high: 71, low: 53, precip: 1.6 },
-      { month: 'Oct', high: 60, low: 46, precip: 3.5 },
-      { month: 'Nov', high: 51, low: 40, precip: 6.1 },
-      { month: 'Dec', high: 46, low: 36, precip: 5.4 },
+      { month: 'Jan', high: 47, low: 37, precip: 5.6, sunshine: 86, cloud: 74 },
+      { month: 'Feb', high: 50, low: 37, precip: 3.5, sunshine: 121, cloud: 68 },
+      { month: 'Mar', high: 54, low: 39, precip: 3.7, sunshine: 171, cloud: 62 },
+      { month: 'Apr', high: 59, low: 42, precip: 2.7, sunshine: 204, cloud: 52 },
+      { month: 'May', high: 65, low: 47, precip: 1.9, sunshine: 248, cloud: 43 },
+      { month: 'Jun', high: 70, low: 52, precip: 1.5, sunshine: 267, cloud: 38 },
+      { month: 'Jul', high: 76, low: 56, precip: 0.7, sunshine: 304, cloud: 28 },
+      { month: 'Aug', high: 76, low: 57, precip: 0.9, sunshine: 279, cloud: 30 },
+      { month: 'Sep', high: 71, low: 53, precip: 1.6, sunshine: 210, cloud: 39 },
+      { month: 'Oct', high: 60, low: 46, precip: 3.5, sunshine: 140, cloud: 58 },
+      { month: 'Nov', high: 51, low: 40, precip: 6.1, sunshine: 81, cloud: 74 },
+      { month: 'Dec', high: 46, low: 36, precip: 5.4, sunshine: 71, cloud: 78 },
     ],
   },
   'san-francisco': {
@@ -163,18 +165,18 @@ export const WEATHER: Record<City, CityWeather> = {
       { hour: '11 PM', temp: 56, precip: 5 },
     ],
     climate: [
-      { month: 'Jan', high: 58, low: 46, precip: 4.5 },
-      { month: 'Feb', high: 61, low: 48, precip: 4.0 },
-      { month: 'Mar', high: 63, low: 49, precip: 2.9 },
-      { month: 'Apr', high: 64, low: 50, precip: 1.5 },
-      { month: 'May', high: 66, low: 52, precip: 0.7 },
-      { month: 'Jun', high: 68, low: 53, precip: 0.2 },
-      { month: 'Jul', high: 68, low: 55, precip: 0.0 },
-      { month: 'Aug', high: 69, low: 56, precip: 0.1 },
-      { month: 'Sep', high: 71, low: 56, precip: 0.2 },
-      { month: 'Oct', high: 70, low: 54, precip: 1.0 },
-      { month: 'Nov', high: 64, low: 50, precip: 2.5 },
-      { month: 'Dec', high: 58, low: 46, precip: 4.0 },
+      { month: 'Jan', high: 58, low: 46, precip: 4.5, sunshine: 166, cloud: 55 },
+      { month: 'Feb', high: 61, low: 48, precip: 4.0, sunshine: 182, cloud: 52 },
+      { month: 'Mar', high: 63, low: 49, precip: 2.9, sunshine: 251, cloud: 48 },
+      { month: 'Apr', high: 64, low: 50, precip: 1.5, sunshine: 282, cloud: 42 },
+      { month: 'May', high: 66, low: 52, precip: 0.7, sunshine: 313, cloud: 36 },
+      { month: 'Jun', high: 68, low: 53, precip: 0.2, sunshine: 300, cloud: 32 },
+      { month: 'Jul', high: 68, low: 55, precip: 0.0, sunshine: 298, cloud: 28 },
+      { month: 'Aug', high: 69, low: 56, precip: 0.1, sunshine: 273, cloud: 27 },
+      { month: 'Sep', high: 71, low: 56, precip: 0.2, sunshine: 270, cloud: 25 },
+      { month: 'Oct', high: 70, low: 54, precip: 1.0, sunshine: 251, cloud: 34 },
+      { month: 'Nov', high: 64, low: 50, precip: 2.5, sunshine: 189, cloud: 48 },
+      { month: 'Dec', high: 58, low: 46, precip: 4.0, sunshine: 158, cloud: 56 },
     ],
   },
 }

@@ -6,6 +6,7 @@
   --accent: #2f6fed;
   --accent-bg: rgba(47, 111, 237, 0.1);
   --accent-border: rgba(47, 111, 237, 0.45);
+  --sun: #d98e04;
   --shadow:
     rgba(22, 20, 28, 0.06) 0 10px 24px -8px,
     rgba(22, 20, 28, 0.04) 0 2px 6px -2px;
@@ -29,6 +30,7 @@
     --accent: #7aa2ff;
     --accent-bg: rgba(122, 162, 255, 0.14);
     --accent-border: rgba(122, 162, 255, 0.45);
+    --sun: #f0b45c;
     --shadow:
       rgba(0, 0, 0, 0.35) 0 12px 28px -10px,
       rgba(0, 0, 0, 0.2) 0 2px 8px -2px;
