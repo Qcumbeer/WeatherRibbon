@@ -6,6 +6,7 @@ import { HourlyChart } from './HourlyChart'
 import { PrecipChanceChart } from './PrecipChanceChart'
 import { RainfallChart } from './RainfallChart'
 import { SnowfallChart } from './SnowfallChart'
+import { HumidityComfortChart } from './HumidityComfortChart'
 import { MoonChart } from './MoonChart'
 import { SolarElevationChart } from './SolarElevationChart'
 import { SunriseSunsetChart } from './SunriseSunsetChart'
@@ -124,6 +125,7 @@ function App() {
               latitude={data.latitude}
               longitude={data.longitude}
             />
+            <HumidityComfortChart name={data.name} climate={data.climate} />
 
             <div className="duo">
               <SunshinePanel name={data.name} climate={data.climate} />

@@ -29,6 +29,12 @@
   --moon-up: #9ec9e8;
   --moon-new: #16141c;
   --moon-full: #c9a227;
+  --hc-dry: #e6d5a8;
+  --hc-comfortable: #b8cc8c;
+  --hc-humid: #c9c45c;
+  --hc-muggy: #e0a83a;
+  --hc-oppressive: #d46b3c;
+  --hc-miserable: #b83d38;
   --shadow:
     rgba(22, 20, 28, 0.06) 0 10px 24px -8px,
     rgba(22, 20, 28, 0.04) 0 2px 6px -2px;
@@ -72,9 +78,15 @@
     --dl-nautical: #3a6188;
     --dl-astro: #1c2436;
     --dl-night: #0b0f18;
-    --moon-up: #4a7ea8;
-    --moon-new: #f4f2ee;
-    --moon-full: #e8c84a;
+  --moon-up: #4a7ea8;
+  --moon-new: #f4f2ee;
+  --moon-full: #e8c84a;
+  --hc-dry: #7a6d4e;
+  --hc-comfortable: #6a7a4e;
+  --hc-humid: #8a8440;
+  --hc-muggy: #b08630;
+  --hc-oppressive: #b05832;
+  --hc-miserable: #9a3834;
     --shadow:
       rgba(0, 0, 0, 0.35) 0 12px 28px -10px,
       rgba(0, 0, 0, 0.2) 0 2px 8px -2px;

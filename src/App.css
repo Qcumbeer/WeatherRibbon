@@ -740,6 +740,70 @@
   border-top: 2px solid var(--moon-full);
 }
 
+.hc-area {
+  stroke: var(--bg);
+  stroke-width: 0.5;
+  stroke-linejoin: round;
+}
+
+.hc-area.dry {
+  fill: var(--hc-dry);
+}
+
+.hc-area.comfortable {
+  fill: var(--hc-comfortable);
+}
+
+.hc-area.humid {
+  fill: var(--hc-humid);
+}
+
+.hc-area.muggy {
+  fill: var(--hc-muggy);
+}
+
+.hc-area.oppressive {
+  fill: var(--hc-oppressive);
+}
+
+.hc-area.miserable {
+  fill: var(--hc-miserable);
+}
+
+.hc-swatch {
+  height: 10px;
+  border-radius: 3px;
+}
+
+.hc-swatch.dry {
+  background: var(--hc-dry);
+}
+
+.hc-swatch.comfortable {
+  background: var(--hc-comfortable);
+}
+
+.hc-swatch.humid {
+  background: var(--hc-humid);
+}
+
+.hc-swatch.muggy {
+  background: var(--hc-muggy);
+}
+
+.hc-swatch.oppressive {
+  background: var(--hc-oppressive);
+}
+
+.hc-swatch.miserable {
+  background: var(--hc-miserable);
+}
+
+.hc-hit {
+  fill: transparent;
+  pointer-events: all;
+}
+
 
 .heatmap-border {
   fill: none;
