@@ -1,12 +1,15 @@
-import { readFileSync, readdirSync } from 'node:fs'
+import { existsSync, readFileSync, readdirSync } from 'node:fs'
 import {
   MONTH_START_DAY,
   RIBBON_MISSING_FILL,
   RIBBON_STOPS,
   RIBBON_TEMP_HI,
   RIBBON_TEMP_LO,
+  TILE_H,
+  TILE_W,
   monthOfDay,
   rampColor,
+  renderRibbonSvg,
   ribbonHalfSeries,
   ribbonOutlinePath,
   ribbonSeries,
@@ -326,6 +329,17 @@ console.log('\n=== Fallback cities (deterministic offline climatology) ===')
   const mSlices = ribbonSlices(mh, ms.temp, xDay, MID_Y)
   check(ms.maxPrecip === 0, 'all-missing precipitation treated as zero')
   check(mSlices.every((x) => x.fill === RIBBON_MISSING_FILL), 'all-missing temperature uses neutral missing color')
+}
+
+console.log('\n=== Saved tile SVG (public/ribbons) ===')
+{
+  const nyc = JSON.parse(readFileSync('data/new-york.json', 'utf8')) as { name: string; climate: ClimateMonth[] }
+  const generated = renderRibbonSvg(nyc.climate, nyc.name)
+  check(generated === renderRibbonSvg(nyc.climate, nyc.name), 'tile SVG is deterministic')
+  check(generated.includes(`viewBox="0 0 ${TILE_W} ${TILE_H}"`), 'tile SVG uses compact tile viewBox')
+  check((generated.match(/<path /g) ?? []).length > 12, 'tile SVG is a continuous stream, not 12 bars')
+  check(existsSync('public/ribbons/new-york.svg'), 'saved New York ribbon file exists')
+  check(readFileSync('public/ribbons/new-york.svg', 'utf8') === generated, 'saved New York SVG matches renderRibbonSvg output')
 }
 
 if (failures > 0) {

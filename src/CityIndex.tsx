@@ -6,12 +6,9 @@ import {
   useState,
   type KeyboardEvent,
 } from 'react'
-import { CITIES, bySlug, cityHref, type CityRef } from './cities'
+import { CITIES, cityHref, type CityRef } from './cities'
 import { searchCities } from './geocoding'
-import { loadCity, type CityData } from './dataService'
-import { SeasonalRibbonChart } from './SeasonalRibbonChart'
-
-const NYC = bySlug.get('new-york')!
+import { ribbonSrc } from './ribbonAssets'
 
 const RANKED: CityRef[] = CITIES
 const ALPHABETICAL: CityRef[] = [...CITIES].sort((a, b) =>
@@ -19,6 +16,31 @@ const ALPHABETICAL: CityRef[] = [...CITIES].sort((a, b) =>
 )
 
 type CityEntry = CityRef & { remote?: boolean }
+
+function CityCard({
+  city,
+  onSelect,
+}: {
+  city: CityRef
+  onSelect: (city: CityRef) => void
+}) {
+  const src = ribbonSrc(city.slug)
+  return (
+    <button type="button" className="city-card" onClick={() => onSelect(city)}>
+      {src && (
+        <img
+          className="city-card-ribbon"
+          src={src}
+          alt=""
+          width={320}
+          height={80}
+        />
+      )}
+      <span className="city-card-name">{city.name}</span>
+      <span className="city-card-region">{city.region}</span>
+    </button>
+  )
+}
 
 interface IndexViewProps {
   query: string
@@ -32,17 +54,6 @@ export function CityIndex({ query, onQueryChange, onNavigate }: IndexViewProps) 
   const listRef = useRef<HTMLUListElement>(null)
   const [remote, setRemote] = useState<CityRef[]>([])
   const [active, setActive] = useState(0)
-  const [nyc, setNyc] = useState<CityData | null>(null)
-
-  useEffect(() => {
-    const ctrl = new AbortController()
-    loadCity(NYC, ctrl.signal)
-      .then(setNyc)
-      .catch((err: unknown) => {
-        if (err instanceof DOMException && err.name === 'AbortError') return
-      })
-    return () => ctrl.abort()
-  }, [])
 
   const results: CityEntry[] = useMemo(() => {
     const q = query.trim().toLowerCase()
@@ -168,12 +179,6 @@ export function CityIndex({ query, onQueryChange, onNavigate }: IndexViewProps) 
         </div>
       </section>
 
-      {!showingResults && nyc && (
-        <section className="index-ribbon">
-          <SeasonalRibbonChart name={nyc.name} climate={nyc.climate} />
-        </section>
-      )}
-
       {showingResults ? (
         <section className="index-results-section" aria-live="polite">
           <div className="index-results-head">
@@ -228,14 +233,7 @@ export function CityIndex({ query, onQueryChange, onNavigate }: IndexViewProps) 
             <ul className="city-grid">
               {RANKED.map((city) => (
                 <li key={city.slug ?? city.name}>
-                  <button
-                    type="button"
-                    className="city-card"
-                    onClick={() => select(city)}
-                  >
-                    <span className="city-card-name">{city.name}</span>
-                    <span className="city-card-region">{city.region}</span>
-                  </button>
+                  <CityCard city={city} onSelect={select} />
                 </li>
               ))}
             </ul>
@@ -245,14 +243,7 @@ export function CityIndex({ query, onQueryChange, onNavigate }: IndexViewProps) 
             <ul className="city-grid">
               {ALPHABETICAL.map((city) => (
                 <li key={city.slug ?? city.name}>
-                  <button
-                    type="button"
-                    className="city-card"
-                    onClick={() => select(city)}
-                  >
-                    <span className="city-card-name">{city.name}</span>
-                    <span className="city-card-region">{city.region}</span>
-                  </button>
+                  <CityCard city={city} onSelect={select} />
                 </li>
               ))}
             </ul>

@@ -143,3 +143,29 @@ export function monthOfDay(day: number): number {
   return 0
 }
 
+export const TILE_W = 320
+export const TILE_H = 80
+export const TILE_PAD_X = 10
+export const TILE_PAD_Y = 12
+
+export function renderRibbonSvg(climate: ClimateMonth[], name = 'City'): string {
+  const plotW = TILE_W - TILE_PAD_X * 2
+  const plotH = TILE_H - TILE_PAD_Y * 2
+  const midY = TILE_PAD_Y + plotH / 2
+  const maxHalf = plotH / 2 - 1
+  const xDay = (d: number) => TILE_PAD_X + (d / YEAR) * plotW
+  const { precip, temp, maxPrecip } = ribbonSeries(climate)
+  const half = ribbonHalfSeries(precip, maxPrecip, maxHalf)
+  const slices = ribbonSlices(half, temp, xDay, midY)
+  const outline = ribbonOutlinePath(half, xDay, midY)
+  const paths = slices.map((s) => `<path d="${s.d}" fill="${s.fill}"/>`).join('')
+  return (
+    `<?xml version="1.0" encoding="UTF-8"?>\n` +
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${TILE_W} ${TILE_H}" role="img">\n` +
+    `  <title>${name} seasonal climate ribbon</title>\n` +
+    `  ${paths}\n` +
+    `  <path d="${outline}" fill="none" stroke="#1a1a1a" stroke-opacity="0.22" stroke-width="0.8" stroke-linejoin="round"/>\n` +
+    `</svg>\n`
+  )
+}
+

@@ -1119,10 +1119,6 @@
   padding: 24px 0 20px;
 }
 
-.index-ribbon {
-  margin: 8px 0 32px;
-}
-
 .index-title {
   font-size: clamp(32px, 6vw, 52px);
   margin: 0 0 8px;
@@ -1306,6 +1302,14 @@
   border-color: var(--accent-border);
   box-shadow: var(--shadow);
   outline: none;
+}
+
+.city-card-ribbon {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-bottom: 8px;
+  border-radius: 6px;
 }
 
 .city-card-name {
