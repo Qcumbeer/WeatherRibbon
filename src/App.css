@@ -1119,6 +1119,10 @@
   padding: 24px 0 20px;
 }
 
+.index-ribbon {
+  margin: 8px 0 32px;
+}
+
 .index-title {
   font-size: clamp(32px, 6vw, 52px);
   margin: 0 0 8px;

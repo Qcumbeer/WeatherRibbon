@@ -6,8 +6,12 @@ import {
   useState,
   type KeyboardEvent,
 } from 'react'
-import { CITIES, cityHref, type CityRef } from './cities'
+import { CITIES, bySlug, cityHref, type CityRef } from './cities'
 import { searchCities } from './geocoding'
+import { loadCity, type CityData } from './dataService'
+import { SeasonalRibbonChart } from './SeasonalRibbonChart'
+
+const NYC = bySlug.get('new-york')!
 
 const RANKED: CityRef[] = CITIES
 const ALPHABETICAL: CityRef[] = [...CITIES].sort((a, b) =>
@@ -28,6 +32,17 @@ export function CityIndex({ query, onQueryChange, onNavigate }: IndexViewProps) 
   const listRef = useRef<HTMLUListElement>(null)
   const [remote, setRemote] = useState<CityRef[]>([])
   const [active, setActive] = useState(0)
+  const [nyc, setNyc] = useState<CityData | null>(null)
+
+  useEffect(() => {
+    const ctrl = new AbortController()
+    loadCity(NYC, ctrl.signal)
+      .then(setNyc)
+      .catch((err: unknown) => {
+        if (err instanceof DOMException && err.name === 'AbortError') return
+      })
+    return () => ctrl.abort()
+  }, [])
 
   const results: CityEntry[] = useMemo(() => {
     const q = query.trim().toLowerCase()
@@ -152,6 +167,12 @@ export function CityIndex({ query, onQueryChange, onNavigate }: IndexViewProps) 
           </div>
         </div>
       </section>
+
+      {!showingResults && nyc && (
+        <section className="index-ribbon">
+          <SeasonalRibbonChart name={nyc.name} climate={nyc.climate} />
+        </section>
+      )}
 
       {showingResults ? (
         <section className="index-results-section" aria-live="polite">

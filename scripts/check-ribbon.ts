@@ -245,6 +245,12 @@ console.log('\n=== Bespoke datasets (data/*.json) ===')
       )
       check(driest.precip < wettest.precip / 3, 'Seattle dry month well below wet month (wet-season shape)')
     }
+    if (file === 'new-york.json') {
+      check(wettest.precip / driest.precip < 1.6, `NYC year-round precip (wet/dry ${(wettest.precip / driest.precip).toFixed(2)})`)
+      const janMean = (city.climate[0].high + city.climate[0].low) / 2
+      const julMean = (city.climate[6].high + city.climate[6].low) / 2
+      check(janMean < 40 && julMean > 70, 'NYC January is cold and July is hot')
+    }
     if (file === 'san-francisco.json') {
       check(driest.month === 'Jul', `SF near-zero summer drought (driest ${driest.month})`)
       check(sanitizePrecip(driest.precip) < 0.1, 'SF driest month ≈ 0 in renders as near-pinched stream')

@@ -113,6 +113,9 @@ async function renderCity(name: string, data: CityData) {
 const seattle = JSON.parse(readFileSync('data/seattle.json', 'utf8')) as CityData
 await renderCity('Seattle (bespoke)', seattle)
 
+const nyc = JSON.parse(readFileSync('data/new-york.json', 'utf8')) as CityData
+await renderCity('New York (bespoke)', nyc)
+
 const anchorage = US_CITIES.find((c) => c.slug === 'anchorage')!
 await renderCity('Anchorage (fallback)', fallbackClimate(anchorage))
 

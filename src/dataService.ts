@@ -3,6 +3,7 @@ import { fallbackClimate } from './fallbackClimate.ts'
 import seattleData from '../data/seattle.json' with { type: 'json' }
 import sanFranciscoData from '../data/san-francisco.json' with { type: 'json' }
 import phoenixData from '../data/phoenix.json' with { type: 'json' }
+import newYorkData from '../data/new-york.json' with { type: 'json' }
 
 export type { CityRef }
 export { FEATURED }
@@ -43,6 +44,7 @@ const STATIC: Record<string, () => Promise<{ default: unknown }>> = {
   seattle: () => Promise.resolve({ default: seattleData }),
   'san-francisco': () => Promise.resolve({ default: sanFranciscoData }),
   phoenix: () => Promise.resolve({ default: phoenixData }),
+  'new-york': () => Promise.resolve({ default: newYorkData }),
 }
 
 const memory = new Map<string, CityData>()

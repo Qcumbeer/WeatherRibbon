@@ -19,6 +19,7 @@ const CITIES: Record<string, { name: string; region: string; lat: number; lon: n
   seattle: { name: 'Seattle', region: 'Washington', lat: 47.61, lon: -122.33 },
   'san-francisco': { name: 'San Francisco', region: 'California', lat: 37.77, lon: -122.42 },
   phoenix: { name: 'Phoenix', region: 'Arizona', lat: 33.45, lon: -112.07 },
+  'new-york': { name: 'New York', region: 'New York', lat: 40.71, lon: -74.01 },
 }
 
 interface GeoHit {
