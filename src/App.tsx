@@ -68,9 +68,16 @@ function CityView({
           <section className="card" aria-label="About this data">
             <p className="eyebrow">{data.region}</p>
             <h1>{data.name}</h1>
+            {data.mock && <span className="data-mock-badge">Mock data</span>}
             <p className="panel-note">
               {data.source} &middot; {data.period}
             </p>
+            {data.mock && (
+              <p className="panel-note mock-note">
+                This city&rsquo;s climate is a synthetic placeholder, not real
+                ERA5 reanalysis. Charts are illustrative only.
+              </p>
+            )}
           </section>
 
           <ClimateExtremes climate={data.climate} />

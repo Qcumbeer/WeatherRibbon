@@ -137,6 +137,24 @@
   font-size: clamp(28px, 5vw, 40px);
 }
 
+.data-mock-badge {
+  display: inline-block;
+  margin-bottom: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: #9a6a00;
+  background: rgba(214, 158, 46, 0.16);
+  border: 1px solid rgba(214, 158, 46, 0.5);
+  border-radius: 999px;
+  padding: 2px 10px;
+}
+
+.mock-note {
+  color: #9a6a00;
+  font-style: italic;
+}
+
 .hourly,
 .climate {
   border: 1px solid var(--border);
@@ -1249,6 +1267,12 @@
   padding: 1px 8px;
 }
 
+.index-result-mock {
+  color: #9a6a00;
+  border-color: rgba(214, 158, 46, 0.5);
+  background: rgba(214, 158, 46, 0.16);
+}
+
 .index-no-results {
   text-align: center;
 }
@@ -1320,6 +1344,20 @@
 .city-card-region {
   font-size: 13px;
   color: var(--text);
+}
+
+.city-card-mock {
+  margin-left: auto;
+  align-self: center;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #9a6a00;
+  background: rgba(214, 158, 46, 0.16);
+  border: 1px solid rgba(214, 158, 46, 0.5);
+  border-radius: 999px;
+  padding: 1px 7px;
 }
 
 .swatch.skyline-height {

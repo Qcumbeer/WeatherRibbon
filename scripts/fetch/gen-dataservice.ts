@@ -1,9 +1,13 @@
-import { readFileSync, writeFileSync } from 'node:fs'
+import { existsSync, readFileSync, writeFileSync } from 'node:fs'
 import { US_CITIES } from '../../src/cities.ts'
 
-// Rewrites src/dataService.ts so every city in the canonical index is backed
-// by its own static data/<slug>.json import (Node- and Vite-compatible),
-// instead of only a handful of hand-listed cities.
+// Rewrites src/dataService.ts so every city that currently has a real
+// data/<slug>.json file is backed by a static import (Node- and Vite-
+// compatible). Cities without a real file are intentionally left out of the
+// static map; loadCity falls back to the synthetic climatology for them and
+// the UI marks those as "mock".
+
+const present = US_CITIES.filter((c) => existsSync(`data/${c.slug}.json`))
 
 function ident(slug: string): string {
   const camel = slug
@@ -16,11 +20,11 @@ function ident(slug: string): string {
 const path = 'src/dataService.ts'
 const src = readFileSync(path, 'utf8')
 
-const importLines = US_CITIES.map(
+const importLines = present.map(
   (c) => `import ${ident(c.slug)} from '../data/${c.slug}.json' with { type: 'json' }`,
 ).join('\n')
 
-const staticEntries = US_CITIES.map(
+const staticEntries = present.map(
   (c) => `  '${c.slug}': () => Promise.resolve({ default: ${ident(c.slug)} }),`,
 ).join('\n')
 
@@ -41,4 +45,4 @@ const out = withImports.replace(
 )
 
 writeFileSync(path, out)
-console.log(`Rewrote ${path}: ${US_CITIES.length} static city imports.`)
+console.log(`Rewrote ${path}: ${present.length} of ${US_CITIES.length} cities have real static data; the rest use the synthetic fallback (mock).`)

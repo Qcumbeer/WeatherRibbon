@@ -7,6 +7,7 @@ import {
   type KeyboardEvent,
 } from 'react'
 import { CITIES, cityHref, type CityRef } from './cities'
+import { isMockCity } from './dataService'
 import { searchCities } from './geocoding'
 import { ribbonSrc } from './ribbonAssets'
 
@@ -25,6 +26,7 @@ function CityCard({
   onSelect: (city: CityRef) => void
 }) {
   const src = ribbonSrc(city.slug)
+  const mock = isMockCity(city)
   return (
     <button type="button" className="city-card" onClick={() => onSelect(city)}>
       {src && (
@@ -38,6 +40,7 @@ function CityCard({
       )}
       <span className="city-card-name">{city.name}</span>
       <span className="city-card-region">{city.region}</span>
+      {mock && <span className="city-card-mock">mock</span>}
     </button>
   )
 }
@@ -219,6 +222,9 @@ export function CityIndex({ query, onQueryChange, onNavigate }: IndexViewProps) 
                     <span className="index-result-region">{city.region}</span>
                     {city.remote && (
                       <span className="index-result-badge">Search</span>
+                    )}
+                    {!city.remote && isMockCity(city) && (
+                      <span className="index-result-badge index-result-mock">mock</span>
                     )}
                   </button>
                 </li>
