@@ -77,11 +77,7 @@ function App() {
             <HumidityComfortChart name={data.name} climate={data.climate} />
             <CloudCoverChart name={data.name} climate={data.climate} />
 
-            <AirQualityChart
-              name={data.name}
-              latitude={data.latitude}
-              longitude={data.longitude}
-            />
+            <AirQualityChart name={data.name} city={city} />
 
             <div className="duo">
               <SunshinePanel name={data.name} climate={data.climate} />

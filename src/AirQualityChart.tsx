@@ -1,88 +1,79 @@
 import { useId, useMemo } from 'react'
+import type { CityRef } from './cities'
 import { AQI_CATEGORIES, aqiCategory, loadAirQuality } from './airQuality'
+import { YEAR, MID_DAY, sampleYear, lineFrom } from './seasonal'
 
 const WIDTH = 640
 const HEIGHT = 300
 const ML = 44
-const MR = 16
+const MR = 72
 const MT = 14
 const MB = 40
 const PLOT_W = WIDTH - ML - MR
 const PLOT_H = HEIGHT - MT - MB
 
+const SPARSE = new Set(['Jan', 'Mar', 'May', 'Jul', 'Sep', 'Nov'])
 const Y_BREAKS = [0, 50, 100, 150, 200, 300, 500]
 
-function formatHour(h: number): string {
-  const period = h < 12 ? 'AM' : 'PM'
-  const hr = h === 0 ? 12 : h <= 12 ? h : h - 12
-  return `${hr} ${period}`
-}
-
-function formatHourShort(h: number): string {
-  const period = h < 12 ? 'a' : 'p'
-  const hr = h === 0 ? 12 : h <= 12 ? h : h - 12
-  return `${hr}${period}`
+function mean(values: number[]): number {
+  return values.reduce((a, b) => a + b, 0) / values.length
 }
 
 export function AirQualityChart({
   name,
-  latitude,
-  longitude,
+  city,
 }: {
   name: string
-  latitude: number
-  longitude: number
+  city: CityRef
 }) {
   const uid = useId()
   const captionId = `${uid}-caption`
   const descId = `${uid}-desc`
 
-  const { hours, currentHour } = useMemo(
-    () => loadAirQuality(latitude, longitude),
-    [latitude, longitude],
-  )
-  const n = hours.length
+  const months = useMemo(() => loadAirQuality(city), [city])
+  const n = months.length
+  const slot = PLOT_W / n
 
-  const maxAqi = Math.max(1, ...hours.map((h) => h.aqi))
-  const yMax =
-    Y_BREAKS.find((b) => b >= maxAqi) ?? 500
-  const yFloor = Math.max(150, yMax)
+  const aqis = months.map((m) => m.aqi)
+  const series = sampleYear(aqis)
 
-  const xAt = (i: number) => ML + (i / (n - 1)) * PLOT_W
+  const maxAqi = Math.max(1, ...aqis)
+  const yFloor = Math.max(150, Y_BREAKS.find((b) => b >= maxAqi) ?? 500)
+  const yTicks = Y_BREAKS.filter((v) => v <= yFloor)
+
+  const xDay = (d: number) => ML + (d / YEAR) * PLOT_W
+  const xAt = (i: number) => ML + slot * (i + 0.5)
   const yAt = (v: number) => MT + ((yFloor - v) / yFloor) * PLOT_H
 
-  const current = hours[0]
-  const currentCat = aqiCategory(current.aqi)
-  const peak = hours.reduce((a, b) => (b.aqi > a.aqi ? b : a))
-  const low = hours.reduce((a, b) => (b.aqi < a.aqi ? b : a))
-
-  const linePath = hours
-    .map(
-      (h, i) => `${i === 0 ? 'M' : 'L'}${xAt(i).toFixed(1)} ${yAt(h.aqi).toFixed(1)}`,
-    )
-    .join(' ')
-
-  const yTicks = Y_BREAKS.filter((v) => v <= yFloor)
-  const xLabels = [0, 3, 6, 9, 12, 15, 18, 21]
-
-  const badgeDark = current.aqi > 100
+  const peak = months.reduce((a, b) => (b.aqi > a.aqi ? b : a))
+  const cleanest = months.reduce((a, b) => (b.aqi < a.aqi ? b : a))
+  const annualAqi = Math.round(mean(aqis))
+  const annualCat = aqiCategory(annualAqi)
+  const annualPm25 = mean(months.map((m) => m.pm25))
+  const annualPm10 = mean(months.map((m) => m.pm10))
+  const annualOzone = mean(months.map((m) => m.ozone))
+  const badgeDark = annualAqi > 100
 
   return (
     <section className="hourly climate aqi-chart" aria-labelledby={captionId}>
       <h2 className="forecast-title" id={captionId}>
-        Air Quality Forecast
+        Air Quality
       </h2>
       <p className="sr-only" id={descId}>
-        {name} forecast air quality index for the next 24 hours starting at{' '}
-        {formatHour(currentHour)}, shown as a line over EPA category color bands
-        from Good through Hazardous. Current AQI is {current.aqi} (
-        {currentCat.name}). Peak {peak.aqi} ({formatHour(peak.hour)}), lowest{' '}
-        {low.aqi} ({formatHour(low.hour)}). PM2.5 {current.pm25} micrograms per
-        cubic meter, PM10 {current.pm10} micrograms per cubic meter, ozone{' '}
-        {current.ozone} parts per billion.
+        {name} monthly mean air quality index from January through December,
+        shown as a line over EPA category color bands. Annual mean AQI is{' '}
+        {annualAqi} ({annualCat.name}). Highest {peak.month} ({peak.aqi}),
+        lowest {cleanest.month} ({cleanest.aqi}). Annual mean PM2.5{' '}
+        {annualPm25.toFixed(1)} micrograms per cubic meter, PM10{' '}
+        {annualPm10.toFixed(1)} micrograms per cubic meter, ozone{' '}
+        {annualOzone.toFixed(0)} parts per billion.
       </p>
 
       <ul className="hourly-legend">
+        <li>
+          <span className="swatch aqi-avg" aria-hidden="true" />
+          Monthly mean AQI
+        </li>
         {AQI_CATEGORIES.filter((c) => c.range[0] < yFloor).map((c) => (
           <li key={c.name}>
             <span
@@ -106,20 +97,31 @@ export function AirQualityChart({
             if (c.range[0] >= yFloor) return null
             const yTop = yAt(Math.min(c.range[1], yFloor))
             const yBot = yAt(c.range[0])
+            const mid = (yTop + yBot) / 2
             return (
-              <rect
-                key={c.name}
-                className="aqi-band"
-                style={{ fill: `var(${c.cssVar})` }}
-                x={ML}
-                y={yTop}
-                width={PLOT_W}
-                height={Math.max(0, yBot - yTop)}
-              >
-                <title>
-                  {c.name} ({c.range[0]}&ndash;{c.range[1]})
-                </title>
-              </rect>
+              <g key={c.name}>
+                <rect
+                  className="aqi-band"
+                  style={{ fill: `var(${c.cssVar})` }}
+                  x={ML}
+                  y={yTop}
+                  width={PLOT_W}
+                  height={Math.max(0, yBot - yTop)}
+                >
+                  <title>
+                    {c.name} ({c.range[0]}&ndash;{c.range[1]})
+                  </title>
+                </rect>
+                {yBot - yTop > 14 && (
+                  <text
+                    className="hourly-axis aqi-band-label"
+                    x={ML + PLOT_W + 6}
+                    y={mid + 4}
+                  >
+                    {c.shortName}
+                  </text>
+                )}
+              </g>
             )
           })}
 
@@ -143,48 +145,39 @@ export function AirQualityChart({
             </g>
           ))}
 
-          <path className="aqi-line" d={linePath}>
-            <title>AQI forecast (next 24 hours)</title>
+          <path className="aqi-line" d={lineFrom(series, xDay, yAt)}>
+            <title>Monthly mean AQI</title>
           </path>
 
-          <circle
-            className="aqi-current-dot"
-            cx={xAt(0)}
-            cy={yAt(current.aqi)}
-            r={5}
-          >
-            <title>
-              Now: AQI {current.aqi} ({currentCat.name})
-            </title>
-          </circle>
-          <text
-            className="aqi-marker-label"
-            x={xAt(0)}
-            y={yAt(current.aqi) - 10}
-            textAnchor="middle"
-          >
-            {current.aqi}
-          </text>
+          {months.map((m, i) => (
+            <circle
+              key={`dot-${m.month}`}
+              className="aqi-dot"
+              cx={xDay(MID_DAY[i])}
+              cy={yAt(m.aqi)}
+              r={3.5}
+            >
+              <title>
+                {m.month}: AQI {m.aqi} ({aqiCategory(m.aqi).name})
+              </title>
+            </circle>
+          ))}
 
-          {xLabels.map((i) => {
-            const h = (currentHour + i) % 24
-            const isMinor = i % 6 !== 0
-            return (
-              <text
-                key={`x-${i}`}
-                className={
-                  isMinor
-                    ? 'hourly-axis hourly-tick aqi-tick-minor'
-                    : 'hourly-axis hourly-tick'
-                }
-                x={xAt(i)}
-                y={MT + PLOT_H + 20}
-                textAnchor="middle"
-              >
-                {formatHourShort(h)}
-              </text>
-            )
-          })}
+          {months.map((m, i) => (
+            <text
+              key={`x-${m.month}`}
+              className={
+                SPARSE.has(m.month)
+                  ? 'hourly-axis hourly-tick'
+                  : 'hourly-axis hourly-tick climate-tick-minor'
+              }
+              x={xAt(i)}
+              y={MT + PLOT_H + 20}
+              textAnchor="middle"
+            >
+              {m.month}
+            </text>
+          ))}
         </svg>
       </div>
 
@@ -192,38 +185,42 @@ export function AirQualityChart({
         <span
           className="aqi-badge"
           style={{
-            background: `var(${currentCat.cssVar})`,
+            background: `var(${annualCat.cssVar})`,
             color: badgeDark ? '#fff' : '#1a1a1a',
           }}
         >
-          <span className="aqi-badge-value">{current.aqi}</span>
-          <span className="aqi-badge-label">{currentCat.name}</span>
+          <span className="aqi-badge-value">{annualAqi}</span>
+          <span className="aqi-badge-label">{annualCat.name}</span>
         </span>
         <ul className="aqi-pollutants">
           <li>
-            <strong>PM2.5</strong> {current.pm25} &micro;g/m&sup3;
+            <strong>PM2.5</strong> {annualPm25.toFixed(1)} &micro;g/m&sup3;
           </li>
           <li>
-            <strong>PM10</strong> {current.pm10} &micro;g/m&sup3;
+            <strong>PM10</strong> {annualPm10.toFixed(1)} &micro;g/m&sup3;
           </li>
           <li>
-            <strong>Ozone</strong> {current.ozone} ppb
+            <strong>Ozone</strong> {annualOzone.toFixed(0)} ppb
           </li>
         </ul>
       </div>
 
-      <p className="panel-note aqi-advice">{currentCat.advice}</p>
+      <p className="panel-note cc-note">
+        Highest {peak.month} ({peak.aqi}) &middot; Lowest {cleanest.month} (
+        {cleanest.aqi}) &middot; Annual mean {annualAqi} ({annualCat.name})
+      </p>
+      <p className="panel-note aqi-advice">{annualCat.advice}</p>
 
       <details className="hourly-details">
-        <summary>View hourly air quality data</summary>
+        <summary>View monthly air quality data</summary>
         <div className="hourly-table-wrap" tabIndex={0}>
           <table>
             <caption className="sr-only">
-              {name} hourly air quality forecast for the next 24 hours
+              {name} monthly mean air quality index, PM2.5, PM10, and ozone
             </caption>
             <thead>
               <tr>
-                <th scope="col">Time</th>
+                <th scope="col">Month</th>
                 <th scope="col">AQI</th>
                 <th scope="col">Category</th>
                 <th scope="col">PM2.5</th>
@@ -232,14 +229,14 @@ export function AirQualityChart({
               </tr>
             </thead>
             <tbody>
-              {hours.map((h, i) => (
-                <tr key={i}>
-                  <th scope="row">{formatHour(h.hour)}</th>
-                  <td>{h.aqi}</td>
-                  <td>{aqiCategory(h.aqi).name}</td>
-                  <td>{h.pm25} &micro;g/m&sup3;</td>
-                  <td>{h.pm10} &micro;g/m&sup3;</td>
-                  <td>{h.ozone} ppb</td>
+              {months.map((m) => (
+                <tr key={m.month}>
+                  <th scope="row">{m.month}</th>
+                  <td>{m.aqi}</td>
+                  <td>{aqiCategory(m.aqi).name}</td>
+                  <td>{m.pm25.toFixed(1)} &micro;g/m&sup3;</td>
+                  <td>{m.pm10.toFixed(1)} &micro;g/m&sup3;</td>
+                  <td>{m.ozone} ppb</td>
                 </tr>
               ))}
             </tbody>

@@ -1015,21 +1015,25 @@
   stroke-linecap: round;
 }
 
-.aqi-current-dot {
-  fill: var(--text-h);
-  stroke: var(--bg);
-  stroke-width: 2.5;
+.aqi-dot {
+  fill: var(--bg);
+  stroke: var(--text-h);
+  stroke-width: 2;
 }
 
-.aqi-marker-label {
-  fill: var(--text-h);
-  font-size: 12px;
-  font-weight: 600;
+.swatch.aqi-avg {
+  height: 3px;
+  border-radius: 999px;
+  background: var(--text-h);
 }
 
 .aqi-swatch {
   height: 10px;
   border-radius: 3px;
+}
+
+.aqi-band-label {
+  font-size: 10px;
 }
 
 .aqi-current-info {
@@ -1100,8 +1104,7 @@
   }
 
   .hourly-tick-minor,
-  .climate-tick-minor,
-  .aqi-tick-minor {
+  .climate-tick-minor {
     display: none;
   }
 }
