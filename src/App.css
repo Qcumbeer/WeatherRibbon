@@ -927,6 +927,33 @@
   color: var(--text-h);
 }
 
+.chart-slot {
+  position: relative;
+}
+
+.mock-badge {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  z-index: 2;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 2px 8px;
+  background: var(--bg);
+  pointer-events: none;
+}
+
+.chart-slot .forecast-title,
+.chart-slot .climate-extremes-title,
+.chart-slot .panel-title {
+  padding-right: 56px;
+}
+
 .card.muted {
   width: min(560px, 100%);
   text-align: left;

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import { AirQualityChart } from './AirQualityChart'
 import { AqiCategoryDaysChart } from './AqiCategoryDaysChart'
 import { ClimateChart } from './ClimateChart'
@@ -23,6 +23,16 @@ import { loadCity, type CityData, type CityRef } from './dataService'
 import { useHashRoute } from './useHashRoute'
 import { routeToCity } from './router'
 import './App.css'
+
+function ChartSlot({ mock, children }: { mock?: boolean; children: ReactNode }) {
+  if (!mock) return children
+  return (
+    <div className="chart-slot">
+      <span className="mock-badge">mock</span>
+      {children}
+    </div>
+  )
+}
 
 function CityView({
   city,
@@ -56,6 +66,8 @@ function CityView({
     }
   }, [city])
 
+  const mockClimate = Boolean(data && /fallback/i.test(data.source))
+
   return (
     <>
       <div className="city-back-row">
@@ -73,29 +85,65 @@ function CityView({
             </p>
           </section>
 
-          <ClimateExtremes climate={data.climate} />
-          <ClimateSkylineChart name={data.name} climate={data.climate} />
-          <WeatherWheelChart name={data.name} climate={data.climate} />
-          <SeasonalRibbonChart name={data.name} climate={data.climate} />
-          <HourlyChart name={data.name} climate={data.climate} />
-          <ClimateChart name={data.name} climate={data.climate} />
-          <ClimateOverviewChart name={data.name} climate={data.climate} />
-          <PrecipChanceChart name={data.name} climate={data.climate} />
-          <RainfallChart name={data.name} climate={data.climate} />
-          <RainIntensityChart name={data.name} climate={data.climate} />
-          <SnowfallChart name={data.name} climate={data.climate} />
-          <HumidityComfortChart name={data.name} climate={data.climate} />
-          <CloudCoverChart name={data.name} climate={data.climate} />
+          <ChartSlot mock={mockClimate}>
+            <ClimateExtremes climate={data.climate} />
+          </ChartSlot>
+          <ChartSlot mock={mockClimate}>
+            <ClimateSkylineChart name={data.name} climate={data.climate} />
+          </ChartSlot>
+          <ChartSlot mock={mockClimate}>
+            <WeatherWheelChart name={data.name} climate={data.climate} />
+          </ChartSlot>
+          <ChartSlot mock={mockClimate}>
+            <SeasonalRibbonChart name={data.name} climate={data.climate} />
+          </ChartSlot>
+          <ChartSlot mock={mockClimate}>
+            <HourlyChart name={data.name} climate={data.climate} />
+          </ChartSlot>
+          <ChartSlot mock={mockClimate}>
+            <ClimateChart name={data.name} climate={data.climate} />
+          </ChartSlot>
+          <ChartSlot mock={mockClimate}>
+            <ClimateOverviewChart name={data.name} climate={data.climate} />
+          </ChartSlot>
+          <ChartSlot mock={mockClimate}>
+            <PrecipChanceChart name={data.name} climate={data.climate} />
+          </ChartSlot>
+          <ChartSlot mock={mockClimate}>
+            <RainfallChart name={data.name} climate={data.climate} />
+          </ChartSlot>
+          <ChartSlot mock={mockClimate}>
+            <RainIntensityChart name={data.name} climate={data.climate} />
+          </ChartSlot>
+          <ChartSlot mock={mockClimate}>
+            <SnowfallChart name={data.name} climate={data.climate} />
+          </ChartSlot>
+          <ChartSlot mock={mockClimate}>
+            <HumidityComfortChart name={data.name} climate={data.climate} />
+          </ChartSlot>
+          <ChartSlot mock={mockClimate}>
+            <CloudCoverChart name={data.name} climate={data.climate} />
+          </ChartSlot>
 
-          <AirQualityChart name={data.name} city={city} />
-          <AqiCategoryDaysChart name={data.name} city={city} />
+          <ChartSlot mock>
+            <AirQualityChart name={data.name} city={city} />
+          </ChartSlot>
+          <ChartSlot mock>
+            <AqiCategoryDaysChart name={data.name} city={city} />
+          </ChartSlot>
 
           <div className="duo">
-            <SunshinePanel name={data.name} climate={data.climate} />
-            <CloudCoverPanel name={data.name} climate={data.climate} />
+            <ChartSlot mock={mockClimate}>
+              <SunshinePanel name={data.name} climate={data.climate} />
+            </ChartSlot>
+            <ChartSlot mock={mockClimate}>
+              <CloudCoverPanel name={data.name} climate={data.climate} />
+            </ChartSlot>
           </div>
 
-          <WindChart name={data.name} climate={data.climate} />
+          <ChartSlot mock={mockClimate}>
+            <WindChart name={data.name} climate={data.climate} />
+          </ChartSlot>
           <DaylightChart name={data.name} latitude={data.latitude} />
           <SunriseSunsetChart
             name={data.name}
