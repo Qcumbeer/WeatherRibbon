@@ -331,15 +331,35 @@ console.log('\n=== Fallback cities (deterministic offline climatology) ===')
   check(mSlices.every((x) => x.fill === RIBBON_MISSING_FILL), 'all-missing temperature uses neutral missing color')
 }
 
-console.log('\n=== Saved tile SVG (public/ribbons) ===')
+console.log('\n=== Saved tile SVGs (public/ribbons) ===')
 {
   const nyc = JSON.parse(readFileSync('data/new-york.json', 'utf8')) as { name: string; climate: ClimateMonth[] }
   const generated = renderRibbonSvg(nyc.climate, nyc.name)
   check(generated === renderRibbonSvg(nyc.climate, nyc.name), 'tile SVG is deterministic')
   check(generated.includes(`viewBox="0 0 ${TILE_W} ${TILE_H}"`), 'tile SVG uses compact tile viewBox')
   check((generated.match(/<path /g) ?? []).length > 12, 'tile SVG is a continuous stream, not 12 bars')
-  check(existsSync('public/ribbons/new-york.svg'), 'saved New York ribbon file exists')
   check(readFileSync('public/ribbons/new-york.svg', 'utf8') === generated, 'saved New York SVG matches renderRibbonSvg output')
+
+  let missing: string[] = []
+  let mismatched: string[] = []
+  for (const city of US_CITIES) {
+    const path = `public/ribbons/${city.slug}.svg`
+    if (!existsSync(path)) {
+      missing.push(city.slug)
+      continue
+    }
+    const expected = renderRibbonSvg(fallbackClimate(city).climate, city.name)
+    let bespoke = false
+    try {
+      const data = JSON.parse(readFileSync(`data/${city.slug}.json`, 'utf8')) as { name: string; climate: ClimateMonth[] }
+      if (readFileSync(path, 'utf8') === renderRibbonSvg(data.climate, data.name)) bespoke = true
+    } catch {
+      // no bespoke dataset; fallback expected
+    }
+    if (!bespoke && readFileSync(path, 'utf8') !== expected) mismatched.push(city.slug)
+  }
+  check(missing.length === 0, `every city has a saved ribbon SVG (${100 - missing.length}/100)`, missing.join(', '))
+  check(mismatched.length === 0, 'every saved ribbon matches its climate data', mismatched.join(', '))
 }
 
 if (failures > 0) {

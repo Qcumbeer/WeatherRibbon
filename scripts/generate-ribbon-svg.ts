@@ -15,7 +15,9 @@ function loadClimate(slug: string): CityData {
 }
 
 const slugs = process.argv.slice(2)
-const targets = slugs.length === 0 || slugs.includes('--all') ? ['new-york'] : slugs
+const targets = slugs.length === 0 || slugs.includes('--all')
+  ? US_CITIES.map((c) => c.slug)
+  : slugs
 
 mkdirSync('public/ribbons', { recursive: true })
 
