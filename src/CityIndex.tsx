@@ -145,7 +145,7 @@ export function CityIndex({ query, onQueryChange, onNavigate }: IndexViewProps) 
           Weatherfork
         </h1>
         <p className="index-subtitle">
-          1991–2020 climate normals for {CITIES.length} U.S. cities.
+          1991–2020 climate normals for {CITIES.length} cities worldwide.
         </p>
         <ul className="index-motifs" aria-hidden="true">
           <li>

@@ -42,7 +42,7 @@ const cityDataGlob = import.meta.glob('../data/*.json')
 const STATIC: Record<string, () => Promise<{ default: unknown }>> = {}
 for (const [path, loader] of Object.entries(cityDataGlob)) {
   const slug = path.match(/\/([^/]+)\.json$/)?.[1]
-  if (slug) STATIC[slug] = loader as () => Promise<{ default: unknown }>
+  if (slug && slug !== 'world-cities') STATIC[slug] = loader as () => Promise<{ default: unknown }>
 }
 
 const memory = new Map<string, CityData>()

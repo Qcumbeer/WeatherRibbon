@@ -1,0 +1,636 @@
+{
+  "name": "Kaohsiung",
+  "region": "Kaohsiung, Taiwan",
+  "latitude": 22.61626,
+  "longitude": 120.31333,
+  "source": "MERRA-2 (via NASA POWER API)",
+  "period": "1991-2020",
+  "climate": [
+    {
+      "month": "Jan",
+      "high": 74.9,
+      "low": 64.3,
+      "feelsHigh": 75.7,
+      "feelsLow": 61.1,
+      "highBand": [
+        72.1,
+        78.1
+      ],
+      "lowBand": [
+        62,
+        66.9
+      ],
+      "precip": 1.17,
+      "precipBand": [
+        0.56,
+        1.33
+      ],
+      "sunshine": 158.3,
+      "cloud": 54.6,
+      "rain": 66.7,
+      "snow": 0,
+      "mixed": 0,
+      "snowfall": 0,
+      "snowBand": [
+        0,
+        0
+      ],
+      "wind": 8.4,
+      "windBand": [
+        6,
+        10.4
+      ],
+      "dewPoint": 58.9,
+      "shortwave": 12.7,
+      "shortwaveBand": [
+        10.57,
+        15.13
+      ]
+    },
+    {
+      "month": "Feb",
+      "high": 76.5,
+      "low": 65.4,
+      "feelsHigh": 77.9,
+      "feelsLow": 62.6,
+      "highBand": [
+        73.7,
+        80
+      ],
+      "lowBand": [
+        63.1,
+        68
+      ],
+      "precip": 1.22,
+      "precipBand": [
+        0.71,
+        1.47
+      ],
+      "sunshine": 136.5,
+      "cloud": 57,
+      "rain": 72.4,
+      "snow": 0,
+      "mixed": 0,
+      "snowfall": 0,
+      "snowBand": [
+        0,
+        0
+      ],
+      "wind": 8.6,
+      "windBand": [
+        6,
+        10.8
+      ],
+      "dewPoint": 60.1,
+      "shortwave": 14.63,
+      "shortwaveBand": [
+        12.46,
+        17.67
+      ]
+    },
+    {
+      "month": "Mar",
+      "high": 80.2,
+      "low": 68.4,
+      "feelsHigh": 82.9,
+      "feelsLow": 66.4,
+      "highBand": [
+        77.7,
+        83.3
+      ],
+      "lowBand": [
+        66.2,
+        71
+      ],
+      "precip": 1.44,
+      "precipBand": [
+        0.61,
+        1.98
+      ],
+      "sunshine": 144.7,
+      "cloud": 59.8,
+      "rain": 67.8,
+      "snow": 0,
+      "mixed": 0,
+      "snowfall": 0,
+      "snowBand": [
+        0,
+        0
+      ],
+      "wind": 8.5,
+      "windBand": [
+        6.2,
+        10.4
+      ],
+      "dewPoint": 62.8,
+      "shortwave": 16.48,
+      "shortwaveBand": [
+        13.35,
+        20.14
+      ]
+    },
+    {
+      "month": "Apr",
+      "high": 83.9,
+      "low": 72.6,
+      "feelsHigh": 88.7,
+      "feelsLow": 72.3,
+      "highBand": [
+        81.8,
+        86.5
+      ],
+      "lowBand": [
+        71,
+        74.8
+      ],
+      "precip": 2.37,
+      "precipBand": [
+        1.11,
+        2.77
+      ],
+      "sunshine": 133,
+      "cloud": 63.1,
+      "rain": 71.3,
+      "snow": 0,
+      "mixed": 0,
+      "snowfall": 0,
+      "snowBand": [
+        0,
+        0
+      ],
+      "wind": 8.3,
+      "windBand": [
+        6.1,
+        10
+      ],
+      "dewPoint": 67,
+      "shortwave": 17.89,
+      "shortwaveBand": [
+        14.68,
+        21.9
+      ]
+    },
+    {
+      "month": "May",
+      "high": 85.7,
+      "low": 76.2,
+      "feelsHigh": 92.5,
+      "feelsLow": 78.2,
+      "highBand": [
+        83.5,
+        88.1
+      ],
+      "lowBand": [
+        75.1,
+        77.6
+      ],
+      "precip": 6.42,
+      "precipBand": [
+        4.3,
+        8.03
+      ],
+      "sunshine": 130.8,
+      "cloud": 65.9,
+      "rain": 82.5,
+      "snow": 0,
+      "mixed": 0,
+      "snowfall": 0,
+      "snowBand": [
+        0,
+        0
+      ],
+      "wind": 8.1,
+      "windBand": [
+        5.8,
+        10
+      ],
+      "dewPoint": 71.3,
+      "shortwave": 18.98,
+      "shortwaveBand": [
+        15.3,
+        23.27
+      ]
+    },
+    {
+      "month": "Jun",
+      "high": 85,
+      "low": 78.1,
+      "feelsHigh": 92.6,
+      "feelsLow": 81.7,
+      "highBand": [
+        82.8,
+        86.9
+      ],
+      "lowBand": [
+        77.2,
+        79.1
+      ],
+      "precip": 11.65,
+      "precipBand": [
+        7.57,
+        13.42
+      ],
+      "sunshine": 126.4,
+      "cloud": 66.7,
+      "rain": 89,
+      "snow": 0,
+      "mixed": 0,
+      "snowfall": 0,
+      "snowBand": [
+        0,
+        0
+      ],
+      "wind": 9.2,
+      "windBand": [
+        6.5,
+        11.1
+      ],
+      "dewPoint": 75.1,
+      "shortwave": 19.94,
+      "shortwaveBand": [
+        15.98,
+        24.9
+      ]
+    },
+    {
+      "month": "Jul",
+      "high": 85.5,
+      "low": 78.7,
+      "feelsHigh": 93.1,
+      "feelsLow": 82.3,
+      "highBand": [
+        83.7,
+        87.2
+      ],
+      "lowBand": [
+        77.9,
+        79.4
+      ],
+      "precip": 11.71,
+      "precipBand": [
+        8.21,
+        14.89
+      ],
+      "sunshine": 140.9,
+      "cloud": 64.4,
+      "rain": 89.9,
+      "snow": 0,
+      "mixed": 0,
+      "snowfall": 0,
+      "snowBand": [
+        0,
+        0
+      ],
+      "wind": 9.9,
+      "windBand": [
+        6.3,
+        12
+      ],
+      "dewPoint": 75.8,
+      "shortwave": 20.35,
+      "shortwaveBand": [
+        17.54,
+        24.73
+      ]
+    },
+    {
+      "month": "Aug",
+      "high": 84.8,
+      "low": 78.5,
+      "feelsHigh": 92.4,
+      "feelsLow": 82.5,
+      "highBand": [
+        83,
+        86.5
+      ],
+      "lowBand": [
+        77.8,
+        79.3
+      ],
+      "precip": 16.14,
+      "precipBand": [
+        9.43,
+        20.86
+      ],
+      "sunshine": 124.3,
+      "cloud": 68.3,
+      "rain": 94.8,
+      "snow": 0,
+      "mixed": 0,
+      "snowfall": 0,
+      "snowBand": [
+        0,
+        0
+      ],
+      "wind": 9.6,
+      "windBand": [
+        5.8,
+        11.9
+      ],
+      "dewPoint": 75.9,
+      "shortwave": 18.07,
+      "shortwaveBand": [
+        14.21,
+        22.88
+      ]
+    },
+    {
+      "month": "Sep",
+      "high": 84.8,
+      "low": 77.4,
+      "feelsHigh": 92.4,
+      "feelsLow": 80.9,
+      "highBand": [
+        83.2,
+        86.5
+      ],
+      "lowBand": [
+        76.5,
+        78.4
+      ],
+      "precip": 8.51,
+      "precipBand": [
+        4.39,
+        9.26
+      ],
+      "sunshine": 137.5,
+      "cloud": 63,
+      "rain": 90.9,
+      "snow": 0,
+      "mixed": 0,
+      "snowfall": 0,
+      "snowBand": [
+        0,
+        0
+      ],
+      "wind": 8.5,
+      "windBand": [
+        4.7,
+        10.6
+      ],
+      "dewPoint": 74.2,
+      "shortwave": 17.73,
+      "shortwaveBand": [
+        15.89,
+        21.09
+      ]
+    },
+    {
+      "month": "Oct",
+      "high": 83.7,
+      "low": 74.6,
+      "feelsHigh": 89.7,
+      "feelsLow": 76.1,
+      "highBand": [
+        82.3,
+        85.3
+      ],
+      "lowBand": [
+        73,
+        76.5
+      ],
+      "precip": 3.32,
+      "precipBand": [
+        0.83,
+        4.84
+      ],
+      "sunshine": 169.8,
+      "cloud": 54.4,
+      "rain": 71.2,
+      "snow": 0,
+      "mixed": 0,
+      "snowfall": 0,
+      "snowBand": [
+        0,
+        0
+      ],
+      "wind": 8.3,
+      "windBand": [
+        4.9,
+        10.1
+      ],
+      "dewPoint": 70.2,
+      "shortwave": 16.17,
+      "shortwaveBand": [
+        14.68,
+        18.6
+      ]
+    },
+    {
+      "month": "Nov",
+      "high": 81.1,
+      "low": 71.1,
+      "feelsHigh": 84.8,
+      "feelsLow": 70.3,
+      "highBand": [
+        79.3,
+        83.3
+      ],
+      "lowBand": [
+        69.3,
+        73.3
+      ],
+      "precip": 1.74,
+      "precipBand": [
+        0.53,
+        2.11
+      ],
+      "sunshine": 162.4,
+      "cloud": 53.4,
+      "rain": 65.3,
+      "snow": 0,
+      "mixed": 0,
+      "snowfall": 0,
+      "snowBand": [
+        0,
+        0
+      ],
+      "wind": 9.2,
+      "windBand": [
+        6.2,
+        11.8
+      ],
+      "dewPoint": 66.4,
+      "shortwave": 13.8,
+      "shortwaveBand": [
+        12.18,
+        16.13
+      ]
+    },
+    {
+      "month": "Dec",
+      "high": 76.5,
+      "low": 66.4,
+      "feelsHigh": 77.7,
+      "feelsLow": 63.7,
+      "highBand": [
+        74.1,
+        79.5
+      ],
+      "lowBand": [
+        64.2,
+        69.2
+      ],
+      "precip": 1.24,
+      "precipBand": [
+        0.47,
+        1.56
+      ],
+      "sunshine": 154.7,
+      "cloud": 56,
+      "rain": 63.7,
+      "snow": 0,
+      "mixed": 0,
+      "snowfall": 0,
+      "snowBand": [
+        0,
+        0
+      ],
+      "wind": 9.2,
+      "windBand": [
+        6.4,
+        11.5
+      ],
+      "dewPoint": 61.3,
+      "shortwave": 12.01,
+      "shortwaveBand": [
+        9.94,
+        14.59
+      ]
+    }
+  ],
+  "windRose": [
+    {
+      "month": "Jan",
+      "n": 9.9,
+      "ne": 35.4,
+      "e": 38.2,
+      "se": 7.1,
+      "s": 1.6,
+      "sw": 0.5,
+      "w": 1.7,
+      "nw": 5.6
+    },
+    {
+      "month": "Feb",
+      "n": 8,
+      "ne": 23.7,
+      "e": 39.2,
+      "se": 11.2,
+      "s": 4.4,
+      "sw": 2.1,
+      "w": 2.9,
+      "nw": 8.5
+    },
+    {
+      "month": "Mar",
+      "n": 4,
+      "ne": 15.1,
+      "e": 37.2,
+      "se": 17.2,
+      "s": 8.2,
+      "sw": 3.5,
+      "w": 6.6,
+      "nw": 8.3
+    },
+    {
+      "month": "Apr",
+      "n": 2.4,
+      "ne": 8.2,
+      "e": 30.3,
+      "se": 18.4,
+      "s": 10.4,
+      "sw": 7.3,
+      "w": 13.9,
+      "nw": 8.9
+    },
+    {
+      "month": "May",
+      "n": 2,
+      "ne": 3.8,
+      "e": 21.6,
+      "se": 18.2,
+      "s": 12.9,
+      "sw": 13.1,
+      "w": 22.2,
+      "nw": 6.2
+    },
+    {
+      "month": "Jun",
+      "n": 1,
+      "ne": 1.1,
+      "e": 6.9,
+      "se": 21,
+      "s": 16.6,
+      "sw": 26.8,
+      "w": 23.9,
+      "nw": 2.8
+    },
+    {
+      "month": "Jul",
+      "n": 0.9,
+      "ne": 2.2,
+      "e": 15.8,
+      "se": 21.7,
+      "s": 13.9,
+      "sw": 17.4,
+      "w": 21.3,
+      "nw": 6.9
+    },
+    {
+      "month": "Aug",
+      "n": 1.1,
+      "ne": 3.5,
+      "e": 16.3,
+      "se": 16.6,
+      "s": 12.9,
+      "sw": 16.1,
+      "w": 24.6,
+      "nw": 8.8
+    },
+    {
+      "month": "Sep",
+      "n": 3.2,
+      "ne": 9.2,
+      "e": 37.7,
+      "se": 12,
+      "s": 6.9,
+      "sw": 7.4,
+      "w": 10.4,
+      "nw": 13.1
+    },
+    {
+      "month": "Oct",
+      "n": 5.4,
+      "ne": 34.6,
+      "e": 45.7,
+      "se": 3.8,
+      "s": 1.8,
+      "sw": 1.5,
+      "w": 2.5,
+      "nw": 4.7
+    },
+    {
+      "month": "Nov",
+      "n": 4.7,
+      "ne": 42.9,
+      "e": 45.3,
+      "se": 3.7,
+      "s": 1.1,
+      "sw": 0.4,
+      "w": 0.3,
+      "nw": 1.6
+    },
+    {
+      "month": "Dec",
+      "n": 5.6,
+      "ne": 51.7,
+      "e": 36.2,
+      "se": 3.4,
+      "s": 0.5,
+      "sw": 0,
+      "w": 0.8,
+      "nw": 1.7
+    }
+  ]
+}

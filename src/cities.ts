@@ -1,3 +1,5 @@
+import { WORLD_CITIES } from './worldCities.ts'
+
 export interface CityRef {
   name: string
   region: string
@@ -122,7 +124,7 @@ export const US_CITIES: UsCity[] = [
   { rank: 100, slug: 'tacoma', name: 'Tacoma', region: 'Washington', population: 222629, latitude: 47.25, longitude: -122.44 },
 ]
 
-export const FEATURED: CityRef[] = US_CITIES
+export const FEATURED: CityRef[] = [...US_CITIES, ...WORLD_CITIES]
 
 export function sameCity(a: CityRef, b: CityRef): boolean {
   return Math.hypot(a.latitude - b.latitude, a.longitude - b.longitude) < 0.15
