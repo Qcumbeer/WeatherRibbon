@@ -364,6 +364,66 @@
   stroke: var(--cold);
 }
 
+.cc-area {
+  stroke: var(--bg);
+  stroke-width: 0.5;
+  stroke-linejoin: round;
+}
+
+.cc-area.clear {
+  fill: var(--cc-clear);
+}
+
+.cc-area.mostly-clear {
+  fill: var(--cc-mostly-clear);
+}
+
+.cc-area.partly {
+  fill: var(--cc-partly);
+}
+
+.cc-area.mostly-cloudy {
+  fill: var(--cc-mostly-cloudy);
+}
+
+.cc-area.overcast {
+  fill: var(--cc-overcast);
+}
+
+.cc-swatch {
+  height: 10px;
+  border-radius: 3px;
+}
+
+.cc-swatch.clear {
+  background: var(--cc-clear);
+}
+
+.cc-swatch.mostly-clear {
+  background: var(--cc-mostly-clear);
+}
+
+.cc-swatch.partly {
+  background: var(--cc-partly);
+}
+
+.cc-swatch.mostly-cloudy {
+  background: var(--cc-mostly-cloudy);
+}
+
+.cc-swatch.overcast {
+  background: var(--cc-overcast);
+}
+
+.cc-hit {
+  fill: transparent;
+  pointer-events: all;
+}
+
+.cc-note {
+  margin-top: 12px;
+}
+
 .heatmap-border {
   fill: none;
   stroke: var(--border);
