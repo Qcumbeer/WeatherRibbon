@@ -1,5 +1,5 @@
-import { FEATURED, cityKey, sameCity, type CityRef } from './cities'
-import { fetchClimate } from './climate'
+import { FEATURED, cityKey, sameCity, type CityRef } from './cities.ts'
+import { fallbackClimate } from './fallbackClimate.ts'
 
 export type { CityRef }
 export { FEATURED }
@@ -37,11 +37,12 @@ export interface CityData {
 }
 
 const STATIC: Record<string, () => Promise<{ default: unknown }>> = {
-  seattle: () => import('../data/seattle.json'),
-  'san-francisco': () => import('../data/san-francisco.json'),
+  seattle: () => import('../data/seattle.json', { with: { type: 'json' } }),
+  'san-francisco': () => import('../data/san-francisco.json', { with: { type: 'json' } }),
 }
 
 const memory = new Map<string, CityData>()
+const store: Storage | undefined = typeof localStorage === 'undefined' ? undefined : localStorage
 
 function cacheKey(city: CityRef): string {
   return `climate:v1:${cityKey(city)}`
@@ -52,7 +53,7 @@ function readCache(city: CityRef): CityData | null {
   const hit = memory.get(key)
   if (hit) return hit
   try {
-    const raw = localStorage.getItem(key)
+    const raw = store?.getItem(key)
     if (!raw) return null
     const data = JSON.parse(raw) as CityData
     memory.set(key, data)
@@ -66,18 +67,19 @@ function writeCache(city: CityRef, data: CityData) {
   const key = cacheKey(city)
   memory.set(key, data)
   try {
-    localStorage.setItem(key, JSON.stringify(data))
+    store?.setItem(key, JSON.stringify(data))
   } catch {
     // quota or private mode
   }
 }
 
-function staticSlug(city: CityRef): string | undefined {
+export function staticSlug(city: CityRef): string | undefined {
   if (city.slug && STATIC[city.slug]) return city.slug
-  return FEATURED.find((f) => f.slug && sameCity(f, city))?.slug
+  return FEATURED.find((f) => f.slug && STATIC[f.slug] && sameCity(f, city))?.slug
 }
 
 export async function loadCity(city: CityRef, signal?: AbortSignal): Promise<CityData> {
+  if (signal?.aborted) throw new DOMException('Aborted', 'AbortError')
   const cached = readCache(city)
   if (cached) return { ...cached, name: city.name, region: city.region }
 
@@ -89,7 +91,7 @@ export async function loadCity(city: CityRef, signal?: AbortSignal): Promise<Cit
     return { ...data, name: city.name, region: city.region }
   }
 
-  const data = await fetchClimate(city, signal)
+  const data = fallbackClimate(city)
   writeCache(city, data)
   return data
 }
