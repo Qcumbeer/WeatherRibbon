@@ -15,11 +15,15 @@
     "events": {
       "type": "service",
       "command": "node scripts/duel-test-service.mjs events"
+    },
+    "worker": {
+      "type": "script",
+      "command": "node scripts/duel-test-worker.mjs"
     }
   },
   "arena": {
     "environment": {
-      "scripts": ["web", "api", "events"],
+      "scripts": ["web", "api", "events", "worker"],
       "primaryService": "web"
     }
   }
