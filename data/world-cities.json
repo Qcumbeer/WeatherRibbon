@@ -1,0 +1,604 @@
+{
+  "source": "https://en.wikipedia.org/wiki/List_of_largest_cities#List",
+  "sourceTitle": "List of largest cities",
+  "populationField": "UN 2025 urban agglomeration estimates (cities exceeding 5 million)",
+  "retrieved": "2026-08-21",
+  "count": 85,
+  "cities": [
+    {
+      "rank": 1,
+      "name": "Jakarta",
+      "country": "Indonesia",
+      "un2025Population": 41913860,
+      "wikipediaAnchor": "Jakarta"
+    },
+    {
+      "rank": 2,
+      "name": "Dhaka",
+      "country": "Bangladesh",
+      "un2025Population": 36585479,
+      "wikipediaAnchor": "Dhaka"
+    },
+    {
+      "rank": 3,
+      "name": "Tokyo",
+      "country": "Japan",
+      "un2025Population": 33412512,
+      "wikipediaAnchor": "Tokyo"
+    },
+    {
+      "rank": 4,
+      "name": "Delhi",
+      "country": "India",
+      "un2025Population": 30222405,
+      "wikipediaAnchor": "Delhi"
+    },
+    {
+      "rank": 5,
+      "name": "Shanghai",
+      "country": "China",
+      "un2025Population": 29558908,
+      "wikipediaAnchor": "Shanghai"
+    },
+    {
+      "rank": 6,
+      "name": "Guangzhou",
+      "country": "China",
+      "un2025Population": 27563372,
+      "wikipediaAnchor": "Guangzhou"
+    },
+    {
+      "rank": 7,
+      "name": "Cairo",
+      "country": "Egypt",
+      "un2025Population": 25566102,
+      "wikipediaAnchor": "Cairo"
+    },
+    {
+      "rank": 8,
+      "name": "Manila",
+      "country": "Philippines",
+      "un2025Population": 24735305,
+      "wikipediaAnchor": "Manila"
+    },
+    {
+      "rank": 9,
+      "name": "Kolkata",
+      "country": "India",
+      "un2025Population": 22549738,
+      "wikipediaAnchor": "Kolkata"
+    },
+    {
+      "rank": 10,
+      "name": "Seoul",
+      "country": "South Korea",
+      "un2025Population": 22490482,
+      "wikipediaAnchor": "Seoul"
+    },
+    {
+      "rank": 11,
+      "name": "Karachi",
+      "country": "Pakistan",
+      "un2025Population": 21422590,
+      "wikipediaAnchor": "Karachi"
+    },
+    {
+      "rank": 12,
+      "name": "Mumbai",
+      "country": "India",
+      "un2025Population": 20203056,
+      "wikipediaAnchor": "Mumbai"
+    },
+    {
+      "rank": 13,
+      "name": "S\u00e3o Paulo",
+      "country": "Brazil",
+      "un2025Population": 18949790,
+      "wikipediaAnchor": "S\u00e3o_Paulo"
+    },
+    {
+      "rank": 14,
+      "name": "Bangkok",
+      "country": "Thailand",
+      "un2025Population": 18180280,
+      "wikipediaAnchor": "Bangkok"
+    },
+    {
+      "rank": 15,
+      "name": "Mexico City",
+      "country": "Mexico",
+      "un2025Population": 17734212,
+      "wikipediaAnchor": "Mexico_City"
+    },
+    {
+      "rank": 16,
+      "name": "Beijing",
+      "country": "China",
+      "un2025Population": 17013303,
+      "wikipediaAnchor": "Beijing"
+    },
+    {
+      "rank": 17,
+      "name": "Lahore",
+      "country": "Pakistan",
+      "un2025Population": 15156430,
+      "wikipediaAnchor": "Lahore"
+    },
+    {
+      "rank": 18,
+      "name": "Istanbul",
+      "country": "Turkey",
+      "un2025Population": 15014763,
+      "wikipediaAnchor": "Istanbul"
+    },
+    {
+      "rank": 19,
+      "name": "Moscow",
+      "country": "Russia",
+      "un2025Population": 14524753,
+      "wikipediaAnchor": "Moscow"
+    },
+    {
+      "rank": 20,
+      "name": "Ho Chi Minh City",
+      "country": "Vietnam",
+      "un2025Population": 14052713,
+      "wikipediaAnchor": "Ho_Chi_Minh_City"
+    },
+    {
+      "rank": 21,
+      "name": "Buenos Aires",
+      "country": "Argentina",
+      "un2025Population": 14017736,
+      "wikipediaAnchor": "Buenos_Aires"
+    },
+    {
+      "rank": 22,
+      "name": "New York City",
+      "country": "United States",
+      "un2025Population": 13920148,
+      "wikipediaAnchor": "New_York"
+    },
+    {
+      "rank": 23,
+      "name": "Shenzhen",
+      "country": "China",
+      "un2025Population": 13878396,
+      "wikipediaAnchor": "Shenzhen"
+    },
+    {
+      "rank": 24,
+      "name": "Bengaluru",
+      "country": "India",
+      "un2025Population": 13187098,
+      "wikipediaAnchor": "Bangalore"
+    },
+    {
+      "rank": 25,
+      "name": "Osaka",
+      "country": "Japan",
+      "un2025Population": 12964145,
+      "wikipediaAnchor": "Osaka"
+    },
+    {
+      "rank": 26,
+      "name": "Lagos",
+      "country": "Nigeria",
+      "un2025Population": 12791699,
+      "wikipediaAnchor": "Lagos"
+    },
+    {
+      "rank": 27,
+      "name": "Los Angeles",
+      "country": "United States",
+      "un2025Population": 12740420,
+      "wikipediaAnchor": "Los_Angeles"
+    },
+    {
+      "rank": 28,
+      "name": "Chennai",
+      "country": "India",
+      "un2025Population": 11153205,
+      "wikipediaAnchor": "Chennai"
+    },
+    {
+      "rank": 29,
+      "name": "Kinshasa",
+      "country": "DR Congo",
+      "un2025Population": 10943641,
+      "wikipediaAnchor": "Kinshasa"
+    },
+    {
+      "rank": 30,
+      "name": "Bogot\u00e1",
+      "country": "Colombia",
+      "un2025Population": 10624315,
+      "wikipediaAnchor": "Bogot\u00e1"
+    },
+    {
+      "rank": 31,
+      "name": "Lima",
+      "country": "Peru",
+      "un2025Population": 10580241,
+      "wikipediaAnchor": "Lima"
+    },
+    {
+      "rank": 32,
+      "name": "London",
+      "country": "United Kingdom",
+      "un2025Population": 10416420,
+      "wikipediaAnchor": "London"
+    },
+    {
+      "rank": 33,
+      "name": "Rio de Janeiro",
+      "country": "Brazil",
+      "un2025Population": 9500336,
+      "wikipediaAnchor": "Rio_de_Janeiro"
+    },
+    {
+      "rank": 34,
+      "name": "Paris",
+      "country": "France",
+      "un2025Population": 9381921,
+      "wikipediaAnchor": "Paris"
+    },
+    {
+      "rank": 35,
+      "name": "Hyderabad",
+      "country": "India",
+      "un2025Population": 9190795,
+      "wikipediaAnchor": "Hyderabad"
+    },
+    {
+      "rank": 36,
+      "name": "Tehran",
+      "country": "Iran",
+      "un2025Population": 9174964,
+      "wikipediaAnchor": "Tehran"
+    },
+    {
+      "rank": 37,
+      "name": "Taipei",
+      "country": "Taiwan",
+      "un2025Population": 9137000,
+      "wikipediaAnchor": "Taipei"
+    },
+    {
+      "rank": 38,
+      "name": "Luanda",
+      "country": "Angola",
+      "un2025Population": 9051000,
+      "wikipediaAnchor": "Luanda"
+    },
+    {
+      "rank": 39,
+      "name": "Bandung",
+      "country": "Indonesia",
+      "un2025Population": 8909104,
+      "wikipediaAnchor": "Bandung"
+    },
+    {
+      "rank": 40,
+      "name": "Kuala Lumpur",
+      "country": "Malaysia",
+      "un2025Population": 8443731,
+      "wikipediaAnchor": "Kuala_Lumpur"
+    },
+    {
+      "rank": 41,
+      "name": "Dar es Salaam",
+      "country": "Tanzania",
+      "un2025Population": 7795114,
+      "wikipediaAnchor": "Dar_es_Salaam"
+    },
+    {
+      "rank": 42,
+      "name": "Suzhou",
+      "country": "China",
+      "un2025Population": 7731101,
+      "wikipediaAnchor": "Suzhou"
+    },
+    {
+      "rank": 43,
+      "name": "Ahmedabad",
+      "country": "India",
+      "un2025Population": 7632408,
+      "wikipediaAnchor": "Ahmedabad"
+    },
+    {
+      "rank": 44,
+      "name": "Hangzhou",
+      "country": "China",
+      "un2025Population": 7500208,
+      "wikipediaAnchor": "Hangzhou"
+    },
+    {
+      "rank": 45,
+      "name": "Wuhan",
+      "country": "China",
+      "un2025Population": 7363548,
+      "wikipediaAnchor": "Wuhan"
+    },
+    {
+      "rank": 46,
+      "name": "Tianjin",
+      "country": "China",
+      "un2025Population": 7285342,
+      "wikipediaAnchor": "Tianjin"
+    },
+    {
+      "rank": 47,
+      "name": "Alexandria",
+      "country": "Egypt",
+      "un2025Population": 7266957,
+      "wikipediaAnchor": "Alexandria"
+    },
+    {
+      "rank": 48,
+      "name": "Nagoya",
+      "country": "Japan",
+      "un2025Population": 7146160,
+      "wikipediaAnchor": "Nagoya"
+    },
+    {
+      "rank": 49,
+      "name": "Johannesburg",
+      "country": "South Africa",
+      "un2025Population": 7077175,
+      "wikipediaAnchor": "Johannesburg"
+    },
+    {
+      "rank": 50,
+      "name": "Chongqing",
+      "country": "China",
+      "un2025Population": 7071073,
+      "wikipediaAnchor": "Chongqing"
+    },
+    {
+      "rank": 51,
+      "name": "Riyadh",
+      "country": "Saudi Arabia",
+      "un2025Population": 6916417,
+      "wikipediaAnchor": "Riyadh"
+    },
+    {
+      "rank": 52,
+      "name": "Surat",
+      "country": "India",
+      "un2025Population": 6908925,
+      "wikipediaAnchor": "Surat"
+    },
+    {
+      "rank": 53,
+      "name": "Surabaya",
+      "country": "Indonesia",
+      "un2025Population": 6843503,
+      "wikipediaAnchor": "Surabaya"
+    },
+    {
+      "rank": 54,
+      "name": "Pune",
+      "country": "India",
+      "un2025Population": 6817951,
+      "wikipediaAnchor": "Pune"
+    },
+    {
+      "rank": 55,
+      "name": "Khartoum",
+      "country": "Sudan",
+      "un2025Population": 6809355,
+      "wikipediaAnchor": "Khartoum"
+    },
+    {
+      "rank": 56,
+      "name": "Nanjing",
+      "country": "China",
+      "un2025Population": 6800676,
+      "wikipediaAnchor": "Nanjing"
+    },
+    {
+      "rank": 57,
+      "name": "Santiago",
+      "country": "Chile",
+      "un2025Population": 6726045,
+      "wikipediaAnchor": "Santiago"
+    },
+    {
+      "rank": 58,
+      "name": "Chicago",
+      "country": "United States",
+      "un2025Population": 8864000,
+      "wikipediaAnchor": "Chicago"
+    },
+    {
+      "rank": 59,
+      "name": "Chengdu",
+      "country": "China",
+      "un2025Population": 8813000,
+      "wikipediaAnchor": "Chengdu"
+    },
+    {
+      "rank": 60,
+      "name": "Xi'an",
+      "country": "China",
+      "un2025Population": 7444000,
+      "wikipediaAnchor": "Xi'an"
+    },
+    {
+      "rank": 61,
+      "name": "Hong Kong",
+      "country": "Hong Kong SAR",
+      "un2025Population": 7429000,
+      "wikipediaAnchor": "Hong_Kong"
+    },
+    {
+      "rank": 62,
+      "name": "Dongguan",
+      "country": "China",
+      "un2025Population": 7360000,
+      "wikipediaAnchor": "Dongguan"
+    },
+    {
+      "rank": 63,
+      "name": "Foshan",
+      "country": "China",
+      "un2025Population": 7236000,
+      "wikipediaAnchor": "Foshan"
+    },
+    {
+      "rank": 64,
+      "name": "Shenyang",
+      "country": "China",
+      "un2025Population": 6921000,
+      "wikipediaAnchor": "Shenyang"
+    },
+    {
+      "rank": 65,
+      "name": "Baghdad",
+      "country": "Iraq",
+      "un2025Population": 6812000,
+      "wikipediaAnchor": "Baghdad"
+    },
+    {
+      "rank": 66,
+      "name": "Addis Ababa",
+      "country": "Ethiopia",
+      "un2025Population": 6706000,
+      "wikipediaAnchor": "Addis_Ababa"
+    },
+    {
+      "rank": 67,
+      "name": "Madrid",
+      "country": "Spain",
+      "un2025Population": 6497000,
+      "wikipediaAnchor": "Madrid"
+    },
+    {
+      "rank": 68,
+      "name": "Harbin",
+      "country": "China",
+      "un2025Population": 6115000,
+      "wikipediaAnchor": "Harbin"
+    },
+    {
+      "rank": 69,
+      "name": "Houston",
+      "country": "United States",
+      "un2025Population": 6115000,
+      "wikipediaAnchor": "Houston"
+    },
+    {
+      "rank": 70,
+      "name": "Dallas",
+      "country": "United States",
+      "un2025Population": 6099000,
+      "wikipediaAnchor": "Dallas"
+    },
+    {
+      "rank": 71,
+      "name": "Toronto",
+      "country": "Canada",
+      "un2025Population": 6082000,
+      "wikipediaAnchor": "Toronto"
+    },
+    {
+      "rank": 72,
+      "name": "Miami",
+      "country": "United States",
+      "un2025Population": 6036000,
+      "wikipediaAnchor": "Miami"
+    },
+    {
+      "rank": 73,
+      "name": "Belo Horizonte",
+      "country": "Brazil",
+      "un2025Population": 5972000,
+      "wikipediaAnchor": "Belo_Horizonte"
+    },
+    {
+      "rank": 74,
+      "name": "Singapore",
+      "country": "Singapore",
+      "un2025Population": 5792000,
+      "wikipediaAnchor": "Singapore"
+    },
+    {
+      "rank": 75,
+      "name": "Philadelphia",
+      "country": "United States",
+      "un2025Population": 5695000,
+      "wikipediaAnchor": "Philadelphia"
+    },
+    {
+      "rank": 76,
+      "name": "Atlanta",
+      "country": "United States",
+      "un2025Population": 5572000,
+      "wikipediaAnchor": "Atlanta"
+    },
+    {
+      "rank": 77,
+      "name": "Fukuoka",
+      "country": "Japan",
+      "un2025Population": 5551000,
+      "wikipediaAnchor": "Fukuoka"
+    },
+    {
+      "rank": 78,
+      "name": "Barcelona",
+      "country": "Spain",
+      "un2025Population": 5494000,
+      "wikipediaAnchor": "Barcelona"
+    },
+    {
+      "rank": 79,
+      "name": "Saint Petersburg",
+      "country": "Russia",
+      "un2025Population": 5383000,
+      "wikipediaAnchor": "Saint_Petersburg"
+    },
+    {
+      "rank": 80,
+      "name": "Qingdao",
+      "country": "China",
+      "un2025Population": 5381000,
+      "wikipediaAnchor": "Qingdao"
+    },
+    {
+      "rank": 81,
+      "name": "Dalian",
+      "country": "China",
+      "un2025Population": 5300000,
+      "wikipediaAnchor": "Dalian"
+    },
+    {
+      "rank": 82,
+      "name": "Washington, D.C.",
+      "country": "United States",
+      "un2025Population": 5207000,
+      "wikipediaAnchor": "Washington,_D.C."
+    },
+    {
+      "rank": 83,
+      "name": "Yangon",
+      "country": "Myanmar",
+      "un2025Population": 5157000,
+      "wikipediaAnchor": "Yangon"
+    },
+    {
+      "rank": 84,
+      "name": "Jinan",
+      "country": "China",
+      "un2025Population": 5052000,
+      "wikipediaAnchor": "Jinan"
+    },
+    {
+      "rank": 85,
+      "name": "Guadalajara",
+      "country": "Mexico",
+      "un2025Population": 5023000,
+      "wikipediaAnchor": "Guadalajara"
+    }
+  ]
+}
