@@ -424,6 +424,68 @@
   margin-top: 12px;
 }
 
+.precip-area.rain {
+  fill: var(--precip-rain-fill);
+  stroke: none;
+}
+
+.precip-line {
+  fill: none;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.precip-line.rain {
+  stroke: var(--precip-rain);
+}
+
+.precip-line.mixed {
+  stroke: var(--precip-mixed);
+  stroke-dasharray: 5 4;
+}
+
+.precip-line.snow {
+  stroke: var(--precip-snow);
+  stroke-dasharray: 2 3;
+}
+
+.precip-dot {
+  fill: var(--bg);
+  stroke-width: 2;
+}
+
+.precip-dot.rain {
+  stroke: var(--precip-rain);
+}
+
+.precip-dot.mixed {
+  stroke: var(--precip-mixed);
+}
+
+.precip-dot.snow {
+  stroke: var(--precip-snow);
+}
+
+.precip-swatch.rain {
+  background: var(--precip-rain);
+}
+
+.precip-swatch.mixed {
+  height: 0;
+  border-radius: 0;
+  background: transparent;
+  border-top: 2px dashed var(--precip-mixed);
+}
+
+.precip-swatch.snow {
+  height: 0;
+  border-radius: 0;
+  background: transparent;
+  border-top: 2px dotted var(--precip-snow);
+}
+
+
 .heatmap-border {
   fill: none;
   stroke: var(--border);

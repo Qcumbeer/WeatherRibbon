@@ -16,6 +16,10 @@
   --cc-partly: #c9d3da;
   --cc-mostly-cloudy: #97a8b5;
   --cc-overcast: #6b7d8c;
+  --precip-rain: #2a9d8f;
+  --precip-mixed: #9b6b9e;
+  --precip-snow: #6eb5d0;
+  --precip-rain-fill: rgba(42, 157, 143, 0.16);
   --shadow:
     rgba(22, 20, 28, 0.06) 0 10px 24px -8px,
     rgba(22, 20, 28, 0.04) 0 2px 6px -2px;
@@ -49,6 +53,10 @@
     --cc-partly: #4a5563;
     --cc-mostly-cloudy: #3a4554;
     --cc-overcast: #2a3340;
+    --precip-rain: #3dbeb0;
+    --precip-mixed: #c48bc7;
+    --precip-snow: #8ecce4;
+    --precip-rain-fill: rgba(61, 190, 176, 0.18);
     --shadow:
       rgba(0, 0, 0, 0.35) 0 12px 28px -10px,
       rgba(0, 0, 0, 0.2) 0 2px 8px -2px;
