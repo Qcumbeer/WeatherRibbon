@@ -517,6 +517,38 @@
   stroke-width: 2;
 }
 
+.swatch.snow-avg {
+  height: 3px;
+  border-radius: 999px;
+  background: var(--precip-snow);
+}
+
+.swatch.snow-pct {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--precip-snow-fill);
+  border: 1px solid var(--border);
+}
+
+.snow-band {
+  fill: var(--precip-snow-fill);
+  stroke: none;
+}
+
+.snow-avg-line {
+  fill: none;
+  stroke: var(--precip-snow);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.snow-dot {
+  fill: var(--bg);
+  stroke: var(--precip-snow);
+  stroke-width: 2;
+}
+
 
 .heatmap-border {
   fill: none;

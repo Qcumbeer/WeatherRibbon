@@ -4,6 +4,7 @@ import { CloudCoverChart } from './CloudCoverChart'
 import { HourlyChart } from './HourlyChart'
 import { PrecipChanceChart } from './PrecipChanceChart'
 import { RainfallChart } from './RainfallChart'
+import { SnowfallChart } from './SnowfallChart'
 import { CloudCoverPanel, SunshinePanel } from './SunCloudPanels'
 import { WEATHER, type City } from './weather'
 import './App.css'
@@ -102,6 +103,7 @@ function App() {
             <CloudCoverChart name={data.name} climate={data.climate} />
             <PrecipChanceChart name={data.name} climate={data.climate} />
             <RainfallChart name={data.name} climate={data.climate} />
+            <SnowfallChart name={data.name} climate={data.climate} />
 
             <div className="duo">
               <SunshinePanel name={data.name} climate={data.climate} />
