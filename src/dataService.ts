@@ -1,5 +1,8 @@
 import { FEATURED, cityKey, sameCity, type CityRef } from './cities.ts'
 import { fallbackClimate } from './fallbackClimate.ts'
+import seattleData from '../data/seattle.json' with { type: 'json' }
+import sanFranciscoData from '../data/san-francisco.json' with { type: 'json' }
+import phoenixData from '../data/phoenix.json' with { type: 'json' }
 
 export type { CityRef }
 export { FEATURED }
@@ -37,9 +40,9 @@ export interface CityData {
 }
 
 const STATIC: Record<string, () => Promise<{ default: unknown }>> = {
-  seattle: () => import('../data/seattle.json', { with: { type: 'json' } }),
-  'san-francisco': () => import('../data/san-francisco.json', { with: { type: 'json' } }),
-  phoenix: () => import('../data/phoenix.json', { with: { type: 'json' } }),
+  seattle: () => Promise.resolve({ default: seattleData }),
+  'san-francisco': () => Promise.resolve({ default: sanFranciscoData }),
+  phoenix: () => Promise.resolve({ default: phoenixData }),
 }
 
 const memory = new Map<string, CityData>()
