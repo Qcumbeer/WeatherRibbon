@@ -6,6 +6,7 @@ import { HourlyChart } from './HourlyChart'
 import { PrecipChanceChart } from './PrecipChanceChart'
 import { RainfallChart } from './RainfallChart'
 import { SnowfallChart } from './SnowfallChart'
+import { SolarElevationChart } from './SolarElevationChart'
 import { SunriseSunsetChart } from './SunriseSunsetChart'
 import { CloudCoverPanel, SunshinePanel } from './SunCloudPanels'
 import { WEATHER, type City } from './weather'
@@ -108,6 +109,11 @@ function App() {
             <SnowfallChart name={data.name} climate={data.climate} />
             <DaylightChart name={data.name} latitude={data.latitude} />
             <SunriseSunsetChart
+              name={data.name}
+              latitude={data.latitude}
+              longitude={data.longitude}
+            />
+            <SolarElevationChart
               name={data.name}
               latitude={data.latitude}
               longitude={data.longitude}

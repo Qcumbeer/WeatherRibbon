@@ -32,6 +32,39 @@ export function solarNoonLST(lng: number, day: number): number {
   return 12 + ((STANDARD_MERIDIAN_PACIFIC - lng) * 4 - eot) / 60
 }
 
+export interface SunPosition {
+  elevation: number
+  azimuth: number
+}
+
+export function sunPosition(
+  lat: number,
+  lng: number,
+  day: number,
+  hourLST: number,
+): SunPosition {
+  const dec = declination(day)
+  const phi = (lat * Math.PI) / 180
+  const decRad = (dec * Math.PI) / 180
+  const eot = equationOfTime(day)
+  const solarTime = hourLST - ((STANDARD_MERIDIAN_PACIFIC - lng) * 4 - eot) / 60
+  const hourAngle = ((solarTime - 12) * 15 * Math.PI) / 180
+
+  const sinAlt =
+    Math.sin(phi) * Math.sin(decRad) +
+    Math.cos(phi) * Math.cos(decRad) * Math.cos(hourAngle)
+  const elevation = (Math.asin(sinAlt) * 180) / Math.PI
+
+  const cosAz =
+    (Math.sin(decRad) - Math.sin(phi) * sinAlt) /
+    (Math.cos(phi) * Math.cos(Math.asin(sinAlt)))
+  let azimuth =
+    (Math.acos(Math.max(-1, Math.min(1, cosAz))) * 180) / Math.PI
+  if (hourAngle > 0) azimuth = 360 - azimuth
+
+  return { elevation, azimuth }
+}
+
 function clampHour(v: number): number {
   return Math.max(0, Math.min(24, v))
 }

@@ -657,6 +657,33 @@
   opacity: 0.7;
 }
 
+.swatch.se-swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  border: 1px solid var(--border);
+}
+
+.swatch.se-contour {
+  height: 0;
+  width: 18px;
+  border-radius: 0;
+  background: transparent;
+  border-top: 2px solid #1a1a2e;
+}
+
+.se-contour-line {
+  fill: none;
+  stroke: #1a1a2e;
+  stroke-width: 0.75;
+  opacity: 0.5;
+}
+
+.se-contour-line.horizon {
+  stroke-width: 1.5;
+  opacity: 0.8;
+}
+
 
 .heatmap-border {
   fill: none;
