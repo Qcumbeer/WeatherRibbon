@@ -25,6 +25,13 @@ export interface HourlyPoint {
   precip: number
 }
 
+export interface ClimateMonth {
+  month: string
+  high: number
+  low: number
+  precip: number
+}
+
 export interface CityWeather {
   name: string
   region: string
@@ -32,6 +39,7 @@ export interface CityWeather {
   current: CurrentConditions
   forecast: DayForecast[]
   hourly: HourlyPoint[]
+  climate: ClimateMonth[]
 }
 
 export const WEATHER: Record<City, CityWeather> = {
@@ -87,6 +95,20 @@ export const WEATHER: Record<City, CityWeather> = {
       { hour: '10 PM', temp: 61, precip: 15 },
       { hour: '11 PM', temp: 60, precip: 20 },
     ],
+    climate: [
+      { month: 'Jan', high: 47, low: 37, precip: 5.6 },
+      { month: 'Feb', high: 50, low: 37, precip: 3.5 },
+      { month: 'Mar', high: 54, low: 39, precip: 3.7 },
+      { month: 'Apr', high: 59, low: 42, precip: 2.7 },
+      { month: 'May', high: 65, low: 47, precip: 1.9 },
+      { month: 'Jun', high: 70, low: 52, precip: 1.5 },
+      { month: 'Jul', high: 76, low: 56, precip: 0.7 },
+      { month: 'Aug', high: 76, low: 57, precip: 0.9 },
+      { month: 'Sep', high: 71, low: 53, precip: 1.6 },
+      { month: 'Oct', high: 60, low: 46, precip: 3.5 },
+      { month: 'Nov', high: 51, low: 40, precip: 6.1 },
+      { month: 'Dec', high: 46, low: 36, precip: 5.4 },
+    ],
   },
   'san-francisco': {
     name: 'San Francisco',
@@ -139,6 +161,20 @@ export const WEATHER: Record<City, CityWeather> = {
       { hour: '9 PM', temp: 58, precip: 5 },
       { hour: '10 PM', temp: 57, precip: 5 },
       { hour: '11 PM', temp: 56, precip: 5 },
+    ],
+    climate: [
+      { month: 'Jan', high: 58, low: 46, precip: 4.5 },
+      { month: 'Feb', high: 61, low: 48, precip: 4.0 },
+      { month: 'Mar', high: 63, low: 49, precip: 2.9 },
+      { month: 'Apr', high: 64, low: 50, precip: 1.5 },
+      { month: 'May', high: 66, low: 52, precip: 0.7 },
+      { month: 'Jun', high: 68, low: 53, precip: 0.2 },
+      { month: 'Jul', high: 68, low: 55, precip: 0.0 },
+      { month: 'Aug', high: 69, low: 56, precip: 0.1 },
+      { month: 'Sep', high: 71, low: 56, precip: 0.2 },
+      { month: 'Oct', high: 70, low: 54, precip: 1.0 },
+      { month: 'Nov', high: 64, low: 50, precip: 2.5 },
+      { month: 'Dec', high: 58, low: 46, precip: 4.0 },
     ],
   },
 }

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { ClimateChart } from './ClimateChart'
 import { HourlyChart } from './HourlyChart'
 import { WEATHER, type City } from './weather'
 import './App.css'
@@ -89,6 +90,7 @@ function App() {
             </section>
 
             <HourlyChart name={data.name} hourly={data.hourly} />
+            <ClimateChart name={data.name} climate={data.climate} />
           </div>
         ) : (
           <article className="card muted">

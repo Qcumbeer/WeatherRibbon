@@ -156,7 +156,8 @@
 }
 
 .forecast,
-.hourly {
+.hourly,
+.climate {
   border: 1px solid var(--border);
   border-radius: 16px;
   background: var(--bg);
@@ -199,8 +200,17 @@
   border-radius: 999px;
 }
 
-.swatch.temp {
+.swatch.temp,
+.swatch.high {
   background: var(--text-h);
+}
+
+.swatch.low {
+  width: 16px;
+  height: 0;
+  border-top: 2px dashed var(--text);
+  border-radius: 0;
+  background: transparent;
 }
 
 .swatch.precip {
@@ -246,10 +256,19 @@
   stroke-linecap: round;
 }
 
+.hourly-line.low {
+  stroke: var(--text);
+  stroke-dasharray: 5 4;
+}
+
 .hourly-dot {
   fill: var(--bg);
   stroke: var(--text-h);
   stroke-width: 2;
+}
+
+.hourly-dot.low {
+  stroke: var(--text);
 }
 
 .hourly-details {
@@ -393,11 +412,13 @@
   .hero-card,
   .card,
   .forecast,
-  .hourly {
+  .hourly,
+  .climate {
     padding: 20px;
   }
 
-  .hourly-tick-minor {
+  .hourly-tick-minor,
+  .climate-tick-minor {
     display: none;
   }
 
