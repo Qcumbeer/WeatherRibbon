@@ -138,7 +138,7 @@ export function CityIndex({ query, onQueryChange, onNavigate }: IndexViewProps) 
   return (
     <div className="index">
       <section className="index-hero">
-        <h1 className="index-title">Weatherfork</h1>
+        <h1 className="index-title">WeatherRibbon</h1>
         <p className="index-subtitle">
           1991–2020 climate normals for {CITIES.length} U.S. cities.
         </p>

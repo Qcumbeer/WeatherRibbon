@@ -133,7 +133,7 @@ function App() {
             navigate({ view: 'index', query: '' })
           }}
         >
-          🌤️ Weatherfork
+          🌤️ WeatherRibbon
         </a>
         {city && (
           <a
