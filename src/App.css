@@ -485,6 +485,38 @@
   border-top: 2px dotted var(--precip-snow);
 }
 
+.swatch.rain-avg {
+  height: 3px;
+  border-radius: 999px;
+  background: var(--precip-rain);
+}
+
+.swatch.rain-pct {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--precip-rain-fill);
+  border: 1px solid var(--border);
+}
+
+.rain-band {
+  fill: var(--precip-rain-fill);
+  stroke: none;
+}
+
+.rain-avg-line {
+  fill: none;
+  stroke: var(--precip-rain);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.rain-dot {
+  fill: var(--bg);
+  stroke: var(--precip-rain);
+  stroke-width: 2;
+}
+
 
 .heatmap-border {
   fill: none;
