@@ -39,6 +39,7 @@ export interface CityData {
 const STATIC: Record<string, () => Promise<{ default: unknown }>> = {
   seattle: () => import('../data/seattle.json', { with: { type: 'json' } }),
   'san-francisco': () => import('../data/san-francisco.json', { with: { type: 'json' } }),
+  phoenix: () => import('../data/phoenix.json', { with: { type: 'json' } }),
 }
 
 const memory = new Map<string, CityData>()

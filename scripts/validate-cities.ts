@@ -59,7 +59,7 @@ check(monotonic, 'population strictly decreases as rank increases')
 
 // 7) Representative cities present.
 const bySlug = new Map(US_CITIES.map((c) => [c.slug, c]))
-const reps = ['new-york', 'los-angeles', 'chicago', 'seattle', 'san-francisco', 'honolulu', 'anchorage', 'miami']
+const reps = ['new-york', 'los-angeles', 'chicago', 'seattle', 'san-francisco', 'phoenix', 'honolulu', 'anchorage', 'miami']
 for (const slug of reps) {
   check(bySlug.has(slug), `representative city present: ${slug}`)
 }
@@ -96,6 +96,29 @@ for (const city of US_CITIES) {
   }
 }
 check(loadOk === 100, `data loads with valid values for all 100 cities (${loadOk}/100)`)
+
+// 9) Phoenix resolves from the bespoke static file, not the deterministic fallback.
+const phoenix = bySlug.get('phoenix')
+check(!!phoenix, 'Phoenix is in the 100-city index')
+if (phoenix) {
+  const phoenixData = await loadCity(phoenix)
+  const climateErr = validClimate(phoenix, phoenixData)
+  check(climateErr === null, `Phoenix climate is valid (12 months, ranges): ${climateErr ?? 'ok'}`)
+  check(phoenixData.climate.length === 12, `Phoenix has all 12 months (got ${phoenixData.climate.length})`)
+  check(
+    MONTHS.every((label, i) => phoenixData.climate[i]?.month === label),
+    'Phoenix months are Jan–Dec in order',
+  )
+  check(
+    !/fallback/i.test(phoenixData.source) && /ERA5/i.test(phoenixData.source),
+    `Phoenix source is bespoke ERA5, not fallback (got ${JSON.stringify(phoenixData.source)})`,
+  )
+  check(phoenixData.period === '1991-2020', `Phoenix period is 1991-2020 (got ${JSON.stringify(phoenixData.period)})`)
+  const july = phoenixData.climate[6]
+  check(july.high > 100 && july.low > 75, 'Phoenix July reflects hot-desert normals')
+  const annualPrecip = phoenixData.climate.reduce((sum, m) => sum + m.precip, 0)
+  check(annualPrecip > 4 && annualPrecip < 12, `Phoenix annual precip is arid (${annualPrecip.toFixed(2)} in)`)
+}
 
 if (failures > 0) {
   console.error(`\n${failures} check(s) failed`)

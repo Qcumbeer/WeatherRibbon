@@ -18,6 +18,7 @@ const PERIOD_END = 2020
 const CITIES: Record<string, { name: string; region: string; lat: number; lon: number }> = {
   seattle: { name: 'Seattle', region: 'Washington', lat: 47.61, lon: -122.33 },
   'san-francisco': { name: 'San Francisco', region: 'California', lat: 37.77, lon: -122.42 },
+  phoenix: { name: 'Phoenix', region: 'Arizona', lat: 33.45, lon: -112.07 },
 }
 
 interface GeoHit {
