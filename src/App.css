@@ -1078,6 +1078,11 @@
   max-width: 50ch;
 }
 
+.aqi-day-bar {
+  stroke: var(--bg);
+  stroke-width: 0.5;
+}
+
 @media (max-width: 640px) {
   .header {
     padding: 16px;

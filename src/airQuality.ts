@@ -1,4 +1,5 @@
 import { FEATURED, sameCity, type CityRef } from './cities'
+import { DAYS_IN_MONTH } from './seasonal'
 
 export interface AirQualityMonth {
   month: string
@@ -6,6 +7,7 @@ export interface AirQualityMonth {
   pm25: number
   pm10: number
   ozone: number
+  days: number[]
 }
 
 export interface AqiCategory {
@@ -130,20 +132,42 @@ function round1(v: number): number {
   return Math.round(v * 10) / 10
 }
 
+function allocateDays(aqi: number, nDays: number): number[] {
+  const centers = AQI_CATEGORIES.map((c) => (c.range[0] + Math.min(c.range[1], 350)) / 2)
+  const sigma = 20 + Math.max(0, aqi - 30) * 0.25
+  const weights = centers.map((center, i) => {
+    if (i === 5 && aqi < 180) return 0
+    return Math.exp(-((aqi - center) ** 2) / (2 * sigma * sigma))
+  })
+  const sum = weights.reduce((a, b) => a + b, 0) || 1
+  const raw = weights.map((w) => (w / sum) * nDays)
+  const counts = raw.map(Math.floor)
+  let leftover = nDays - counts.reduce((a, b) => a + b, 0)
+  const order = raw
+    .map((v, i) => ({ i, frac: v - Math.floor(v) }))
+    .sort((a, b) => b.frac - a.frac)
+  for (let k = 0; k < leftover; k++) counts[order[k].i]++
+  return counts
+}
+
 function monthsFromPollutants(
   pm25: number[],
   pm10: number[],
   ozone: number[],
 ): AirQualityMonth[] {
-  return MONTHS.map((month, i) => ({
-    month,
-    aqi: Math.round(
+  return MONTHS.map((month, i) => {
+    const aqi = Math.round(
       Math.max(pm25ToAqi(pm25[i]), pm10ToAqi(pm10[i]), ozoneToAqi(ozone[i])),
-    ),
-    pm25: round1(pm25[i]),
-    pm10: round1(pm10[i]),
-    ozone: Math.round(ozone[i]),
-  }))
+    )
+    return {
+      month,
+      aqi,
+      pm25: round1(pm25[i]),
+      pm10: round1(pm10[i]),
+      ozone: Math.round(ozone[i]),
+      days: allocateDays(aqi, DAYS_IN_MONTH[i]),
+    }
+  })
 }
 
 const PROFILES: Record<string, { pm25: number[]; pm10: number[]; ozone: number[] }> = {
