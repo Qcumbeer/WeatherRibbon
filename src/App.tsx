@@ -6,6 +6,7 @@ import { HourlyChart } from './HourlyChart'
 import { PrecipChanceChart } from './PrecipChanceChart'
 import { RainfallChart } from './RainfallChart'
 import { SnowfallChart } from './SnowfallChart'
+import { MoonChart } from './MoonChart'
 import { SolarElevationChart } from './SolarElevationChart'
 import { SunriseSunsetChart } from './SunriseSunsetChart'
 import { CloudCoverPanel, SunshinePanel } from './SunCloudPanels'
@@ -114,6 +115,11 @@ function App() {
               longitude={data.longitude}
             />
             <SolarElevationChart
+              name={data.name}
+              latitude={data.latitude}
+              longitude={data.longitude}
+            />
+            <MoonChart
               name={data.name}
               latitude={data.latitude}
               longitude={data.longitude}

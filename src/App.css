@@ -684,6 +684,62 @@
   opacity: 0.8;
 }
 
+.moon-up {
+  fill: var(--moon-up);
+  stroke: none;
+}
+
+.moon-phase-line {
+  stroke-width: 1.25;
+}
+
+.moon-phase-line.new {
+  stroke: var(--moon-new);
+  stroke-dasharray: 3 3;
+  opacity: 0.7;
+}
+
+.moon-phase-line.full {
+  stroke: var(--moon-full);
+  opacity: 0.9;
+}
+
+.moon-phase-label {
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.moon-phase-label.new {
+  fill: var(--moon-new);
+}
+
+.moon-phase-label.full {
+  fill: var(--moon-full);
+}
+
+.swatch.moon-up-swatch {
+  height: 10px;
+  border-radius: 3px;
+  background: var(--moon-up);
+}
+
+.swatch.moon-new-mark {
+  height: 0;
+  width: 18px;
+  border-radius: 0;
+  background: transparent;
+  border-top: 2px dashed var(--moon-new);
+}
+
+.swatch.moon-full-mark {
+  height: 0;
+  width: 18px;
+  border-radius: 0;
+  background: transparent;
+  border-top: 2px solid var(--moon-full);
+}
+
 
 .heatmap-border {
   fill: none;
