@@ -1,5 +1,5 @@
-import { type CityRef } from './cities.ts'
-import { type CityData, type ClimateMonth } from './dataService.ts'
+import type { CityRef } from './cities.ts'
+import type { CityData, ClimateMonth } from './dataService.ts'
 
 const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 const DAYS_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]

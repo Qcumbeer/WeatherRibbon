@@ -1,5 +1,5 @@
-import { type CityRef } from './cities'
-import { type CityData, type ClimateMonth } from './dataService'
+import type { CityRef } from './cities.ts'
+import type { CityData, ClimateMonth } from './dataService.ts'
 
 const PERIOD_START = 1991
 const PERIOD_END = 2020
@@ -57,27 +57,91 @@ function avg(arr: number[]): number {
   return arr.length ? arr.reduce((a, b) => a + b, 0) / arr.length : 0
 }
 
-async function fetchDaily(lat: number, lon: number, signal?: AbortSignal): Promise<DailyResponse> {
-  const url =
-    `https://archive-api.open-meteo.com/v1/archive?latitude=${lat}&longitude=${lon}` +
+interface LocationPayload {
+  latitude?: number
+  longitude?: number
+  daily?: DailyResponse['daily']
+  error?: boolean
+  reason?: string
+}
+
+function archiveUrl(latitude: string, longitude: string): string {
+  return (
+    `https://archive-api.open-meteo.com/v1/archive?latitude=${latitude}&longitude=${longitude}` +
     `&start_date=${PERIOD_START}-01-01&end_date=${PERIOD_END}-12-31` +
-    `&daily=${DAILY}&timezone=auto&models=ERA5`
-  for (let attempt = 1; attempt <= 3; attempt++) {
+    `&daily=${DAILY}&timezone=auto`
+  )
+}
+
+async function fetchArchiveJson(url: string, signal?: AbortSignal): Promise<unknown> {
+  for (let attempt = 1; attempt <= 4; attempt++) {
+    if (signal?.aborted) throw new DOMException('Aborted', 'AbortError')
     try {
       const res = await fetch(url, { signal })
+      if (res.status === 429) {
+        let reason = 'rate limited (HTTP 429)'
+        try {
+          const body = (await res.json()) as { reason?: string }
+          if (body.reason) reason = body.reason
+        } catch {
+          // body was not JSON; keep the generic message
+        }
+        throw new Error(reason)
+      }
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
-      return (await res.json()) as DailyResponse
+      return await res.json()
     } catch (err) {
-      if (signal?.aborted || attempt === 3) throw err
-      await new Promise((r) => setTimeout(r, 2000 * attempt))
+      if (signal?.aborted) throw err
+      if (attempt === 4) throw err
+      const msg = err instanceof Error ? err.message : String(err)
+      // The archive API enforces both minutely and hourly request budgets. On an
+      // hourly 429, retrying quickly only burns more of the budget, so wait for
+      // the window to roll over instead of churning.
+      const wait = /hour/i.test(msg)
+        ? 40 * 60 * 1000
+        : /rate|429|limit|minute/i.test(msg)
+          ? 60000
+          : 3000 * attempt
+      await new Promise((r) => setTimeout(r, wait))
     }
   }
   throw new Error('unreachable')
 }
 
-export async function fetchClimate(city: CityRef, signal?: AbortSignal): Promise<CityData> {
-  const { daily: d } = await fetchDaily(city.latitude, city.longitude, signal)
+// Fetches one request for one or more locations (comma-joined coordinates) and
+// returns the per-location daily arrays in input order. Batching many cities
+// into a single request keeps the call count under the archive API's hourly
+// request budget.
+export async function fetchDailyMulti(cities: CityRef[], signal?: AbortSignal): Promise<DailyResponse['daily'][]> {
+  if (cities.length === 0) return []
+  const latitude = cities.map((c) => c.latitude).join(',')
+  const longitude = cities.map((c) => c.longitude).join(',')
+  const body = await fetchArchiveJson(archiveUrl(latitude, longitude), signal)
 
+  if (cities.length === 1) {
+    const single = body as LocationPayload
+    if (single.error || !single.daily) throw new Error(single.reason || 'Archive API returned no daily data')
+    return [single.daily]
+  }
+
+  const arr = body as LocationPayload[]
+  if (!Array.isArray(arr)) {
+    const single = body as LocationPayload
+    throw new Error(single.reason || 'Expected an array of locations from the archive API')
+  }
+  if (arr.length !== cities.length) throw new Error(`Expected ${cities.length} locations, got ${arr.length}`)
+  return arr.map((loc) => {
+    if (loc.error || !loc.daily) throw new Error(loc.reason || 'Archive API returned no daily data for a location')
+    return loc.daily
+  })
+}
+
+export async function fetchClimate(city: CityRef, signal?: AbortSignal): Promise<CityData> {
+  const [daily] = await fetchDailyMulti([city], signal)
+  return climateFromDaily(daily, city)
+}
+
+export function climateFromDaily(d: DailyResponse['daily'], city: CityRef): CityData {
   const dailyMaxT: number[][] = Array.from({ length: 12 }, () => [])
   const dailyMinT: number[][] = Array.from({ length: 12 }, () => [])
   const dailyMaxA: number[][] = Array.from({ length: 12 }, () => [])
