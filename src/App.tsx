@@ -3,6 +3,7 @@ import { AirQualityChart } from './AirQualityChart'
 import { AqiCategoryDaysChart } from './AqiCategoryDaysChart'
 import { ClimateChart } from './ClimateChart'
 import { ClimateOverviewChart } from './ClimateOverviewChart'
+import { ClimateSkylineChart } from './ClimateSkylineChart'
 import { CloudCoverChart } from './CloudCoverChart'
 import { DaylightChart } from './DaylightChart'
 import { HourlyChart } from './HourlyChart'
@@ -69,6 +70,7 @@ function CityView({
             </p>
           </section>
 
+          <ClimateSkylineChart name={data.name} climate={data.climate} />
           <HourlyChart name={data.name} climate={data.climate} />
           <ClimateChart name={data.name} climate={data.climate} />
           <ClimateOverviewChart name={data.name} climate={data.climate} />

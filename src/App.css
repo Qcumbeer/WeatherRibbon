@@ -1314,6 +1314,80 @@
   color: var(--text);
 }
 
+.swatch.skyline-height {
+  height: 14px;
+  width: 10px;
+  border-radius: 2px 2px 0 0;
+  background: var(--text);
+}
+
+.swatch.skyline-temp {
+  background: linear-gradient(to right, #2848b0, #5ac8c0, #ebbe46, #aa232d);
+}
+
+.swatch.skyline-zero {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--cold);
+}
+
+.swatch.skyline-missing {
+  background: transparent;
+  border: 1.5px dashed #94949c;
+}
+
+.skyline-baseline {
+  stroke: var(--text);
+  stroke-width: 1.25;
+}
+
+.skyline-building {
+  stroke: none;
+}
+
+.skyline-mark {
+  outline: none;
+}
+
+.skyline-mark:focus-visible .skyline-building,
+.skyline-mark.is-focused .skyline-building {
+  stroke: var(--text-h);
+  stroke-width: 2;
+}
+
+.skyline-hit {
+  fill: transparent;
+  pointer-events: all;
+}
+
+.skyline-zero-dot {
+  stroke: var(--bg);
+  stroke-width: 1.5;
+}
+
+.skyline-mark:focus-visible .skyline-zero-dot,
+.skyline-mark.is-focused .skyline-zero-dot {
+  stroke: var(--text-h);
+  stroke-width: 2;
+}
+
+.skyline-missing-stub {
+  fill: none;
+  stroke: #94949c;
+  stroke-width: 1.5;
+  stroke-dasharray: 3 2;
+}
+
+.skyline-legend-bar {
+  stroke: var(--border);
+  stroke-width: 1;
+}
+
+.skyline-readout {
+  min-height: 1.4em;
+}
+
 @media (max-width: 640px) {
   .header {
     padding: 16px;
