@@ -1,5 +1,5 @@
 import { useId } from 'react'
-import { declination, lengthAbove, YEAR } from './solar'
+import { dayEvents, isDST2026, YEAR } from './solar'
 
 const WIDTH = 640
 const HEIGHT = 320
@@ -13,6 +13,10 @@ const STEP = 2
 
 const SPARSE = new Set(['Jan', 'Mar', 'May', 'Jul', 'Sep', 'Nov'])
 const DAYS_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+const MONTHS = [
+  'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+]
 const MID_DAY = (() => {
   const out: number[] = []
   let acc = 0
@@ -23,7 +27,7 @@ const MID_DAY = (() => {
   return out
 })()
 
-const SOLSTICE_DAYS = { june: 172, december: 355 }
+const DST_DAYS = { start: 66, end: 304 }
 
 interface Phase {
   key: string
@@ -53,61 +57,6 @@ const LEGEND: Phase[] = [
 
 const GRID_HOURS = [0, 3, 6, 9, 12, 15, 18, 21, 24]
 
-const MONTHS = [
-  'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
-]
-
-function cumulativeHeights(lat: number, day: number): number[] {
-  const dec = declination(day)
-  const lDay = lengthAbove(lat, dec, -0.833)
-  const lCivil = lengthAbove(lat, dec, -6)
-  const lNaut = lengthAbove(lat, dec, -12)
-  const lAstr = lengthAbove(lat, dec, -18)
-  const nightHalf = (24 - lAstr) / 2
-  const astroHalf = (lAstr - lNaut) / 2
-  const nautHalf = (lNaut - lCivil) / 2
-  const civilHalf = (lCivil - lDay) / 2
-  let c = 0
-  const cum = [c]
-  c += nightHalf
-  cum.push(c)
-  c += astroHalf
-  cum.push(c)
-  c += nautHalf
-  cum.push(c)
-  c += civilHalf
-  cum.push(c)
-  c += lDay
-  cum.push(c)
-  c += civilHalf
-  cum.push(c)
-  c += nautHalf
-  cum.push(c)
-  c += astroHalf
-  cum.push(c)
-  c += nightHalf
-  cum.push(c)
-  return cum
-}
-
-function bandPath(
-  cum: number[][],
-  k: number,
-  xDay: (d: number) => number,
-  yHour: (h: number) => number,
-): string {
-  const n = cum.length
-  const fwd = cum
-    .map((row, i) => `${i === 0 ? 'M' : 'L'}${xDay(i * STEP).toFixed(1)} ${yHour(row[k]).toFixed(1)}`)
-    .join(' ')
-  const back: string[] = []
-  for (let i = n - 1; i >= 0; i--) {
-    back.push(`L${xDay(i * STEP).toFixed(1)} ${yHour(cum[i][k + 1]).toFixed(1)}`)
-  }
-  return `${fwd} ${back.join(' ')} Z`
-}
-
 function hourLabel(h: number): string {
   const hr = h % 24
   const period = hr < 12 ? 'am' : 'pm'
@@ -115,82 +64,98 @@ function hourLabel(h: number): string {
   return `${disp}${period}`
 }
 
-function hm(hours: number): string {
-  const h = Math.floor(hours)
-  const m = Math.round((hours - h) * 60)
-  return `${h}h ${m}m`
+function clockTime(hours: number): string {
+  const total = Math.round(hours * 60)
+  const h = Math.floor(total / 60)
+  const m = total % 60
+  const hr24 = ((h % 24) + 24) % 24
+  const period = hr24 < 12 ? 'am' : 'pm'
+  const disp = hr24 % 12 === 0 ? 12 : hr24 % 12
+  return `${disp}:${String(m).padStart(2, '0')} ${period}`
 }
 
-export function DaylightChart({
+function bandPath(
+  rows: number[][],
+  k: number,
+  xDay: (d: number) => number,
+  yHour: (h: number) => number,
+): string {
+  const n = rows.length
+  const fwd = rows
+    .map((row, i) => `${i === 0 ? 'M' : 'L'}${xDay(i * STEP).toFixed(1)} ${yHour(row[k]).toFixed(1)}`)
+    .join(' ')
+  const back: string[] = []
+  for (let i = n - 1; i >= 0; i--) {
+    back.push(`L${xDay(i * STEP).toFixed(1)} ${yHour(rows[i][k + 1]).toFixed(1)}`)
+  }
+  return `${fwd} ${back.join(' ')} Z`
+}
+
+function curvePath(
+  values: number[],
+  xDay: (d: number) => number,
+  yHour: (h: number) => number,
+): string {
+  const parts: string[] = []
+  for (let i = 0; i < values.length; i++) {
+    const day = i * STEP
+    const prevDay = (i - 1) * STEP
+    const gap =
+      i > 0 && isDST2026(prevDay) !== isDST2026(day)
+    parts.push(
+      `${i === 0 || gap ? 'M' : 'L'}${xDay(day).toFixed(1)} ${yHour(values[i]).toFixed(1)}`,
+    )
+  }
+  return parts.join(' ')
+}
+
+export function SunriseSunsetChart({
   name,
   latitude,
+  longitude,
 }: {
   name: string
   latitude: number
+  longitude: number
 }) {
   const uid = useId()
   const captionId = `${uid}-caption`
   const descId = `${uid}-desc`
 
-  const samples: number[][] = []
+  const events: ReturnType<typeof dayEvents>[] = []
   for (let d = 0; d < YEAR; d += STEP) {
-    samples.push(cumulativeHeights(latitude, d))
+    events.push(dayEvents(latitude, longitude, d))
   }
 
   const xDay = (d: number) => ML + (d / YEAR) * PLOT_W
   const yHour = (h: number) => MT + ((24 - h) / 24) * PLOT_H
   const slot = PLOT_W / 12
 
-  const daylightSeries = samples.map((row) => row[5] - row[4])
-  let longest = 0
-  let shortest = 24
-  let longestDay = 0
-  let shortestDay = 0
-  for (let i = 0; i < samples.length; i++) {
-    const dl = daylightSeries[i]
-    if (dl > longest) {
-      longest = dl
-      longestDay = i * STEP
-    }
-    if (dl < shortest) {
-      shortest = dl
-      shortestDay = i * STEP
-    }
-  }
+  const boundaryRows = events.map((e) => e.boundaries)
+  const sunriseVals = events.map((e) => e.sunrise)
+  const sunsetVals = events.map((e) => e.sunset)
+  const noonVals = events.map((e) => e.solarNoon)
+  const midnightVals = events.map((e) => e.solarMidnight)
 
-  const monthly = MID_DAY.map((d) => {
-    const cum = cumulativeHeights(latitude, d)
-    const dl = cum[5] - cum[4]
-    const civil = (cum[4] - cum[3]) + (cum[6] - cum[5])
-    const nautical = (cum[3] - cum[2]) + (cum[7] - cum[6])
-    const astro = (cum[2] - cum[1]) + (cum[8] - cum[7])
-    const night = (cum[1] - cum[0]) + (cum[9] - cum[8])
-    return { dl, civil, nautical, astro, night }
-  })
+  const monthly = MID_DAY.map((d) => dayEvents(latitude, longitude, d))
 
-  const longestNear =
-    Math.abs(longestDay - SOLSTICE_DAYS.june) <
-    Math.abs(longestDay - SOLSTICE_DAYS.december)
-      ? 'Jun'
-      : 'Dec'
-  const shortestNear =
-    Math.abs(shortestDay - SOLSTICE_DAYS.december) <
-    Math.abs(shortestDay - SOLSTICE_DAYS.june)
-      ? 'Dec'
-      : 'Jun'
+  const earliestSunrise = sunriseVals.reduce((a, b) => (b < a ? b : a))
+  const latestSunset = sunsetVals.reduce((a, b) => (b > a ? b : a))
 
   return (
     <section
-      className="hourly climate daylight-chart"
+      className="hourly climate sunrise-sunset-chart"
       aria-labelledby={captionId}
     >
       <h2 className="forecast-title" id={captionId}>
-        Hours of Daylight and Twilight
+        Sunrise and Sunset with Twilight and Daylight Saving Time
       </h2>
       <p className="sr-only" id={descId}>
-        {name} daily hours of daylight, civil twilight, nautical twilight,
-        astronomical twilight, and night from January through December,
-        computed for latitude {latitude.toFixed(2)}&deg;.
+        {name} sunrise, sunset, solar noon, solar midnight, and twilight
+        bands in local clock time (Pacific) from January through December
+        2026, with daylight saving time transitions shown as discontinuities.
+        Computed for latitude {latitude.toFixed(2)}&deg;N, longitude{' '}
+        {Math.abs(longitude).toFixed(2)}&deg;W.
       </p>
 
       <ul className="hourly-legend">
@@ -200,6 +165,18 @@ export function DaylightChart({
             {p.label}
           </li>
         ))}
+        <li>
+          <span className="swatch dl-curve sunrise" aria-hidden="true" />
+          Sunrise / Sunset
+        </li>
+        <li>
+          <span className="swatch dl-curve noon" aria-hidden="true" />
+          Solar noon / midnight
+        </li>
+        <li>
+          <span className="swatch dl-dst-mark" aria-hidden="true" />
+          DST shift
+        </li>
       </ul>
 
       <div className="hourly-chart-wrap">
@@ -236,25 +213,47 @@ export function DaylightChart({
             <path
               key={`band-${k}`}
               className={`dl-area ${band.cls}`}
-              d={bandPath(samples, k, xDay, yHour)}
+              d={bandPath(boundaryRows, k, xDay, yHour)}
             >
               <title>{band.label}</title>
             </path>
           ))}
 
-          {[SOLSTICE_DAYS.june, SOLSTICE_DAYS.december].map((d) => {
-            const x = xDay(d)
-            return (
-              <line
-                key={`solstice-${d}`}
-                className="dl-solstice"
-                x1={x}
-                x2={x}
-                y1={MT}
-                y2={MT + PLOT_H}
-              />
-            )
-          })}
+          {[DST_DAYS.start, DST_DAYS.end].map((d) => (
+            <line
+              key={`dst-${d}`}
+              className="dl-dst"
+              x1={xDay(d)}
+              x2={xDay(d)}
+              y1={MT}
+              y2={MT + PLOT_H}
+            />
+          ))}
+
+          <path
+            className="dl-curve-line midnight"
+            d={curvePath(midnightVals, xDay, yHour)}
+          >
+            <title>Solar midnight</title>
+          </path>
+          <path
+            className="dl-curve-line noon"
+            d={curvePath(noonVals, xDay, yHour)}
+          >
+            <title>Solar noon</title>
+          </path>
+          <path
+            className="dl-curve-line sunrise"
+            d={curvePath(sunriseVals, xDay, yHour)}
+          >
+            <title>Sunrise</title>
+          </path>
+          <path
+            className="dl-curve-line sunset"
+            d={curvePath(sunsetVals, xDay, yHour)}
+          >
+            <title>Sunset</title>
+          </path>
 
           {MONTHS.map((mon, i) => (
             <text
@@ -275,36 +274,35 @@ export function DaylightChart({
       </div>
 
       <p className="panel-note cc-note">
-        Longest day {longestNear} ({hm(longest)}) &middot; Shortest day{' '}
-        {shortestNear} ({hm(shortest)})
+        Earliest sunrise {clockTime(earliestSunrise)} &middot; Latest sunset{' '}
+        {clockTime(latestSunset)} &middot; DST starts Mar 8, ends Nov 1
       </p>
 
       <details className="hourly-details">
-        <summary>View daylight data</summary>
+        <summary>View sunrise & sunset data</summary>
         <div className="hourly-table-wrap" tabIndex={0}>
           <table>
             <caption className="sr-only">
-              {name} monthly hours of daylight and twilight
+              {name} monthly sunrise, sunset, solar noon, and daylight hours
+              for 2026
             </caption>
             <thead>
               <tr>
                 <th scope="col">Month</th>
+                <th scope="col">Sunrise</th>
+                <th scope="col">Solar noon</th>
+                <th scope="col">Sunset</th>
                 <th scope="col">Daylight</th>
-                <th scope="col">Civil</th>
-                <th scope="col">Nautical</th>
-                <th scope="col">Astronomical</th>
-                <th scope="col">Night</th>
               </tr>
             </thead>
             <tbody>
               {monthly.map((m, i) => (
                 <tr key={i}>
                   <th scope="row">{MONTHS[i]}</th>
-                  <td>{m.dl.toFixed(1)} h</td>
-                  <td>{m.civil.toFixed(1)} h</td>
-                  <td>{m.nautical.toFixed(1)} h</td>
-                  <td>{m.astro.toFixed(1)} h</td>
-                  <td>{m.night.toFixed(1)} h</td>
+                  <td>{clockTime(m.sunrise)}</td>
+                  <td>{clockTime(m.solarNoon)}</td>
+                  <td>{clockTime(m.sunset)}</td>
+                  <td>{m.daylight.toFixed(1)} h</td>
                 </tr>
               ))}
             </tbody>

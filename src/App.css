@@ -607,6 +607,56 @@
   background: var(--dl-night);
 }
 
+.dl-dst {
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  stroke-dasharray: 4 3;
+  opacity: 0.55;
+}
+
+.dl-curve-line {
+  fill: none;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.dl-curve-line.sunrise,
+.dl-curve-line.sunset {
+  stroke: var(--text-h);
+  stroke-width: 1.5;
+  opacity: 0.85;
+}
+
+.dl-curve-line.noon,
+.dl-curve-line.midnight {
+  stroke: var(--text-h);
+  stroke-width: 1;
+  stroke-dasharray: 4 3;
+  opacity: 0.5;
+}
+
+.swatch.dl-curve {
+  height: 0;
+  width: 18px;
+  border-radius: 0;
+  background: transparent;
+  border-top: 2px solid var(--text-h);
+}
+
+.swatch.dl-curve.noon {
+  border-top-style: dashed;
+  opacity: 0.6;
+}
+
+.swatch.dl-dst-mark {
+  height: 0;
+  width: 18px;
+  border-radius: 0;
+  background: transparent;
+  border-top: 2px dashed var(--accent);
+  opacity: 0.7;
+}
+
 
 .heatmap-border {
   fill: none;
