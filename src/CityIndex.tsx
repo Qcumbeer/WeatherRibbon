@@ -138,15 +138,34 @@ export function CityIndex({ query, onQueryChange, onNavigate }: IndexViewProps) 
   return (
     <div className="index">
       <section className="index-hero">
-        <h1 className="index-title">Weatherfork</h1>
+        <h1 className="index-title">
+          <svg className="index-brand-icon" aria-hidden="true">
+            <use href="/icons.svg#brand-icon" />
+          </svg>
+          Weatherfork
+        </h1>
         <p className="index-subtitle">
           1991–2020 climate normals for {CITIES.length} U.S. cities.
         </p>
+        <ul className="index-motifs" aria-hidden="true">
+          <li>
+            <svg><use href="/icons.svg#sun-icon" /></svg>
+          </li>
+          <li>
+            <svg><use href="/icons.svg#rain-icon" /></svg>
+          </li>
+          <li>
+            <svg><use href="/icons.svg#wind-icon" /></svg>
+          </li>
+        </ul>
         <div className="index-search-wrap">
           <label className="sr-only" htmlFor={`${id}-search`}>
             Search cities by name or state
           </label>
           <div className="index-search-inner">
+            <svg className="index-search-icon" aria-hidden="true">
+              <use href="/icons.svg#search-icon" />
+            </svg>
             <input
               id={`${id}-search`}
               ref={inputRef}
@@ -172,7 +191,9 @@ export function CityIndex({ query, onQueryChange, onNavigate }: IndexViewProps) 
                 aria-label="Clear search"
                 onClick={() => onQueryChange('')}
               >
-                ✕
+                <svg aria-hidden="true">
+                  <use href="/icons.svg#clear-icon" />
+                </svg>
               </button>
             )}
           </div>

@@ -133,6 +133,9 @@ function App() {
             navigate({ view: 'index', query: '' })
           }}
         >
+          <svg className="brand-icon" aria-hidden="true">
+            <use href="/icons.svg#brand-icon" />
+          </svg>
           Weatherfork
         </a>
         {city && (
