@@ -2,19 +2,22 @@ import { useId } from 'react'
 import type { ClimateMonth } from './weather'
 
 const WIDTH = 640
-const HEIGHT = 248
+const HEIGHT = 300
 const ML = 40
-const MR = 40
+const MR = 16
 const MT = 16
-const MB = 36
+const MB = 40
 const PLOT_W = WIDTH - ML - MR
 const PLOT_H = HEIGHT - MT - MB
 
 const SPARSE = new Set(['Jan', 'Mar', 'May', 'Jul', 'Sep', 'Nov'])
 
-function ticks(lo: number, hi: number, count: number) {
-  const step = (hi - lo) / (count - 1)
-  return Array.from({ length: count }, (_, i) => lo + step * i)
+function niceTicks(lo: number, hi: number, step: number) {
+  const start = Math.ceil(lo / step) * step
+  const end = Math.floor(hi / step) * step
+  const out: number[] = []
+  for (let v = start; v <= end + 1e-9; v += step) out.push(v)
+  return out
 }
 
 function linePath(
@@ -25,6 +28,23 @@ function linePath(
   return points
     .map((m, i) => `${i === 0 ? 'M' : 'L'}${xAt(i).toFixed(1)} ${yAt(m).toFixed(1)}`)
     .join(' ')
+}
+
+function bandPath(
+  points: ClimateMonth[],
+  xAt: (i: number) => number,
+  yBottom: (m: ClimateMonth) => number,
+  yTop: (m: ClimateMonth) => number,
+) {
+  const n = points.length
+  const fwd = points
+    .map((m, i) => `${i === 0 ? 'M' : 'L'}${xAt(i).toFixed(1)} ${yBottom(m).toFixed(1)}`)
+    .join(' ')
+  const back: string[] = []
+  for (let i = n - 1; i >= 0; i--) {
+    back.push(`L${xAt(i).toFixed(1)} ${yTop(points[i]).toFixed(1)}`)
+  }
+  return `${fwd} ${back.join(' ')} Z`
 }
 
 export function ClimateChart({
@@ -40,44 +60,71 @@ export function ClimateChart({
   const n = climate.length
   const highs = climate.map((m) => m.high)
   const lows = climate.map((m) => m.low)
-  const precips = climate.map((m) => m.precip)
-  const tLo = Math.floor((Math.min(...lows) - 4) / 5) * 5
-  const tHi = Math.ceil((Math.max(...highs) + 4) / 5) * 5
-  const pHi = Math.max(4, Math.ceil(Math.max(0, ...precips)))
+  const feelsHighs = climate.map((m) => m.feelsHigh)
+  const feelsLows = climate.map((m) => m.feelsLow)
+  const bandTop = climate.map((m) => m.highBand[1])
+  const bandBottom = climate.map((m) => m.lowBand[0])
+
+  const dataLo = Math.min(...lows, ...feelsLows, ...bandBottom)
+  const dataHi = Math.max(...highs, ...feelsHighs, ...bandTop)
+  const tLo = Math.floor(dataLo / 10) * 10
+  const tHi = Math.ceil(dataHi / 10) * 10
   const tRange = tHi - tLo || 1
   const slot = PLOT_W / n
-  const barW = slot * 0.5
 
   const xAt = (i: number) => ML + slot * (i + 0.5)
   const yTemp = (t: number) => MT + ((tHi - t) / tRange) * PLOT_H
-  const yPrecip = (p: number) => MT + ((pHi - p) / pHi) * PLOT_H
 
   const highLine = linePath(climate, xAt, (m) => yTemp(m.high))
   const lowLine = linePath(climate, xAt, (m) => yTemp(m.low))
+  const feelsHighLine = linePath(climate, xAt, (m) => yTemp(m.feelsHigh))
+  const feelsLowLine = linePath(climate, xAt, (m) => yTemp(m.feelsLow))
+  const highBand = bandPath(
+    climate,
+    xAt,
+    (m) => yTemp(m.highBand[0]),
+    (m) => yTemp(m.highBand[1]),
+  )
+  const lowBand = bandPath(
+    climate,
+    xAt,
+    (m) => yTemp(m.lowBand[0]),
+    (m) => yTemp(m.lowBand[1]),
+  )
+
+  const grid = niceTicks(tLo, tHi, 10)
 
   return (
-    <section className="hourly climate" aria-labelledby={captionId}>
+    <section className="hourly climate temp-chart" aria-labelledby={captionId}>
       <h2 className="forecast-title" id={captionId}>
-        Climate
+        Average High and Low Temperature
       </h2>
       <p className="sr-only" id={descId}>
-        {name} monthly climate with average high and low temperatures in
-        degrees Fahrenheit and precipitation in inches from January through
-        December.
+        {name} monthly average high and low temperatures in degrees Fahrenheit
+        from January through December, with 25th to 75th percentile variability
+        bands and perceived (feels-like) temperatures.
       </p>
 
       <ul className="hourly-legend">
         <li>
-          <span className="swatch high" aria-hidden="true" />
-          Avg high (°F)
+          <span className="swatch climate-high" aria-hidden="true" />
+          Avg high (&deg;F)
         </li>
         <li>
-          <span className="swatch low" aria-hidden="true" />
-          Avg low (°F)
+          <span className="swatch climate-low" aria-hidden="true" />
+          Avg low (&deg;F)
         </li>
         <li>
-          <span className="swatch precip" aria-hidden="true" />
-          Precipitation (in)
+          <span className="swatch climate-feels climate-feels-high" aria-hidden="true" />
+          Perceived high
+        </li>
+        <li>
+          <span className="swatch climate-feels climate-feels-low" aria-hidden="true" />
+          Perceived low
+        </li>
+        <li>
+          <span className="swatch climate-band" aria-hidden="true" />
+          Variability (25th&ndash;75th)
         </li>
       </ul>
 
@@ -88,7 +135,7 @@ export function ClimateChart({
           role="img"
           aria-labelledby={`${captionId} ${descId}`}
         >
-          {ticks(tLo, tHi, 4).map((t) => {
+          {grid.map((t) => {
             const y = yTemp(t)
             return (
               <g key={`grid-${t}`}>
@@ -100,64 +147,45 @@ export function ClimateChart({
                   y2={y}
                 />
                 <text className="hourly-axis" x={ML - 8} y={y + 4} textAnchor="end">
-                  {Math.round(t)}°
-                </text>
-                <text
-                  className="hourly-axis hourly-axis-right"
-                  x={ML + PLOT_W + 8}
-                  y={y + 4}
-                  textAnchor="start"
-                >
-                  {(((t - tLo) / tRange) * pHi).toFixed(1)}″
+                  {t}&deg;
                 </text>
               </g>
             )
           })}
 
-          {climate.map((m, i) => {
-            const y = yPrecip(m.precip)
-            const height = MT + PLOT_H - y
-            if (height <= 0) return null
-            return (
-              <rect
-                key={`bar-${m.month}`}
-                className="hourly-bar"
-                x={xAt(i) - barW / 2}
-                y={y}
-                width={barW}
-                height={height}
-                rx={2}
-              >
-                <title>
-                  {m.month}: {m.precip.toFixed(1)} inches of precipitation
-                </title>
-              </rect>
-            )
-          })}
+          <path className="climate-band hot" d={highBand}>
+            <title>High temperature 25th&ndash;75th percentile band</title>
+          </path>
+          <path className="climate-band cold" d={lowBand}>
+            <title>Low temperature 25th&ndash;75th percentile band</title>
+          </path>
 
-          <path className="hourly-line low" d={lowLine} />
-          <path className="hourly-line" d={highLine} />
+          <path className="climate-line feels hot" d={feelsHighLine} />
+          <path className="climate-line feels cold" d={feelsLowLine} />
+
+          <path className="climate-line hot" d={highLine} />
+          <path className="climate-line cold" d={lowLine} />
 
           {climate.map((m, i) => (
             <g key={`dots-${m.month}`}>
               <circle
-                className="hourly-dot"
+                className="climate-dot hot"
                 cx={xAt(i)}
                 cy={yTemp(m.high)}
                 r={3.5}
               >
                 <title>
-                  {m.month} high: {m.high}°F
+                  {m.month} high: {m.high}&deg;F
                 </title>
               </circle>
               <circle
-                className="hourly-dot low"
+                className="climate-dot cold"
                 cx={xAt(i)}
                 cy={yTemp(m.low)}
                 r={3}
               >
                 <title>
-                  {m.month} low: {m.low}°F
+                  {m.month} low: {m.low}&deg;F
                 </title>
               </circle>
             </g>
@@ -186,13 +214,15 @@ export function ClimateChart({
         <div className="hourly-table-wrap" tabIndex={0}>
           <table>
             <caption className="sr-only">
-              {name} monthly average high, low, and precipitation
+              {name} monthly average high, low, perceived, and precipitation
             </caption>
             <thead>
               <tr>
                 <th scope="col">Month</th>
                 <th scope="col">Avg high</th>
                 <th scope="col">Avg low</th>
+                <th scope="col">Feels high</th>
+                <th scope="col">Feels low</th>
                 <th scope="col">Precipitation</th>
               </tr>
             </thead>
@@ -202,6 +232,8 @@ export function ClimateChart({
                   <th scope="row">{m.month}</th>
                   <td>{m.high}&deg;F</td>
                   <td>{m.low}&deg;F</td>
+                  <td>{m.feelsHigh}&deg;F</td>
+                  <td>{m.feelsLow}&deg;F</td>
                   <td>{m.precip.toFixed(1)} in</td>
                 </tr>
               ))}

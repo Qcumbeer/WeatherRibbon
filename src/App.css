@@ -218,6 +218,45 @@
   opacity: 0.55;
 }
 
+.swatch.climate-high {
+  height: 3px;
+  border-radius: 999px;
+  background: var(--hot);
+}
+
+.swatch.climate-low {
+  height: 3px;
+  border-radius: 999px;
+  background: var(--cold);
+}
+
+.swatch.climate-feels {
+  height: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.swatch.climate-feels-high {
+  border-top: 2px dotted var(--hot);
+}
+
+.swatch.climate-feels-low {
+  border-top: 2px dotted var(--cold);
+}
+
+.swatch.climate-band {
+  height: 8px;
+  border-radius: 999px;
+  background: linear-gradient(
+    to right,
+    var(--hot-band) 0,
+    var(--hot-band) 50%,
+    var(--cold-band) 50%,
+    var(--cold-band) 100%
+  );
+  border: 1px solid var(--border);
+}
+
 .hourly-chart-wrap {
   width: 100%;
 }
@@ -269,6 +308,60 @@
 
 .hourly-dot.low {
   stroke: var(--text);
+}
+
+.climate-band {
+  stroke: none;
+}
+
+.climate-band.hot {
+  fill: var(--hot-band);
+}
+
+.climate-band.cold {
+  fill: var(--cold-band);
+}
+
+.climate-line {
+  fill: none;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.climate-line.hot {
+  stroke: var(--hot);
+}
+
+.climate-line.cold {
+  stroke: var(--cold);
+}
+
+.climate-line.feels {
+  stroke-width: 1.5;
+  stroke-dasharray: 2 4;
+  opacity: 0.75;
+}
+
+.climate-line.feels.hot {
+  stroke: var(--hot);
+}
+
+.climate-line.feels.cold {
+  stroke: var(--cold);
+}
+
+.climate-dot {
+  fill: var(--bg);
+  stroke-width: 2;
+}
+
+.climate-dot.hot {
+  stroke: var(--hot);
+}
+
+.climate-dot.cold {
+  stroke: var(--cold);
 }
 
 .hourly-details {
