@@ -1083,6 +1083,237 @@
   stroke-width: 0.5;
 }
 
+.header-back {
+  font-size: 13px;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.back-btn {
+  appearance: none;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--accent);
+  padding: 6px 16px;
+  margin-bottom: 20px;
+}
+
+.back-btn:hover {
+  background: var(--accent-bg);
+}
+
+.city-back-row {
+  width: min(680px, 100%);
+}
+
+.index {
+  width: min(900px, 100%);
+}
+
+.index-hero {
+  text-align: center;
+  padding: 24px 0 20px;
+}
+
+.index-title {
+  font-size: clamp(32px, 6vw, 52px);
+  margin: 0 0 8px;
+}
+
+.index-subtitle {
+  margin: 0 0 24px;
+  color: var(--text);
+  font-size: 15px;
+}
+
+.index-search-wrap {
+  width: min(520px, 100%);
+  margin: 0 auto;
+}
+
+.index-search-inner {
+  position: relative;
+}
+
+.index-search {
+  appearance: none;
+  width: 100%;
+  font: inherit;
+  font-size: 16px;
+  padding: 12px 44px 12px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-h);
+  box-shadow: var(--shadow);
+}
+
+.index-search:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.index-clear {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font-size: 16px;
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.index-clear:hover {
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+.index-results-section {
+  margin-top: 24px;
+}
+
+.index-results-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.index-count {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.index-results {
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--bg);
+  box-shadow: var(--shadow);
+  max-height: min(520px, 70vh);
+  overflow: auto;
+}
+
+.index-result {
+  appearance: none;
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  font: inherit;
+  text-align: left;
+  padding: 10px 14px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text-h);
+}
+
+.index-result.active,
+.index-result:hover {
+  background: var(--accent-bg);
+}
+
+.index-result-name {
+  font-size: 15px;
+}
+
+.index-result-region {
+  font-size: 13px;
+  color: var(--text);
+}
+
+.index-result-badge {
+  font-size: 11px;
+  color: var(--accent);
+  border: 1px solid var(--accent-border);
+  border-radius: 999px;
+  padding: 1px 8px;
+}
+
+.index-no-results {
+  text-align: center;
+}
+
+.index-no-results p {
+  max-width: 40ch;
+  margin: 0 auto;
+}
+
+.index-browse {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin-top: 32px;
+}
+
+.index-section-title {
+  font-size: 18px;
+  color: var(--text-h);
+  margin: 0 0 16px;
+}
+
+.city-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.city-card {
+  appearance: none;
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
+  font: inherit;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg);
+  color: var(--text-h);
+  transition: border-color 0.12s, box-shadow 0.12s;
+}
+
+.city-card:hover,
+.city-card:focus-visible {
+  border-color: var(--accent-border);
+  box-shadow: var(--shadow);
+  outline: none;
+}
+
+.city-card-name {
+  font-size: 15px;
+  font-weight: 560;
+}
+
+.city-card-region {
+  font-size: 13px;
+  color: var(--text);
+}
+
 @media (max-width: 640px) {
   .header {
     padding: 16px;
@@ -1111,5 +1342,23 @@
   .hourly-tick-minor,
   .climate-tick-minor {
     display: none;
+  }
+
+  .index-hero {
+    padding: 12px 0 16px;
+  }
+
+  .index-search {
+    font-size: 15px;
+    padding: 10px 40px 10px 16px;
+  }
+
+  .city-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+  }
+
+  .city-card {
+    padding: 12px 14px;
   }
 }

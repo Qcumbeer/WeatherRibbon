@@ -111,3 +111,43 @@ export function sameCity(a: CityRef, b: CityRef): boolean {
 export function cityKey(city: CityRef): string {
   return `${city.latitude.toFixed(2)},${city.longitude.toFixed(2)}`
 }
+
+export function slugify(value: string): string {
+  return value
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+}
+
+export const CITIES: CityRef[] = (() => {
+  const seen = new Set<string>()
+  return FEATURED.map((city) => {
+    let slug = city.slug ?? slugify(city.name)
+    if (!slug || seen.has(slug)) slug = `${slug || 'city'}-${slugify(city.region)}`
+    seen.add(slug)
+    return { ...city, slug }
+  })
+})()
+
+export const bySlug: Map<string, CityRef> = new Map(
+  CITIES.map((c) => [c.slug as string, c]),
+)
+
+export function findCanonical(city: CityRef): CityRef | undefined {
+  return CITIES.find((c) => sameCity(c, city))
+}
+
+export function citySlug(city: CityRef): string | undefined {
+  return findCanonical(city)?.slug
+}
+
+export function cityHref(city: CityRef): string {
+  const slug = citySlug(city)
+  if (slug) return `#/city/${slug}`
+  const name = encodeURIComponent(city.name || 'Location')
+  const region = encodeURIComponent(city.region || '')
+  const regionParam = region ? `&region=${region}` : ''
+  return `#/city/@${city.latitude.toFixed(2)},${city.longitude.toFixed(2)}?name=${name}${regionParam}`
+}
