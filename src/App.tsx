@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { AirQualityChart } from './AirQualityChart'
 import { AqiCategoryDaysChart } from './AqiCategoryDaysChart'
 import { ClimateChart } from './ClimateChart'
+import { ClimateExtremes } from './ClimateExtremes'
 import { ClimateOverviewChart } from './ClimateOverviewChart'
 import { ClimateSkylineChart } from './ClimateSkylineChart'
 import { CloudCoverChart } from './CloudCoverChart'
@@ -72,6 +73,7 @@ function CityView({
             </p>
           </section>
 
+          <ClimateExtremes climate={data.climate} />
           <ClimateSkylineChart name={data.name} climate={data.climate} />
           <WeatherWheelChart name={data.name} climate={data.climate} />
           <SeasonalRibbonChart name={data.name} climate={data.climate} />
