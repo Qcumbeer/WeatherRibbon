@@ -364,6 +364,16 @@
   stroke: var(--cold);
 }
 
+.heatmap-border {
+  fill: none;
+  stroke: var(--border);
+  stroke-width: 1;
+}
+
+.heatmap-legend-tick {
+  font-size: 10px;
+}
+
 .hourly-details {
   margin-top: 12px;
 }

@@ -1,85 +1,132 @@
 import { useId } from 'react'
-import type { HourlyPoint } from './weather'
+import type { ClimateMonth, HourlyPoint } from './weather'
 
 const WIDTH = 640
-const HEIGHT = 248
-const ML = 40
-const MR = 40
-const MT = 16
-const MB = 36
+const ML = 44
+const MR = 16
+const MT = 14
 const PLOT_W = WIDTH - ML - MR
-const PLOT_H = HEIGHT - MT - MB
+const HOURS = 24
+const MONTHS = 12
+const CELL_W = PLOT_W / MONTHS
+const CELL_H = 10.5
+const HEAT_H = HOURS * CELL_H
+const MONTH_LABEL_Y = MT + HEAT_H + 16
+const LEGEND_Y = MONTH_LABEL_Y + 20
+const LEGEND_H = 12
+const LEGEND_LABEL_Y = LEGEND_Y + LEGEND_H + 12
+const HEIGHT = LEGEND_LABEL_Y + 6
 
-const MAJOR = new Set([
-  '12 AM',
-  '3 AM',
-  '6 AM',
-  '9 AM',
-  '12 PM',
-  '3 PM',
-  '6 PM',
-  '9 PM',
-])
-const SPARSE = new Set(['12 AM', '6 AM', '12 PM', '6 PM'])
+const PEAK_HOUR = 15
 
-function shortHour(hour: string) {
-  return hour.replace(' AM', 'a').replace(' PM', 'p')
+const MONTH_LABELS = [
+  'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+]
+const SPARSE_MONTHS = new Set(['Jan', 'Mar', 'May', 'Jul', 'Sep', 'Nov'])
+const HOUR_TICKS = [
+  { h: 0, label: '12a' },
+  { h: 6, label: '6a' },
+  { h: 12, label: '12p' },
+  { h: 18, label: '6p' },
+]
+
+interface ColorStop {
+  t: number
+  c: [number, number, number]
 }
 
-function ticks(lo: number, hi: number, count: number) {
-  const step = (hi - lo) / (count - 1)
-  return Array.from({ length: count }, (_, i) => lo + step * i)
+const STOPS: ColorStop[] = [
+  { t: 20, c: [38, 50, 115] },
+  { t: 30, c: [55, 100, 170] },
+  { t: 40, c: [80, 150, 200] },
+  { t: 50, c: [110, 190, 175] },
+  { t: 60, c: [165, 200, 120] },
+  { t: 70, c: [235, 195, 85] },
+  { t: 80, c: [225, 110, 60] },
+  { t: 90, c: [185, 50, 50] },
+]
+
+function rgbStr(c: [number, number, number]) {
+  return `rgb(${c[0]},${c[1]},${c[2]})`
+}
+
+function tempColor(temp: number): string {
+  if (temp <= STOPS[0].t) return rgbStr(STOPS[0].c)
+  if (temp >= STOPS[STOPS.length - 1].t)
+    return rgbStr(STOPS[STOPS.length - 1].c)
+  for (let i = 0; i < STOPS.length - 1; i++) {
+    if (temp >= STOPS[i].t && temp <= STOPS[i + 1].t) {
+      const f = (temp - STOPS[i].t) / (STOPS[i + 1].t - STOPS[i].t)
+      return rgbStr([
+        Math.round(STOPS[i].c[0] + f * (STOPS[i + 1].c[0] - STOPS[i].c[0])),
+        Math.round(STOPS[i].c[1] + f * (STOPS[i + 1].c[1] - STOPS[i].c[1])),
+        Math.round(STOPS[i].c[2] + f * (STOPS[i + 1].c[2] - STOPS[i].c[2])),
+      ])
+    }
+  }
+  return rgbStr(STOPS[0].c)
+}
+
+function formatHour(h: number): string {
+  if (h === 0) return '12 AM'
+  if (h < 12) return `${h} AM`
+  if (h === 12) return '12 PM'
+  return `${h - 12} PM`
+}
+
+function niceRange(lo: number, hi: number, step: number): number[] {
+  const out: number[] = []
+  for (let v = lo; v <= hi + 1e-9; v += step) out.push(Math.round(v))
+  return out
+}
+
+function buildGrid(climate: ClimateMonth[]): number[][] {
+  return climate.map((m) => {
+    const avg = (m.high + m.low) / 2
+    const amp = (m.high - m.low) / 2
+    return Array.from(
+      { length: HOURS },
+      (_, h) => avg + amp * Math.cos((2 * Math.PI * (h - PEAK_HOUR)) / 24),
+    )
+  })
 }
 
 export function HourlyChart({
   name,
   hourly,
+  climate,
 }: {
   name: string
   hourly: HourlyPoint[]
+  climate: ClimateMonth[]
 }) {
   const uid = useId()
   const captionId = `${uid}-caption`
   const descId = `${uid}-desc`
-  const n = hourly.length
-  const temps = hourly.map((h) => h.temp)
-  const precips = hourly.map((h) => h.precip)
-  const tLo = Math.floor((Math.min(...temps) - 3) / 5) * 5
-  const tHi = Math.ceil((Math.max(...temps) + 3) / 5) * 5
-  const pHi = Math.max(40, Math.ceil(Math.max(0, ...precips) / 20) * 20)
-  const tRange = tHi - tLo || 1
-  const barW = (PLOT_W / n) * 0.5
+  const gradId = `${uid}-legend`
+  const grid = buildGrid(climate)
 
-  const xAt = (i: number) =>
-    ML + (n <= 1 ? PLOT_W / 2 : (i / (n - 1)) * PLOT_W)
-  const yTemp = (t: number) => MT + ((tHi - t) / tRange) * PLOT_H
-  const yPrecip = (p: number) => MT + ((pHi - p) / pHi) * PLOT_H
-
-  const line = hourly
-    .map((h, i) => `${i === 0 ? 'M' : 'L'}${xAt(i).toFixed(1)} ${yTemp(h.temp).toFixed(1)}`)
-    .join(' ')
-  const area = `${line} L${xAt(n - 1).toFixed(1)} ${MT + PLOT_H} L${xAt(0).toFixed(1)} ${MT + PLOT_H} Z`
+  const allTemps = grid.flat()
+  const minT = Math.min(...allTemps)
+  const maxT = Math.max(...allTemps)
+  const legLo = Math.floor(minT / 10) * 10
+  const legHi = Math.ceil(maxT / 10) * 10
+  const legSpan = legHi - legLo || 1
+  const legendTicks = niceRange(legLo, legHi, 10)
+  const legendGradStops = niceRange(legLo, legHi, 2)
 
   return (
-    <section className="hourly" aria-labelledby={captionId}>
+    <section className="hourly heatmap-chart" aria-labelledby={captionId}>
       <h2 className="forecast-title" id={captionId}>
-        Hourly
+        Average Hourly Temperature
       </h2>
       <p className="sr-only" id={descId}>
-        {name} hourly temperature in degrees Fahrenheit and chance of
-        precipitation for the next 24 hours.
+        {name} average hourly temperature in degrees Fahrenheit, shown as a
+        heat map across months (January through December) and hours (midnight
+        through midnight). Cooler temperatures appear blue, warmer
+        temperatures appear red.
       </p>
-
-      <ul className="hourly-legend">
-        <li>
-          <span className="swatch temp" aria-hidden="true" />
-          Temperature (°F)
-        </li>
-        <li>
-          <span className="swatch precip" aria-hidden="true" />
-          Precipitation (%)
-        </li>
-      </ul>
 
       <div className="hourly-chart-wrap">
         <svg
@@ -88,94 +135,98 @@ export function HourlyChart({
           role="img"
           aria-labelledby={`${captionId} ${descId}`}
         >
-          {ticks(tLo, tHi, 4).map((t) => {
-            const y = yTemp(t)
-            return (
-              <g key={`grid-${t}`}>
-                <line
-                  className="hourly-grid"
-                  x1={ML}
-                  x2={ML + PLOT_W}
-                  y1={y}
-                  y2={y}
-                />
-                <text className="hourly-axis" x={ML - 8} y={y + 4} textAnchor="end">
-                  {Math.round(t)}°
-                </text>
-                <text
-                  className="hourly-axis hourly-axis-right"
-                  x={ML + PLOT_W + 8}
-                  y={y + 4}
-                  textAnchor="start"
-                >
-                  {Math.round(((t - tLo) / tRange) * pHi)}%
-                </text>
-              </g>
-            )
-          })}
+          <defs>
+            <linearGradient id={gradId} x1="0" x2="1" y1="0" y2="0">
+              {legendGradStops.map((t) => {
+                const frac = (t - legLo) / legSpan
+                return (
+                  <stop
+                    key={t}
+                    offset={`${(frac * 100).toFixed(1)}%`}
+                    stopColor={tempColor(t)}
+                  />
+                )
+              })}
+            </linearGradient>
+          </defs>
 
-          {hourly.map((h, i) => {
-            const y = yPrecip(h.precip)
-            const height = MT + PLOT_H - y
-            if (height <= 0) return null
-            return (
+          {grid.map((row, mi) =>
+            row.map((temp, hi) => (
               <rect
-                key={`bar-${h.hour}`}
-                className="hourly-bar"
-                x={xAt(i) - barW / 2}
-                y={y}
-                width={barW}
-                height={height}
-                rx={2}
+                key={`cell-${mi}-${hi}`}
+                x={ML + mi * CELL_W}
+                y={MT + hi * CELL_H}
+                width={CELL_W}
+                height={CELL_H}
+                fill={tempColor(temp)}
               >
                 <title>
-                  {h.hour}: {h.precip}% chance of precipitation
+                  {MONTH_LABELS[mi]} {formatHour(hi)}: {Math.round(temp)}&deg;F
                 </title>
               </rect>
-            )
-          })}
-
-          <path className="hourly-area" d={area} />
-          <path className="hourly-line" d={line} />
-
-          {hourly.map((h, i) =>
-            MAJOR.has(h.hour) ? (
-              <circle
-                key={`dot-${h.hour}`}
-                className="hourly-dot"
-                cx={xAt(i)}
-                cy={yTemp(h.temp)}
-                r={3.5}
-              >
-                <title>
-                  {h.hour}: {h.temp}°F
-                </title>
-              </circle>
-            ) : null,
+            )),
           )}
 
-          {hourly.map((h, i) =>
-            MAJOR.has(h.hour) ? (
-              <text
-                key={`x-${h.hour}`}
-                className={
-                  SPARSE.has(h.hour)
-                    ? 'hourly-axis hourly-tick'
-                    : 'hourly-axis hourly-tick hourly-tick-minor'
-                }
-                x={xAt(i)}
-                y={MT + PLOT_H + 20}
-                textAnchor="middle"
-              >
-                {shortHour(h.hour)}
-              </text>
-            ) : null,
-          )}
+          <rect
+            className="heatmap-border"
+            x={ML}
+            y={MT}
+            width={PLOT_W}
+            height={HEAT_H}
+          />
+
+          {HOUR_TICKS.map(({ h, label }) => (
+            <text
+              key={`h-${h}`}
+              className="hourly-axis"
+              x={ML - 6}
+              y={MT + h * CELL_H + CELL_H / 2 + 4}
+              textAnchor="end"
+            >
+              {label}
+            </text>
+          ))}
+
+          {MONTH_LABELS.map((m, i) => (
+            <text
+              key={`m-${m}`}
+              className={
+                SPARSE_MONTHS.has(m)
+                  ? 'hourly-axis hourly-tick'
+                  : 'hourly-axis hourly-tick hourly-tick-minor'
+              }
+              x={ML + i * CELL_W + CELL_W / 2}
+              y={MONTH_LABEL_Y}
+              textAnchor="middle"
+            >
+              {m}
+            </text>
+          ))}
+
+          <rect
+            x={ML}
+            y={LEGEND_Y}
+            width={PLOT_W}
+            height={LEGEND_H}
+            fill={`url(#${gradId})`}
+            rx={3}
+          />
+          {legendTicks.map((t) => (
+            <text
+              key={`leg-${t}`}
+              className="hourly-axis heatmap-legend-tick"
+              x={ML + ((t - legLo) / legSpan) * PLOT_W}
+              y={LEGEND_LABEL_Y}
+              textAnchor="middle"
+            >
+              {t}&deg;
+            </text>
+          ))}
         </svg>
       </div>
 
       <details className="hourly-details">
-        <summary>View hourly data</summary>
+        <summary>View today's hourly data</summary>
         <div className="hourly-table-wrap" tabIndex={0}>
           <table>
             <caption className="sr-only">

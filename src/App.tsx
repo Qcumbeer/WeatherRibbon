@@ -90,7 +90,11 @@ function App() {
               </ul>
             </section>
 
-            <HourlyChart name={data.name} hourly={data.hourly} />
+            <HourlyChart
+              name={data.name}
+              hourly={data.hourly}
+              climate={data.climate}
+            />
             <ClimateChart name={data.name} climate={data.climate} />
 
             <div className="duo">
