@@ -140,7 +140,8 @@ export function CityIndex({ query, onQueryChange, onNavigate }: IndexViewProps) 
       <section className="index-hero">
         <h1 className="index-title">Weatherfork</h1>
         <p className="index-subtitle">
-          1991–2020 climate normals for {CITIES.length} U.S. cities.
+          1991–2020 climate normals for {CITIES.length} U.S. cities — explore
+          temperature, rainfall, and more.
         </p>
         <div className="index-search-wrap">
           <label className="sr-only" htmlFor={`${id}-search`}>
