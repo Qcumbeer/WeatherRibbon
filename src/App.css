@@ -1314,80 +1314,6 @@
   color: var(--text);
 }
 
-.swatch.skyline-height {
-  height: 14px;
-  width: 10px;
-  border-radius: 2px 2px 0 0;
-  background: var(--text);
-}
-
-.swatch.skyline-temp {
-  background: linear-gradient(to right, #2848b0, #5ac8c0, #ebbe46, #aa232d);
-}
-
-.swatch.skyline-zero {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--cold);
-}
-
-.swatch.skyline-missing {
-  background: transparent;
-  border: 1.5px dashed #94949c;
-}
-
-.skyline-baseline {
-  stroke: var(--text);
-  stroke-width: 1.25;
-}
-
-.skyline-building {
-  stroke: none;
-}
-
-.skyline-mark {
-  outline: none;
-}
-
-.skyline-mark:focus-visible .skyline-building,
-.skyline-mark.is-focused .skyline-building {
-  stroke: var(--text-h);
-  stroke-width: 2;
-}
-
-.skyline-hit {
-  fill: transparent;
-  pointer-events: all;
-}
-
-.skyline-zero-dot {
-  stroke: var(--bg);
-  stroke-width: 1.5;
-}
-
-.skyline-mark:focus-visible .skyline-zero-dot,
-.skyline-mark.is-focused .skyline-zero-dot {
-  stroke: var(--text-h);
-  stroke-width: 2;
-}
-
-.skyline-missing-stub {
-  fill: none;
-  stroke: #94949c;
-  stroke-width: 1.5;
-  stroke-dasharray: 3 2;
-}
-
-.skyline-legend-bar {
-  stroke: var(--border);
-  stroke-width: 1;
-}
-
-.skyline-readout {
-  min-height: 1.4em;
-}
-
 .swatch.ribbon-ramp {
   width: 56px;
   height: 10px;
@@ -1453,80 +1379,6 @@
 
 .ribbon-readout {
   min-height: 1.4em;
-}
-
-.ww-wrap,
-.ww-svg {
-  overflow: visible;
-}
-
-.ww-hub-disk {
-  fill: var(--bg);
-  stroke: var(--border);
-  stroke-width: 1;
-}
-
-.ww-ring {
-  fill: none;
-  stroke: var(--border);
-  stroke-width: 1;
-  opacity: 0.85;
-}
-
-.ww-ring-label {
-  font-size: 10px;
-}
-
-.ww-petal {
-  stroke: var(--bg);
-  stroke-width: 1.5;
-  cursor: pointer;
-}
-
-.ww-petal:focus {
-  outline: none;
-}
-
-.ww-petal:focus-visible,
-.ww-petal-focus {
-  stroke: var(--text-h);
-  stroke-width: 2.5;
-}
-
-.ww-month {
-  font-size: 12px;
-  font-weight: 600;
-  fill: var(--text-h);
-}
-
-.ww-hub-month {
-  fill: var(--text-h);
-  font-size: 15px;
-  font-weight: 650;
-}
-
-.ww-hub-temp,
-.ww-hub-precip {
-  fill: var(--text);
-  font-size: 11px;
-}
-
-.ww-temp-legend {
-  margin: 0 0 12px;
-}
-
-.ww-temp-bar {
-  height: 10px;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-}
-
-.ww-temp-ticks {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 4px;
-  font-size: 11px;
-  color: var(--text);
 }
 
 .climate-extremes {
@@ -1621,10 +1473,6 @@
   .hourly-tick-minor,
   .climate-tick-minor {
     display: none;
-  }
-
-  .ww-month {
-    display: inherit;
   }
 
   .index-hero {
