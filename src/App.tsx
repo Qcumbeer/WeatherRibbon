@@ -1,27 +1,10 @@
 import { useState } from 'react'
+import { WEATHER, type City } from './weather'
 import './App.css'
-
-type City = 'seattle' | 'san-francisco'
-
-const CITIES: Record<
-  City,
-  { name: string; region: string; note: string }
-> = {
-  seattle: {
-    name: 'Seattle',
-    region: 'Washington',
-    note: 'Puget Sound, evergreen hills, and a working waterfront.',
-  },
-  'san-francisco': {
-    name: 'San Francisco',
-    region: 'California',
-    note: 'Fog, hills, and a bay that defines the city.',
-  },
-}
 
 function App() {
   const [city, setCity] = useState<City | null>(null)
-  const selected = city ? CITIES[city] : null
+  const data = city ? WEATHER[city] : null
 
   return (
     <div className="shell">
@@ -50,16 +33,64 @@ function App() {
       </header>
 
       <main className="main">
-        {selected ? (
-          <article className="card">
-            <p className="eyebrow">{selected.region}</p>
-            <h1>{selected.name}</h1>
-            <p>{selected.note}</p>
-          </article>
+        {data ? (
+          <div className="weather">
+            <section className="hero-card" aria-label="Current conditions">
+              <div className="hero-top">
+                <div>
+                  <p className="eyebrow">{data.region}</p>
+                  <h1>{data.name}</h1>
+                  <p className="condition">{data.current.condition}</p>
+                </div>
+                <div className="temp-block">
+                  <span className="temp">{data.current.temp}&deg;</span>
+                  <span className="feels">
+                    Feels like {data.current.feelsLike}&deg;
+                  </span>
+                </div>
+              </div>
+
+              <dl className="stats">
+                <div className="stat">
+                  <dt>High / Low</dt>
+                  <dd>
+                    {data.current.high}&deg; / {data.current.low}&deg;
+                  </dd>
+                </div>
+                <div className="stat">
+                  <dt>Humidity</dt>
+                  <dd>{data.current.humidity}%</dd>
+                </div>
+                <div className="stat">
+                  <dt>Wind</dt>
+                  <dd>
+                    {data.current.wind} mph {data.current.windDir}
+                  </dd>
+                </div>
+              </dl>
+            </section>
+
+            <section className="forecast" aria-label="10 day forecast">
+              <h2 className="forecast-title">10-day forecast</h2>
+              <ul className="forecast-list">
+                {data.forecast.map((d, i) => (
+                  <li className="forecast-row" key={`${d.day}-${i}`}>
+                    <span className="f-day">{d.day}</span>
+                    <span className="f-cond">{d.condition}</span>
+                    <span className="f-precip">{d.precip}%</span>
+                    <span className="f-temps">
+                      <span className="f-high">{d.high}&deg;</span>
+                      <span className="f-low">{d.low}&deg;</span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          </div>
         ) : (
           <article className="card muted">
             <h1>Choose a city</h1>
-            <p>Select Seattle or San Francisco to see details.</p>
+            <p>Select Seattle or San Francisco to see the weather.</p>
           </article>
         )}
       </main>
