@@ -156,7 +156,7 @@ ok(
   document.querySelector('[role="radio"][aria-checked="true"]')?.getAttribute('data-year') === '2024',
   'ArrowLeft moves to 2024',
 )
-ok(document.activeElement === selected || document.activeElement?.getAttribute('role') === 'radio', 'year control is keyboard focusable')
+ok(document.activeElement?.getAttribute('data-year') === '2024', 'ArrowLeft moves focus to 2024')
 await cleanup()
 
 console.log('\n=== DOM: missing and zero values ===')

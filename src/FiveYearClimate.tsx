@@ -105,23 +105,28 @@ export function FiveYearClimate({
       ? selected.precipIn - summary.precipMean
       : null
 
+  function selectYear(e: KeyboardEvent<HTMLDivElement>, year: number) {
+    setSelectedYear(year)
+    e.currentTarget.querySelector<HTMLButtonElement>(`[data-year="${year}"]`)?.focus()
+  }
+
   function onYearKey(e: KeyboardEvent<HTMLDivElement>) {
     const idx = records.findIndex((r) => r.year === selectedYear)
     if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
       e.preventDefault()
       const next = records[Math.min(idx + 1, records.length - 1)]
-      if (next) setSelectedYear(next.year)
+      if (next) selectYear(e, next.year)
     } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
       e.preventDefault()
       const next = records[Math.max(idx - 1, 0)]
-      if (next) setSelectedYear(next.year)
+      if (next) selectYear(e, next.year)
     } else if (e.key === 'Home') {
       e.preventDefault()
-      if (records[0]) setSelectedYear(records[0].year)
+      if (records[0]) selectYear(e, records[0].year)
     } else if (e.key === 'End') {
       e.preventDefault()
       const last = records[records.length - 1]
-      if (last) setSelectedYear(last.year)
+      if (last) selectYear(e, last.year)
     }
   }
 
@@ -259,7 +264,11 @@ export function FiveYearClimate({
       <dl className="five-year-source">
         <div>
           <dt>Source</dt>
-          <dd>{ANNUAL_META.sourceName}</dd>
+          <dd>
+            <a href={ANNUAL_META.sourceUrl} target="_blank" rel="noreferrer">
+              {ANNUAL_META.sourceName}
+            </a>
+          </dd>
         </div>
         <div>
           <dt>Dataset</dt>
@@ -289,6 +298,10 @@ export function FiveYearClimate({
         <div>
           <dt>Record</dt>
           <dd data-source-id={selected.sourceId}>{selected.sourceId}</dd>
+        </div>
+        <div>
+          <dt>Artifact</dt>
+          <dd title={ANNUAL_META.contentHash}>{ANNUAL_META.contentHash.slice(0, 12)}…</dd>
         </div>
       </dl>
 

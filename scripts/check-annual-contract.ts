@@ -8,6 +8,7 @@ import {
   annualForCity,
   formatPrecip,
   formatTemp,
+  signedDelta,
 } from '../src/annual.ts'
 
 let failures = 0
@@ -31,10 +32,11 @@ check(ANNUAL_META.window.start === 2021 && ANNUAL_META.window.end === 2025, 'met
 check(ANNUAL_META.units.meanTempF === '°F', 'temperature unit is °F')
 check(ANNUAL_META.units.precipIn === 'in', 'precipitation unit is in')
 check(ANNUAL_META.sourceName.includes('NOAA'), 'source names NOAA')
-check(ANNUAL_META.license.toLowerCase().includes('public domain'), 'license is public domain')
+check(ANNUAL_META.license.includes('NOAA / NCEI public information'), 'license identifies NOAA public information')
 check(ANNUAL_META.method.includes('nClimGrid'), 'method documents nClimGrid')
 check(ANNUAL_META.method.includes('GHCN'), 'method documents GHCN for AK/HI')
 check(ANNUAL_META.method.includes('Trace'), 'method documents trace precipitation')
+check(/^sha256:[a-f0-9]{64}$/.test(ANNUAL_META.contentHash), 'artifact exposes a SHA-256 content hash')
 
 const bySlug = new Map<string, typeof ANNUAL_RECORDS>()
 for (const rec of ANNUAL_RECORDS) {
@@ -131,15 +133,15 @@ function expectRecord(
   )
 }
 
-expectRecord('phoenix', 2021, 75.1, 9.65)
-expectRecord('phoenix', 2023, 74.4, 4.85)
-expectRecord('phoenix', 2025, 76, 9.06)
-expectRecord('miami', 2021, 77.7, 64.69)
+expectRecord('phoenix', 2021, 75.1, 9.66)
+expectRecord('phoenix', 2023, 74.4, 4.87)
+expectRecord('phoenix', 2025, 76, 9.05)
+expectRecord('miami', 2021, 77.7, 64.75)
 expectRecord('miami', 2024, 78.2, 73.17)
-expectRecord('seattle', 2021, 53.2, 40.76)
-expectRecord('seattle', 2025, 54.1, 30.87)
-expectRecord('honolulu', 2021, 78.31, 21.34)
-expectRecord('anchorage', 2021, 35.93, 15.44)
+expectRecord('seattle', 2021, 53.2, 40.79)
+expectRecord('seattle', 2025, 54.1, 30.84)
+expectRecord('honolulu', 2021, 78.3, 21.34)
+expectRecord('anchorage', 2021, 35.9, 15.44)
 
 const mean = (slug: string, key: 'meanTempF' | 'precipIn') => {
   const recs = bySlug.get(slug) ?? []
@@ -163,6 +165,7 @@ check(formatTemp(75.1) === '75.1 °F', 'formatTemp includes unit')
 check(formatPrecip(9.65) === '9.65 in', 'formatPrecip includes unit')
 check(formatTemp(null) === '—', 'formatTemp missing is em dash')
 check(formatPrecip(0) === '0.00 in', 'zero precip is formatted, not missing')
+check(signedDelta(-0.01, '°F', 1) === '0.0 °F', 'rounded zero does not render as negative zero')
 
 const appSrc = readFileSync(new URL('../src/App.tsx', import.meta.url), 'utf8')
 check(appSrc.includes('<FiveYearClimate city={city} />'), 'App mounts FiveYearClimate on city detail')

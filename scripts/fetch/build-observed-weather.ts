@@ -27,7 +27,7 @@ import {
 import { dailySeriesHash, recordsContentHash } from '../observed-hash.ts'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '../..')
-const OUT_PATH = join(ROOT, 'data/observed-weather-2021-2025.json')
+const OUT_PATH = join(ROOT, 'data/observed/2021-2025.json')
 const CACHE_DIR = join(ROOT, 'data/.cache/observed-acis')
 const CONCURRENCY = 4
 const ATTEMPTS = 5

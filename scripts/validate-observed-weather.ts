@@ -33,7 +33,7 @@ function check(cond: boolean, label: string) {
   }
 }
 
-const artifactPath = join(dirname(fileURLToPath(import.meta.url)), '../data/observed-weather-2021-2025.json')
+const artifactPath = join(dirname(fileURLToPath(import.meta.url)), '../data/observed/2021-2025.json')
 const raw = readFileSync(artifactPath, 'utf8')
 const dataset = JSON.parse(raw) as ObservedWeatherDataset
 

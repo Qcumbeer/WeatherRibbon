@@ -1,4 +1,4 @@
-import artifact from '../data/observed-weather-2021-2025.json' with { type: 'json' }
+import artifact from '../data/observed/2021-2025.json' with { type: 'json' }
 import {
   getObservedYear,
   loadObservedWeather,
