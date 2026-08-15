@@ -1,5 +1,5 @@
 import { useId } from 'react'
-import type { ClimateMonth } from './weather'
+import type { ClimateMonth } from './dataService'
 
 const WIDTH = 640
 const HEIGHT = 300
@@ -142,14 +142,18 @@ export function PrecipChanceChart({
           <path
             className="precip-area rain"
             d={areaPath(climate, xAt, yPct, (m) => m.rain)}
-          />
+          >
+            <title>Chance of rain</title>
+          </path>
 
           {SERIES.map((s) => (
             <path
               key={`line-${s.key}`}
               className={`precip-line ${s.cls}`}
               d={linePath(climate, xAt, yPct, s.value)}
-            />
+            >
+              <title>{s.label} chance</title>
+            </path>
           ))}
 
           {climate.map((m, i) => (

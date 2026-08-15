@@ -1,143 +1,104 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ClimateChart } from './ClimateChart'
+import { ClimateOverviewChart } from './ClimateOverviewChart'
 import { CloudCoverChart } from './CloudCoverChart'
 import { DaylightChart } from './DaylightChart'
 import { HourlyChart } from './HourlyChart'
 import { PrecipChanceChart } from './PrecipChanceChart'
 import { RainfallChart } from './RainfallChart'
+import { RainIntensityChart } from './RainIntensityChart'
 import { SnowfallChart } from './SnowfallChart'
 import { HumidityComfortChart } from './HumidityComfortChart'
-import { MoonChart } from './MoonChart'
-import { SolarElevationChart } from './SolarElevationChart'
 import { SunriseSunsetChart } from './SunriseSunsetChart'
 import { WindChart } from './WindChart'
 import { CloudCoverPanel, SunshinePanel } from './SunCloudPanels'
-import { WEATHER, type City } from './weather'
+import { CityPicker } from './CityPicker'
+import { loadCity, type CityData, type CityRef } from './dataService'
 import './App.css'
 
 function App() {
-  const [city, setCity] = useState<City | null>(null)
-  const data = city ? WEATHER[city] : null
+  const [city, setCity] = useState<CityRef | null>(null)
+  const [data, setData] = useState<CityData | null>(null)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (!city) {
+      setData(null)
+      setError(null)
+      return
+    }
+    const ctrl = new AbortController()
+    setData(null)
+    setError(null)
+    setLoading(true)
+    loadCity(city, ctrl.signal)
+      .then((d) => {
+        if (ctrl.signal.aborted) return
+        setData(d)
+        setLoading(false)
+      })
+      .catch((err: unknown) => {
+        if (ctrl.signal.aborted || (err instanceof DOMException && err.name === 'AbortError')) return
+        setError(err instanceof Error ? err.message : 'Failed to load climate')
+        setLoading(false)
+      })
+    return () => {
+      ctrl.abort()
+    }
+  }, [city])
 
   return (
     <div className="shell">
       <header className="header">
         <p className="brand">Cities</p>
-        <nav className="nav" aria-label="Cities">
-          <button
-            type="button"
-            className={city === 'seattle' ? 'city-btn active' : 'city-btn'}
-            aria-pressed={city === 'seattle'}
-            onClick={() => setCity('seattle')}
-          >
-            Seattle
-          </button>
-          <button
-            type="button"
-            className={
-              city === 'san-francisco' ? 'city-btn active' : 'city-btn'
-            }
-            aria-pressed={city === 'san-francisco'}
-            onClick={() => setCity('san-francisco')}
-          >
-            San Francisco
-          </button>
-        </nav>
+        <CityPicker value={city} onChange={setCity} />
       </header>
 
       <main className="main">
-        {data ? (
+        {data && city ? (
           <div className="weather">
-            <section className="hero-card" aria-label="Current conditions">
-              <div className="hero-top">
-                <div>
-                  <p className="eyebrow">{data.region}</p>
-                  <h1>{data.name}</h1>
-                  <p className="condition">{data.current.condition}</p>
-                </div>
-                <div className="temp-block">
-                  <span className="temp">{data.current.temp}&deg;</span>
-                  <span className="feels">
-                    Feels like {data.current.feelsLike}&deg;
-                  </span>
-                </div>
-              </div>
-
-              <dl className="stats">
-                <div className="stat">
-                  <dt>High / Low</dt>
-                  <dd>
-                    {data.current.high}&deg; / {data.current.low}&deg;
-                  </dd>
-                </div>
-                <div className="stat">
-                  <dt>Humidity</dt>
-                  <dd>{data.current.humidity}%</dd>
-                </div>
-                <div className="stat">
-                  <dt>Wind</dt>
-                  <dd>
-                    {data.current.wind} mph {data.current.windDir}
-                  </dd>
-                </div>
-              </dl>
+            <section className="card" aria-label="About this data">
+              <p className="eyebrow">{data.region}</p>
+              <h1>{data.name}</h1>
+              <p className="panel-note">
+                {data.source} &middot; {data.period}
+              </p>
             </section>
 
-            <section className="forecast" aria-label="10 day forecast">
-              <h2 className="forecast-title">10-day forecast</h2>
-              <ul className="forecast-list">
-                {data.forecast.map((d, i) => (
-                  <li className="forecast-row" key={`${d.day}-${i}`}>
-                    <span className="f-day">{d.day}</span>
-                    <span className="f-cond">{d.condition}</span>
-                    <span className="f-precip">{d.precip}%</span>
-                    <span className="f-temps">
-                      <span className="f-high">{d.high}&deg;</span>
-                      <span className="f-low">{d.low}&deg;</span>
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </section>
-
-            <HourlyChart
-              name={data.name}
-              hourly={data.hourly}
-              climate={data.climate}
-            />
+            <HourlyChart name={data.name} climate={data.climate} />
             <ClimateChart name={data.name} climate={data.climate} />
-            <CloudCoverChart name={data.name} climate={data.climate} />
+            <ClimateOverviewChart name={data.name} climate={data.climate} />
             <PrecipChanceChart name={data.name} climate={data.climate} />
             <RainfallChart name={data.name} climate={data.climate} />
+            <RainIntensityChart name={data.name} climate={data.climate} />
             <SnowfallChart name={data.name} climate={data.climate} />
+            <HumidityComfortChart name={data.name} climate={data.climate} />
+            <CloudCoverChart name={data.name} climate={data.climate} />
+
+            <div className="duo">
+              <SunshinePanel name={data.name} climate={data.climate} />
+              <CloudCoverPanel name={data.name} climate={data.climate} />
+            </div>
+
+            <WindChart name={data.name} climate={data.climate} />
             <DaylightChart name={data.name} latitude={data.latitude} />
             <SunriseSunsetChart
               name={data.name}
               latitude={data.latitude}
               longitude={data.longitude}
             />
-            <SolarElevationChart
-              name={data.name}
-              latitude={data.latitude}
-              longitude={data.longitude}
-            />
-            <MoonChart
-              name={data.name}
-              latitude={data.latitude}
-              longitude={data.longitude}
-            />
-            <HumidityComfortChart name={data.name} climate={data.climate} />
-            <WindChart name={data.name} climate={data.climate} />
-
-            <div className="duo">
-              <SunshinePanel name={data.name} climate={data.climate} />
-              <CloudCoverPanel name={data.name} climate={data.climate} />
-            </div>
           </div>
         ) : (
           <article className="card muted">
-            <h1>Choose a city</h1>
-            <p>Select Seattle or San Francisco to see the weather.</p>
+            <h1>{loading ? 'Loading…' : error ? 'Could not load city' : 'Choose a city'}</h1>
+            <p>
+              {loading
+                ? 'Fetching 1991–2020 ERA5 climate…'
+                : error
+                  ? error
+                  : 'Search any city, or pick from the featured list.'}
+            </p>
           </article>
         )}
       </main>

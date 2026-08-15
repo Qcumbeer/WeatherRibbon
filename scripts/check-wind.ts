@@ -1,4 +1,4 @@
-import { WEATHER, type City } from '../src/weather.ts'
+import { readFileSync, readdirSync } from 'node:fs'
 import { sampleYear, YEAR, STEP } from '../src/seasonal.ts'
 
 const EPS = 1e-9
@@ -17,10 +17,24 @@ function fmt(v: number) {
   return v.toFixed(2)
 }
 
-for (const key of Object.keys(WEATHER) as City[]) {
-  const city = WEATHER[key]
+interface ClimateMonth {
+  month: string
+  wind: number
+  windBand: [number, number]
+}
+
+interface CityFile {
+  name: string
+  climate: ClimateMonth[]
+}
+
+const files = readdirSync('data').filter((f) => f.endsWith('.json'))
+check(files.length > 0, `found city datasets in data/ (${files.join(', ')})`)
+
+for (const file of files) {
+  const city: CityFile = JSON.parse(readFileSync(`data/${file}`, 'utf8'))
   const climate = city.climate
-  console.log(`\n=== ${city.name} ===`)
+  console.log(`\n=== ${city.name} (${file}) ===`)
 
   const avgs = climate.map((m) => m.wind)
   const lows = climate.map((m) => m.windBand[0])
@@ -65,7 +79,6 @@ for (const key of Object.keys(WEATHER) as City[]) {
   // 3) Deliberate edge case: the calm summer minimum.
   const calmIdx = avgs.indexOf(Math.min(...avgs))
   const calmMonth = climate[calmIdx].month
-  const isSummer = ['Jun', 'Jul', 'Aug', 'Sep'].includes(climate[calmIdx].month)
   console.log(
     `  calmest month ${calmMonth}: mean ${fmt(avgs[calmIdx])} mph, 25th ${fmt(lows[calmIdx])} mph`,
   )
@@ -73,7 +86,8 @@ for (const key of Object.keys(WEATHER) as City[]) {
     lows[calmIdx] >= 0 && lows[calmIdx] <= avgs[calmIdx],
     `calm minimum (${calmMonth}) band is valid and above zero`,
   )
-  if (key === 'seattle') {
+  if (file === 'seattle.json') {
+    const isSummer = ['Jun', 'Jul', 'Aug', 'Sep'].includes(calmMonth)
     check(isSummer, 'Seattle calm minimum occurs in summer (edge case present)')
   }
 

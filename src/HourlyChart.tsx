@@ -1,5 +1,5 @@
 import { useId } from 'react'
-import type { ClimateMonth, HourlyPoint } from './weather'
+import type { ClimateMonth } from './dataService'
 
 const WIDTH = 640
 const ML = 44
@@ -94,11 +94,9 @@ function buildGrid(climate: ClimateMonth[]): number[][] {
 
 export function HourlyChart({
   name,
-  hourly,
   climate,
 }: {
   name: string
-  hourly: HourlyPoint[]
   climate: ClimateMonth[]
 }) {
   const uid = useId()
@@ -224,33 +222,6 @@ export function HourlyChart({
           ))}
         </svg>
       </div>
-
-      <details className="hourly-details">
-        <summary>View today's hourly data</summary>
-        <div className="hourly-table-wrap" tabIndex={0}>
-          <table>
-            <caption className="sr-only">
-              {name} hourly temperature and precipitation
-            </caption>
-            <thead>
-              <tr>
-                <th scope="col">Hour</th>
-                <th scope="col">Temperature</th>
-                <th scope="col">Precipitation</th>
-              </tr>
-            </thead>
-            <tbody>
-              {hourly.map((h) => (
-                <tr key={h.hour}>
-                  <th scope="row">{h.hour}</th>
-                  <td>{h.temp}&deg;F</td>
-                  <td>{h.precip}%</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </details>
     </section>
   )
 }

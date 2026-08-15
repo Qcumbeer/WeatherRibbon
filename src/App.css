@@ -23,15 +23,14 @@
   color: var(--text-h);
 }
 
-.nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+.city-picker {
+  position: relative;
+  width: min(420px, 100%);
 }
 
-.city-btn {
+.city-search {
   appearance: none;
-  cursor: pointer;
+  width: 100%;
   font: inherit;
   font-size: 15px;
   padding: 8px 14px;
@@ -39,22 +38,68 @@
   border: 1px solid var(--border);
   background: var(--bg);
   color: var(--text-h);
-  transition: background 0.15s, border-color 0.15s, color 0.15s;
 }
 
-.city-btn:hover {
-  border-color: var(--accent-border);
-}
-
-.city-btn:focus-visible {
+.city-search:focus {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
-.city-btn.active {
+.city-results {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 6px);
+  right: 0;
+  left: 0;
+  max-height: min(420px, 70vh);
+  overflow: auto;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--bg);
+  box-shadow: var(--shadow);
+}
+
+.city-option {
+  appearance: none;
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  font: inherit;
+  text-align: left;
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text-h);
+}
+
+.city-option.active,
+.city-option:hover {
   background: var(--accent-bg);
-  border-color: var(--accent-border);
+}
+
+.city-option.current .city-option-name {
   color: var(--accent);
+}
+
+.city-option-name {
+  font-size: 15px;
+}
+
+.city-option-region {
+  font-size: 12px;
+  color: var(--text);
+}
+
+.city-empty {
+  padding: 10px 12px;
+  font-size: 14px;
 }
 
 .main {
@@ -71,21 +116,12 @@
   gap: 20px;
 }
 
-.hero-card,
 .card {
   padding: 28px;
   border: 1px solid var(--border);
   border-radius: 16px;
   background: var(--bg);
   box-shadow: var(--shadow);
-}
-
-.hero-top {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 20px;
 }
 
 .eyebrow {
@@ -96,66 +132,11 @@
   color: var(--accent);
 }
 
-.hero-card h1 {
+.card h1 {
   margin: 0 0 6px;
   font-size: clamp(28px, 5vw, 40px);
 }
 
-.condition {
-  margin: 0;
-  font-size: 17px;
-  color: var(--text);
-}
-
-.temp-block {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 2px;
-}
-
-.temp {
-  font-size: clamp(48px, 9vw, 68px);
-  line-height: 1;
-  font-weight: 560;
-  color: var(--text-h);
-  letter-spacing: -0.03em;
-}
-
-.feels {
-  font-size: 14px;
-  color: var(--text);
-}
-
-.stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin: 24px 0 0;
-  padding-top: 20px;
-  border-top: 1px solid var(--border);
-}
-
-.stat {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.stat dt {
-  font-size: 12px;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--text);
-}
-
-.stat dd {
-  margin: 0;
-  font-size: 16px;
-  color: var(--text-h);
-}
-
-.forecast,
 .hourly,
 .climate {
   border: 1px solid var(--border);
@@ -581,6 +562,129 @@
   stroke-width: 2;
 }
 
+.swatch.ri-bar {
+  height: 10px;
+  border-radius: 3px;
+}
+
+.swatch.ri-bar.light {
+  background: var(--precip-rain);
+  opacity: 0.4;
+}
+
+.swatch.ri-bar.moderate {
+  background: var(--precip-rain);
+  opacity: 0.7;
+}
+
+.swatch.ri-bar.heavy {
+  background: var(--precip-rain);
+}
+
+.swatch.ri-days {
+  height: 3px;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+.ri-bar-rect {
+  stroke: var(--bg);
+  stroke-width: 0.5;
+}
+
+.ri-bar-rect.light {
+  fill: var(--precip-rain);
+  opacity: 0.4;
+}
+
+.ri-bar-rect.moderate {
+  fill: var(--precip-rain);
+  opacity: 0.7;
+}
+
+.ri-bar-rect.heavy {
+  fill: var(--precip-rain);
+}
+
+.ri-days-line {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.ri-days-dot {
+  fill: var(--bg);
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+
+.ri-axis-right {
+  fill: var(--text);
+}
+
+.ri-axis-cap {
+  font-size: 8px;
+  fill: var(--text);
+}
+
+.swatch.ov-rain {
+  height: 10px;
+  border-radius: 3px;
+  background: var(--precip-rain-fill);
+  border: 1px solid var(--precip-rain);
+}
+
+.swatch.ov-temp {
+  height: 3px;
+  border-radius: 999px;
+  background: var(--hot);
+}
+
+.swatch.ov-sun {
+  height: 3px;
+  border-radius: 999px;
+  background: var(--sun);
+  border-top: 2px dashed var(--sun);
+  border-bottom: 0;
+}
+
+.ov-rain-bar {
+  fill: var(--precip-rain-fill);
+  stroke: var(--precip-rain);
+  stroke-width: 1;
+}
+
+.ov-temp-line {
+  fill: none;
+  stroke: var(--hot);
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.ov-sun-line {
+  fill: none;
+  stroke: var(--sun);
+  stroke-width: 2;
+  stroke-dasharray: 5 3;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.ov-temp-dot {
+  fill: var(--bg);
+  stroke: var(--hot);
+  stroke-width: 2;
+}
+
+.ov-sun-dot {
+  fill: var(--bg);
+  stroke: var(--sun);
+  stroke-width: 2;
+}
+
 .dl-area {
   stroke: var(--bg);
   stroke-width: 0.5;
@@ -687,89 +791,6 @@
   background: transparent;
   border-top: 2px dashed var(--accent);
   opacity: 0.7;
-}
-
-.swatch.se-swatch {
-  width: 14px;
-  height: 14px;
-  border-radius: 3px;
-  border: 1px solid var(--border);
-}
-
-.swatch.se-contour {
-  height: 0;
-  width: 18px;
-  border-radius: 0;
-  background: transparent;
-  border-top: 2px solid #1a1a2e;
-}
-
-.se-contour-line {
-  fill: none;
-  stroke: #1a1a2e;
-  stroke-width: 0.75;
-  opacity: 0.5;
-}
-
-.se-contour-line.horizon {
-  stroke-width: 1.5;
-  opacity: 0.8;
-}
-
-.moon-up {
-  fill: var(--moon-up);
-  stroke: none;
-}
-
-.moon-phase-line {
-  stroke-width: 1.25;
-}
-
-.moon-phase-line.new {
-  stroke: var(--moon-new);
-  stroke-dasharray: 3 3;
-  opacity: 0.7;
-}
-
-.moon-phase-line.full {
-  stroke: var(--moon-full);
-  opacity: 0.9;
-}
-
-.moon-phase-label {
-  font-size: 8px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-}
-
-.moon-phase-label.new {
-  fill: var(--moon-new);
-}
-
-.moon-phase-label.full {
-  fill: var(--moon-full);
-}
-
-.swatch.moon-up-swatch {
-  height: 10px;
-  border-radius: 3px;
-  background: var(--moon-up);
-}
-
-.swatch.moon-new-mark {
-  height: 0;
-  width: 18px;
-  border-radius: 0;
-  background: transparent;
-  border-top: 2px dashed var(--moon-new);
-}
-
-.swatch.moon-full-mark {
-  height: 0;
-  width: 18px;
-  border-radius: 0;
-  background: transparent;
-  border-top: 2px solid var(--moon-full);
 }
 
 .hc-area {
@@ -906,56 +927,6 @@
   color: var(--text-h);
 }
 
-.forecast-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.forecast-row {
-  display: grid;
-  grid-template-columns: 56px 1fr 56px 88px;
-  align-items: center;
-  gap: 12px;
-  padding: 9px 0;
-  border-top: 1px solid var(--border);
-  font-size: 15px;
-}
-
-.forecast-row:first-child {
-  border-top: none;
-}
-
-.f-day {
-  font-weight: 600;
-  color: var(--text-h);
-}
-
-.f-cond {
-  color: var(--text);
-}
-
-.f-precip {
-  color: var(--accent);
-  font-size: 13px;
-  text-align: right;
-}
-
-.f-temps {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-}
-
-.f-high {
-  color: var(--text-h);
-  font-weight: 600;
-}
-
-.f-low {
-  color: var(--text);
-}
-
 .card.muted {
   width: min(560px, 100%);
   text-align: left;
@@ -1026,10 +997,6 @@
   color: var(--text);
 }
 
-.card h1 {
-  margin: 0 0 12px;
-}
-
 .card p {
   margin: 0;
   max-width: 42ch;
@@ -1045,9 +1012,7 @@
     place-items: start stretch;
   }
 
-  .hero-card,
   .card,
-  .forecast,
   .hourly,
   .climate {
     padding: 20px;
@@ -1064,18 +1029,6 @@
 
   .hourly-tick-minor,
   .climate-tick-minor {
-    display: none;
-  }
-
-  .stats {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .forecast-row {
-    grid-template-columns: 48px 1fr 76px;
-  }
-
-  .f-precip {
     display: none;
   }
 }

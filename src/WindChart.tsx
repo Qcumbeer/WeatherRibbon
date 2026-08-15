@@ -1,5 +1,5 @@
 import { useId } from 'react'
-import type { ClimateMonth } from './weather'
+import type { ClimateMonth } from './dataService'
 import {
   YEAR,
   MID_DAY,
@@ -106,7 +106,9 @@ export function WindChart({
           >
             <title>25th&ndash;75th percentile wind speed band</title>
           </path>
-          <path className="wind-avg-line" d={lineFrom(avgSeries, xDay, yIn)} />
+          <path className="wind-avg-line" d={lineFrom(avgSeries, xDay, yIn)}>
+            <title>Average wind speed (daily mean)</title>
+          </path>
 
           {climate.map((m, i) => (
             <circle

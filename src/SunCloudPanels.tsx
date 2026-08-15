@@ -1,5 +1,5 @@
 import { useId } from 'react'
-import type { ClimateMonth } from './weather'
+import type { ClimateMonth } from './dataService'
 
 const WIDTH = 320
 const HEIGHT = 118

@@ -1,5 +1,5 @@
 import { useId } from 'react'
-import type { ClimateMonth } from './weather'
+import type { ClimateMonth } from './dataService'
 
 const WIDTH = 640
 const HEIGHT = 300
@@ -160,11 +160,19 @@ export function ClimateChart({
             <title>Low temperature 25th&ndash;75th percentile band</title>
           </path>
 
-          <path className="climate-line feels hot" d={feelsHighLine} />
-          <path className="climate-line feels cold" d={feelsLowLine} />
+          <path className="climate-line feels hot" d={feelsHighLine}>
+            <title>Perceived (feels-like) high temperature</title>
+          </path>
+          <path className="climate-line feels cold" d={feelsLowLine}>
+            <title>Perceived (feels-like) low temperature</title>
+          </path>
 
-          <path className="climate-line hot" d={highLine} />
-          <path className="climate-line cold" d={lowLine} />
+          <path className="climate-line hot" d={highLine}>
+            <title>Average high temperature</title>
+          </path>
+          <path className="climate-line cold" d={lowLine}>
+            <title>Average low temperature</title>
+          </path>
 
           {climate.map((m, i) => (
             <g key={`dots-${m.month}`}>

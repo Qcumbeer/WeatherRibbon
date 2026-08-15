@@ -1,5 +1,5 @@
 import { useId } from 'react'
-import type { ClimateMonth } from './weather'
+import type { ClimateMonth } from './dataService'
 
 const WIDTH = 640
 const HEIGHT = 300
@@ -165,7 +165,9 @@ export function SnowfallChart({
           >
             <title>25th&ndash;75th percentile snowfall band</title>
           </path>
-          <path className="snow-avg-line" d={lineFrom(avgSeries, xDay, yIn)} />
+          <path className="snow-avg-line" d={lineFrom(avgSeries, xDay, yIn)}>
+            <title>Average snowfall (31-day total)</title>
+          </path>
 
           {climate.map((m, i) => (
             <circle
