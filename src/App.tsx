@@ -15,6 +15,7 @@ import { SunriseSunsetChart } from './SunriseSunsetChart'
 import { WindChart } from './WindChart'
 import { CloudCoverPanel, SunshinePanel } from './SunCloudPanels'
 import { CityIndex } from './CityIndex'
+import { FiveYearClimate } from './FiveYearClimate'
 import { loadCity, type CityData, type CityRef } from './dataService'
 import { useHashRoute } from './useHashRoute'
 import { routeToCity } from './router'
@@ -59,8 +60,10 @@ function CityView({
           ← Back to cities
         </button>
       </div>
-      {data ? (
-        <div className="weather">
+      <div className="weather">
+        <FiveYearClimate city={city} />
+        {data ? (
+          <>
           <section className="card" aria-label="About this data">
             <p className="eyebrow">{data.region}</p>
             <h1>{data.name}</h1>
@@ -94,8 +97,8 @@ function CityView({
             latitude={data.latitude}
             longitude={data.longitude}
           />
-        </div>
-      ) : (
+          </>
+        ) : (
         <article className="card muted">
           <h1>{loading ? 'Loading…' : 'Could not load city'}</h1>
           <p>
@@ -104,7 +107,8 @@ function CityView({
               : error ?? 'Unable to load this city.'}
           </p>
         </article>
-      )}
+        )}
+      </div>
     </>
   )
 }

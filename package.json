@@ -8,6 +8,11 @@
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "validate": "node scripts/validate-cities.ts",
+    "check:index": "node scripts/check-index.ts",
+    "check:index-dom": "node scripts/check-index-dom.ts",
+    "check:wind": "node scripts/check-wind.ts",
+    "check:annual": "node scripts/check-annual-contract.ts",
+    "check:annual-dom": "npx tsx --tsconfig tsconfig.app.json scripts/check-annual-dom.ts",
     "preview": "vite preview"
   },
   "dependencies": {

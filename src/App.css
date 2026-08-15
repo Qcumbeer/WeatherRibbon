@@ -1314,6 +1314,130 @@
   color: var(--text);
 }
 
+.five-year-caution {
+  margin: 0 0 16px;
+  font-size: 14px;
+  color: var(--text);
+  max-width: 62ch;
+}
+
+.five-year-years {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 16px;
+}
+
+.five-year-year {
+  appearance: none;
+  font: inherit;
+  font-size: 14px;
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--text-h);
+  cursor: pointer;
+}
+
+.five-year-year.selected,
+.five-year-year[aria-checked='true'] {
+  background: var(--accent-bg);
+  border-color: var(--accent-border);
+  color: var(--accent);
+}
+
+.five-year-year:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.five-year-compare {
+  display: grid;
+  gap: 4px;
+  margin: 0 0 16px;
+  font-size: 15px;
+  color: var(--text-h);
+}
+
+.five-year-compare p {
+  margin: 0;
+}
+
+.five-year-charts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 0 0 16px;
+}
+
+.five-year-chart {
+  margin: 0;
+}
+
+.five-year-chart figcaption {
+  font-size: 13px;
+  color: var(--text);
+  margin: 0 0 8px;
+}
+
+.five-year-bar {
+  fill: var(--accent);
+  opacity: 0.45;
+}
+
+.five-year-bar.temp {
+  fill: var(--hot);
+}
+
+.five-year-bar.precip {
+  fill: var(--precip-rain);
+}
+
+.five-year-bar.selected {
+  opacity: 1;
+}
+
+.five-year-direction {
+  margin: 0 0 16px;
+  font-size: 14px;
+  max-width: 68ch;
+}
+
+.five-year-source {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px 16px;
+  margin: 0;
+}
+
+.five-year-source div {
+  margin: 0;
+}
+
+.five-year-source dt {
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.five-year-source dd {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: var(--text-h);
+}
+
+@media (max-width: 640px) {
+  .five-year-charts {
+    grid-template-columns: 1fr;
+  }
+
+  .five-year-source {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 640px) {
   .header {
     padding: 16px;
