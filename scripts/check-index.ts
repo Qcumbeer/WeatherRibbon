@@ -183,7 +183,7 @@ check(emptyResults.length === CITIES.length, 'empty query returns all cities')
 
 // Case-insensitive
 check(filterCities('SEATTLE').length === 1, 'case-insensitive search works')
-check(filterCities('Tokyo').length === 1, 'mixed-case search works')
+check(filterCities('ChiCaGo').length === 1, 'mixed-case search works')
 
 // Partial match
 check(filterCities('san').some((c) => c.name === 'San Francisco'), 'partial match "san" finds San Francisco')

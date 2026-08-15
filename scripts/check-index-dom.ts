@@ -152,7 +152,7 @@ ok(afterBack2.view === 'index' && afterBack2.query === '', 'Back again returns t
 // Stable shareable URL: deep-link to city slug resolves.
 // ---------------------------------------------------------------------------
 console.log('\n=== DOM: stable shareable city URLs ===')
-for (const slug of ['seattle', 'san-francisco', 'tokyo', 'london', 'new-york']) {
+for (const slug of ['seattle', 'san-francisco', 'miami', 'denver', 'new-york']) {
   const city = bySlug.get(slug)
   if (city) {
     const hash = cityHref(city)
