@@ -10,10 +10,12 @@ import { HourlyChart } from './HourlyChart'
 import { PrecipChanceChart } from './PrecipChanceChart'
 import { RainfallChart } from './RainfallChart'
 import { RainIntensityChart } from './RainIntensityChart'
+import { SeasonalRibbonChart } from './SeasonalRibbonChart'
 import { SnowfallChart } from './SnowfallChart'
 import { HumidityComfortChart } from './HumidityComfortChart'
 import { SunriseSunsetChart } from './SunriseSunsetChart'
 import { WindChart } from './WindChart'
+import { WeatherWheelChart } from './WeatherWheelChart'
 import { CloudCoverPanel, SunshinePanel } from './SunCloudPanels'
 import { CityIndex } from './CityIndex'
 import { loadCity, type CityData, type CityRef } from './dataService'
@@ -71,6 +73,8 @@ function CityView({
           </section>
 
           <ClimateSkylineChart name={data.name} climate={data.climate} />
+          <WeatherWheelChart name={data.name} climate={data.climate} />
+          <SeasonalRibbonChart name={data.name} climate={data.climate} />
           <HourlyChart name={data.name} climate={data.climate} />
           <ClimateChart name={data.name} climate={data.climate} />
           <ClimateOverviewChart name={data.name} climate={data.climate} />

@@ -1388,6 +1388,147 @@
   min-height: 1.4em;
 }
 
+.swatch.ribbon-ramp {
+  width: 56px;
+  height: 10px;
+  border-radius: 3px;
+  border: 1px solid var(--border);
+}
+
+.swatch.ribbon-thickness {
+  height: 12px;
+  border-radius: 999px / 60%;
+  background: var(--text);
+  opacity: 0.45;
+  clip-path: polygon(0 35%, 50% 0, 100% 35%, 100% 65%, 50% 100%, 0 65%);
+}
+
+.ribbon-svg {
+  border-radius: 10px;
+}
+
+.ribbon-svg:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.ribbon-boundary {
+  stroke: var(--border);
+  stroke-width: 1;
+  opacity: 0.6;
+}
+
+.ribbon-thread {
+  fill: none;
+  stroke: var(--text);
+  stroke-width: 1;
+  stroke-dasharray: 2 4;
+  opacity: 0.5;
+}
+
+.ribbon-slice {
+  stroke: none;
+}
+
+.ribbon-outline {
+  fill: none;
+  stroke: var(--text-h);
+  stroke-width: 1;
+  stroke-linejoin: round;
+  opacity: 0.35;
+}
+
+.ribbon-hit {
+  fill: transparent;
+  pointer-events: all;
+  cursor: pointer;
+}
+
+.ribbon-focus {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2;
+  pointer-events: none;
+}
+
+.ribbon-readout {
+  min-height: 1.4em;
+}
+
+.ww-wrap,
+.ww-svg {
+  overflow: visible;
+}
+
+.ww-hub-disk {
+  fill: var(--bg);
+  stroke: var(--border);
+  stroke-width: 1;
+}
+
+.ww-ring {
+  fill: none;
+  stroke: var(--border);
+  stroke-width: 1;
+  opacity: 0.85;
+}
+
+.ww-ring-label {
+  font-size: 10px;
+}
+
+.ww-petal {
+  stroke: var(--bg);
+  stroke-width: 1.5;
+  cursor: pointer;
+}
+
+.ww-petal:focus {
+  outline: none;
+}
+
+.ww-petal:focus-visible,
+.ww-petal-focus {
+  stroke: var(--text-h);
+  stroke-width: 2.5;
+}
+
+.ww-month {
+  font-size: 12px;
+  font-weight: 600;
+  fill: var(--text-h);
+}
+
+.ww-hub-month {
+  fill: var(--text-h);
+  font-size: 15px;
+  font-weight: 650;
+}
+
+.ww-hub-temp,
+.ww-hub-precip {
+  fill: var(--text);
+  font-size: 11px;
+}
+
+.ww-temp-legend {
+  margin: 0 0 12px;
+}
+
+.ww-temp-bar {
+  height: 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+}
+
+.ww-temp-ticks {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--text);
+}
+
 @media (max-width: 640px) {
   .header {
     padding: 16px;
@@ -1416,6 +1557,10 @@
   .hourly-tick-minor,
   .climate-tick-minor {
     display: none;
+  }
+
+  .ww-month {
+    display: inherit;
   }
 
   .index-hero {

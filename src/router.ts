@@ -1,4 +1,4 @@
-import { bySlug, type CityRef } from './cities'
+import { bySlug, type CityRef } from './cities.ts'
 
 export type Route =
   | { view: 'index'; query: string }

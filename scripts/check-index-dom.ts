@@ -1,6 +1,6 @@
 import { JSDOM } from 'jsdom'
-import { CITIES, bySlug, cityHref } from '../src/cities'
-import { parseHash, routeToCity } from '../src/router'
+import { CITIES, bySlug, cityHref } from '../src/cities.ts'
+import { parseHash, routeToCity } from '../src/router.ts'
 
 let failures = 0
 let pass = 0
