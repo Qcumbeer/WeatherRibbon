@@ -1,5 +1,5 @@
-import { CITIES, bySlug, cityHref, citySlug, findCanonical, sameCity, slugify } from '../src/cities'
-import { parseHash, routeToCity, serializeRoute, type Route } from '../src/router'
+import { CITIES, bySlug, cityHref, citySlug, findCanonical, sameCity, slugify } from '../src/cities.ts'
+import { parseHash, routeToCity, serializeRoute, type Route } from '../src/router.ts'
 
 let failures = 0
 const checks: { label: string; ok: boolean; detail?: string }[] = []
