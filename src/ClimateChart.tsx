@@ -95,7 +95,7 @@ export function ClimateChart({
   const grid = niceTicks(tLo, tHi, 10)
 
   return (
-    <section className="hourly climate temp-chart" aria-labelledby={captionId}>
+    <section className="hourly climate temp-chart" aria-labelledby={captionId} data-chart="ribbon">
       <h2 className="forecast-title" id={captionId}>
         Average High and Low Temperature
       </h2>

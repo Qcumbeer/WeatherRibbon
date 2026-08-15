@@ -13,6 +13,7 @@
     "check:wind": "node scripts/check-wind.ts",
     "check:annual": "node scripts/check-annual-contract.ts",
     "check:annual-dom": "npx tsx --tsconfig tsconfig.app.json scripts/check-annual-dom.ts",
+    "check:ribbon": "npx tsx --tsconfig tsconfig.app.json scripts/check-ribbon-order.ts",
     "fetch:observed": "node scripts/fetch/build-observed-weather.ts",
     "preview": "vite preview"
   },

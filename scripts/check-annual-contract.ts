@@ -167,8 +167,8 @@ check(formatTemp(null) === '—', 'formatTemp missing is em dash')
 check(formatPrecip(0) === '0.00 in', 'zero precip is formatted, not missing')
 check(signedDelta(-0.01, '°F', 1) === '0.0 °F', 'rounded zero does not render as negative zero')
 
-const appSrc = readFileSync(new URL('../src/App.tsx', import.meta.url), 'utf8')
-check(appSrc.includes('<FiveYearClimate city={city} />'), 'App mounts FiveYearClimate on city detail')
+const cityViewSrc = readFileSync(new URL('../src/CityView.tsx', import.meta.url), 'utf8')
+check(cityViewSrc.includes('<FiveYearClimate city={city} />'), 'CityView mounts FiveYearClimate on city detail')
 
 if (failures > 0) {
   console.error(`\n${failures} annual contract check(s) failed`)
