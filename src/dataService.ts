@@ -26,6 +26,18 @@ export interface ClimateMonth {
   dewPoint: number
 }
 
+export interface WindRoseMonth {
+  month: string
+  n: number
+  ne: number
+  e: number
+  se: number
+  s: number
+  sw: number
+  w: number
+  nw: number
+}
+
 export interface CityData {
   name: string
   region: string
@@ -34,6 +46,7 @@ export interface CityData {
   source: string
   period: string
   climate: ClimateMonth[]
+  windRose?: WindRoseMonth[]
 }
 
 // Lazy-load each city's climate JSON as a separate chunk.

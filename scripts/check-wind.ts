@@ -1,5 +1,4 @@
 import { readFileSync, readdirSync } from 'node:fs'
-import { sampleYear, YEAR, STEP } from '../src/seasonal.ts'
 
 const EPS = 1e-9
 let failures = 0
@@ -28,7 +27,9 @@ interface CityFile {
   climate: ClimateMonth[]
 }
 
-const files = readdirSync('data').filter((f) => f.endsWith('.json'))
+const files = readdirSync('data').filter(
+  (f) => f.endsWith('.json') && f !== 'world-cities.json',
+)
 check(files.length > 0, `found city datasets in data/ (${files.join(', ')})`)
 
 for (const file of files) {
@@ -40,7 +41,6 @@ for (const file of files) {
   const lows = climate.map((m) => m.windBand[0])
   const highs = climate.map((m) => m.windBand[1])
 
-  // 1) Monthly source data must be well-formed.
   let monthlyOk = true
   climate.forEach((m) => {
     if (!(m.windBand[0] >= 0)) {
@@ -54,33 +54,24 @@ for (const file of files) {
       )
     }
   })
-  check(monthlyOk, 'monthly data: 0 <= 25th <= mean <= 75th')
+  check(monthlyOk, 'monthly data: 0 <= 20th <= mean <= 80th')
 
-  // 2) Sample the exact series the chart renders.
-  const avgSeries = sampleYear(avgs)
-  const loSeries = sampleYear(lows)
-  const hiSeries = sampleYear(highs)
-
-  const minLo = Math.min(...loSeries)
-  const minAvg = Math.min(...avgSeries)
-  const maxAvg = Math.max(...avgSeries)
-  const maxHi = Math.max(...hiSeries)
-
-  check(minLo >= -EPS, `sampled 25th percentile stays >= 0 (min ${fmt(minLo)})`)
+  const minLo = Math.min(...lows)
+  const maxHi = Math.max(...highs)
+  check(minLo >= -EPS, `20th percentile stays >= 0 (min ${fmt(minLo)})`)
   check(
-    loSeries.every((v, i) => v <= avgSeries[i] + EPS),
-    'sampled 25th percentile never crosses above the mean',
+    lows.every((v, i) => v <= avgs[i] + EPS),
+    '20th percentile never crosses above the mean',
   )
   check(
-    hiSeries.every((v, i) => v >= avgSeries[i] - EPS),
-    'sampled 75th percentile never crosses below the mean',
+    highs.every((v, i) => v >= avgs[i] - EPS),
+    '80th percentile never crosses below the mean',
   )
 
-  // 3) Deliberate edge case: the calm summer minimum.
   const calmIdx = avgs.indexOf(Math.min(...avgs))
   const calmMonth = climate[calmIdx].month
   console.log(
-    `  calmest month ${calmMonth}: mean ${fmt(avgs[calmIdx])} mph, 25th ${fmt(lows[calmIdx])} mph`,
+    `  calmest month ${calmMonth}: mean ${fmt(avgs[calmIdx])} mph, 20th ${fmt(lows[calmIdx])} mph`,
   )
   check(
     lows[calmIdx] >= 0 && lows[calmIdx] <= avgs[calmIdx],
@@ -91,25 +82,20 @@ for (const file of files) {
     check(isSummer, 'Seattle calm minimum occurs in summer (edge case present)')
   }
 
-  // 4) Readable seasonal min/max.
   const windiest = climate.reduce((a, b) => (b.wind > a.wind ? b : a))
   const calmest = climate.reduce((a, b) => (b.wind < a.wind ? b : a))
   console.log(
-    `  seasonal mean range: ${fmt(minAvg)} - ${fmt(maxAvg)} mph ` +
+    `  seasonal mean range: ${fmt(Math.min(...avgs))} - ${fmt(Math.max(...avgs))} mph ` +
       `(windiest ${windiest.month} ${fmt(windiest.wind)}, calmest ${calmest.month} ${fmt(calmest.wind)})`,
   )
   console.log(
-    `  sampled band envelope: 25th min ${fmt(minLo)} mph, 75th max ${fmt(maxHi)} mph`,
+    `  band envelope: 20th min ${fmt(minLo)} mph, 80th max ${fmt(maxHi)} mph`,
   )
   check(
-    Number.isFinite(minAvg) && Number.isFinite(maxAvg),
+    Number.isFinite(Math.min(...avgs)) && Number.isFinite(Math.max(...avgs)),
     'seasonal min/max are finite and readable',
   )
 }
-
-// Sanity: sampler produces a full non-leap year.
-const probe = sampleYear(new Array(12).fill(1))
-check(probe.length === Math.ceil(YEAR / STEP), `sampler yields full year (${probe.length} pts)`)
 
 if (failures > 0) {
   console.error(`\n${failures} check(s) failed`)

@@ -22,11 +22,9 @@ interface Category {
 }
 
 const CATS: Category[] = [
-  { key: 'clear', label: 'Clear', center: 5, cls: 'clear' },
-  { key: 'mostly-clear', label: 'Mostly clear', center: 25, cls: 'mostly-clear' },
+  { key: 'clear', label: 'Clear', center: 15, cls: 'clear' },
   { key: 'partly-cloudy', label: 'Partly cloudy', center: 50, cls: 'partly' },
-  { key: 'mostly-cloudy', label: 'Mostly cloudy', center: 75, cls: 'mostly-cloudy' },
-  { key: 'overcast', label: 'Overcast', center: 95, cls: 'overcast' },
+  { key: 'overcast', label: 'Overcast', center: 85, cls: 'overcast' },
 ]
 
 function categoryFractions(cloud: number): number[] {
@@ -89,12 +87,12 @@ export function CloudCoverChart({
       aria-labelledby={captionId}
     >
       <h2 className="forecast-title" id={captionId}>
-        Cloud Cover Categories
+        Sky Conditions
       </h2>
       <p className="sr-only" id={descId}>
-        {name} percentage of time spent in each cloud cover category &mdash;
-        clear, mostly clear, partly cloudy, mostly cloudy, and overcast &mdash;
-        from January through December. Categories stack to 100%.
+        {name} percentage of time spent in each sky condition &mdash; clear,
+        partly cloudy, and overcast &mdash; from January through December.
+        Categories stack to 100%.
       </p>
 
       <ul className="hourly-legend">

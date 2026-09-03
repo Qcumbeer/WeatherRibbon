@@ -11,6 +11,8 @@ const PLOT_W = WIDTH - ML - MR
 const PLOT_H = HEIGHT - MT - MB
 
 const SPARSE = new Set(['Jan', 'Mar', 'May', 'Jul', 'Sep', 'Nov'])
+const Y_MAX = 100
+const Y_TICKS = [0, 25, 50, 75, 100]
 
 const SIGMA = 5
 
@@ -25,8 +27,6 @@ const BANDS: Band[] = [
   { key: 'comfortable', label: 'Comfortable', cls: 'comfortable' },
   { key: 'humid', label: 'Humid', cls: 'humid' },
   { key: 'muggy', label: 'Muggy', cls: 'muggy' },
-  { key: 'oppressive', label: 'Oppressive', cls: 'oppressive' },
-  { key: 'miserable', label: 'Miserable', cls: 'miserable' },
 ]
 
 function erf(x: number): number {
@@ -48,41 +48,14 @@ function phi(x: number, mean: number): number {
 }
 
 function bandFractions(dewPoint: number): number[] {
-  const edges = [55, 60, 65, 70, 75]
+  const edges = [55, 65, 75]
   const cdfs = edges.map((edge) => phi(edge, dewPoint))
   return [
     cdfs[0] * 100,
     (cdfs[1] - cdfs[0]) * 100,
     (cdfs[2] - cdfs[1]) * 100,
-    (cdfs[3] - cdfs[2]) * 100,
-    (cdfs[4] - cdfs[3]) * 100,
-    (1 - cdfs[4]) * 100,
+    (1 - cdfs[2]) * 100,
   ]
-}
-
-function stackedArea(
-  climate: ClimateMonth[],
-  fractions: number[][],
-  xAt: (i: number) => number,
-  yPct: (p: number) => number,
-  catIndex: number,
-): string {
-  const n = climate.length
-  const parts: string[] = []
-  for (let i = 0; i < n; i++) {
-    let bottom = 0
-    for (let k = 0; k < catIndex; k++) bottom += fractions[i][k]
-    parts.push(
-      `${i === 0 ? 'M' : 'L'}${xAt(i).toFixed(1)} ${yPct(bottom).toFixed(1)}`,
-    )
-  }
-  for (let i = n - 1; i >= 0; i--) {
-    let top = 0
-    for (let k = 0; k <= catIndex; k++) top += fractions[i][k]
-    parts.push(`L${xAt(i).toFixed(1)} ${yPct(top).toFixed(1)}`)
-  }
-  parts.push('Z')
-  return parts.join(' ')
 }
 
 export function HumidityComfortChart({
@@ -97,13 +70,12 @@ export function HumidityComfortChart({
   const descId = `${uid}-desc`
   const n = climate.length
   const slot = PLOT_W / n
+  const barW = slot * 0.55
 
   const xAt = (i: number) => ML + slot * (i + 0.5)
-  const yPct = (p: number) => MT + ((100 - p) / 100) * PLOT_H
+  const yPct = (p: number) => MT + ((Y_MAX - p) / Y_MAX) * PLOT_H
 
   const fractions = climate.map((m) => bandFractions(m.dewPoint))
-
-  const grid = [0, 25, 50, 75, 100]
 
   const driestMonth = climate.reduce((a, b) =>
     b.dewPoint < a.dewPoint ? b : a,
@@ -118,13 +90,13 @@ export function HumidityComfortChart({
       aria-labelledby={captionId}
     >
       <h2 className="forecast-title" id={captionId}>
-        Humidity Comfort Levels
+        Dew Point Comfort
       </h2>
       <p className="sr-only" id={descId}>
         {name} percentage of time spent in each dew-point comfort band &mdash;
-        dry below 55 degrees, comfortable 55 to 60, humid 60 to 65, muggy 65 to
-        70, oppressive 70 to 75, and miserable 75 and above &mdash; from
-        January through December. Categories stack to 100%.
+        dry below 55 degrees, comfortable 55 to 65, humid 65 to 75, and muggy
+        75 and above &mdash; from January through December. Categories stack
+        to 100%.
       </p>
 
       <ul className="hourly-legend">
@@ -148,7 +120,7 @@ export function HumidityComfortChart({
           role="img"
           aria-labelledby={`${captionId} ${descId}`}
         >
-          {grid.map((p) => {
+          {Y_TICKS.map((p) => {
             const y = yPct(p)
             return (
               <g key={`grid-${p}`}>
@@ -171,34 +143,35 @@ export function HumidityComfortChart({
             )
           })}
 
-          {BANDS.map((band, bi) => (
-            <path
-              key={band.key}
-              className={`hc-area ${band.cls}`}
-              d={stackedArea(climate, fractions, xAt, yPct, bi)}
-            >
-              <title>{band.label}</title>
-            </path>
-          ))}
-
-          {climate.map((m, i) => (
-            <rect
-              key={`hit-${m.month}`}
-              className="hc-hit"
-              x={xAt(i) - slot / 2}
-              y={MT}
-              width={slot}
-              height={PLOT_H}
-            >
-              <title>
-                {m.month} &mdash; dew point {m.dewPoint}&deg; &mdash;{' '}
-                {BANDS.map(
-                  (band, bi) =>
-                    `${band.label}: ${fractions[i][bi].toFixed(0)}%`,
-                ).join(', ')}
-              </title>
-            </rect>
-          ))}
+          {climate.map((m, i) => {
+            const x = xAt(i) - barW / 2
+            let bottom = 0
+            return (
+              <g key={`bar-${m.month}`}>
+                {BANDS.map((band, bi) => {
+                  const p = fractions[i][bi]
+                  if (p <= 0) return null
+                  const yTop = yPct(bottom + p)
+                  const yBot = yPct(bottom)
+                  bottom += p
+                  return (
+                    <rect
+                      key={band.key}
+                      className={`hc-bar ${band.cls}`}
+                      x={x}
+                      y={yTop}
+                      width={barW}
+                      height={Math.max(0, yBot - yTop)}
+                    >
+                      <title>
+                        {`${m.month} ${band.label.toLowerCase()}: ${p.toFixed(0)}%`}
+                      </title>
+                    </rect>
+                  )
+                })}
+              </g>
+            )
+          })}
 
           {climate.map((m, i) => (
             <text

@@ -217,7 +217,9 @@ console.log('\n=== Month landmarks ===')
 // ---------------------------------------------------------------------------
 console.log('\n=== Bespoke datasets (data/*.json) ===')
 {
-  const files = readdirSync('data').filter((f) => f.endsWith('.json'))
+  const files = readdirSync('data').filter(
+    (f) => f.endsWith('.json') && f !== 'world-cities.json',
+  )
   check(files.length > 0, `found bespoke datasets (${files.join(', ')})`)
   for (const file of files) {
     const city = JSON.parse(readFileSync(`data/${file}`, 'utf8')) as { name: string; climate: ClimateMonth[] }
