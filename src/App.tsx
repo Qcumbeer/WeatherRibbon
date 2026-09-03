@@ -77,7 +77,7 @@ function CityView({
           <ClimateSkylineChart name={data.name} climate={data.climate} />
           <WeatherWheelChart name={data.name} climate={data.climate} />
           <SeasonalRibbonChart name={data.name} climate={data.climate} />
-          <HourlyChart name={data.name} climate={data.climate} />
+          <HourlyChart name={data.name} climate={data.climate} hourlyTemp={data.hourlyTemp} />
           <ClimateChart name={data.name} climate={data.climate} />
           <ClimateOverviewChart name={data.name} climate={data.climate} />
           <PrecipChanceChart name={data.name} climate={data.climate} />

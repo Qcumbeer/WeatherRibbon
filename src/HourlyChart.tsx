@@ -91,19 +91,20 @@ function buildGrid(climate: ClimateMonth[]): number[][] {
     )
   })
 }
-
 export function HourlyChart({
   name,
   climate,
+  hourlyTemp,
 }: {
   name: string
   climate: ClimateMonth[]
+  hourlyTemp?: number[][]
 }) {
   const uid = useId()
   const captionId = `${uid}-caption`
   const descId = `${uid}-desc`
   const gradId = `${uid}-legend`
-  const grid = buildGrid(climate)
+  const grid = hourlyTemp ?? buildGrid(climate)
 
   const allTemps = grid.flat()
   const minT = Math.min(...allTemps)

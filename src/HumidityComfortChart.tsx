@@ -1,5 +1,6 @@
 import { useId } from 'react'
 import type { ClimateMonth } from './dataService'
+import { YEAR, MID_DAY, sampleYear, lineFrom } from './seasonal'
 
 const WIDTH = 640
 const HEIGHT = 300
@@ -12,78 +13,22 @@ const PLOT_H = HEIGHT - MT - MB
 
 const SPARSE = new Set(['Jan', 'Mar', 'May', 'Jul', 'Sep', 'Nov'])
 
-const SIGMA = 5
-
-interface Band {
+interface Zone {
   key: string
   label: string
   cls: string
+  lo: number
+  hi: number
 }
 
-const BANDS: Band[] = [
-  { key: 'dry', label: 'Dry', cls: 'dry' },
-  { key: 'comfortable', label: 'Comfortable', cls: 'comfortable' },
-  { key: 'humid', label: 'Humid', cls: 'humid' },
-  { key: 'muggy', label: 'Muggy', cls: 'muggy' },
-  { key: 'oppressive', label: 'Oppressive', cls: 'oppressive' },
-  { key: 'miserable', label: 'Miserable', cls: 'miserable' },
+const ZONES: Zone[] = [
+  { key: 'dry', label: 'Dry', cls: 'dry', lo: 0, hi: 55 },
+  { key: 'comfortable', label: 'Comfortable', cls: 'comfortable', lo: 55, hi: 60 },
+  { key: 'humid', label: 'Humid', cls: 'humid', lo: 60, hi: 65 },
+  { key: 'muggy', label: 'Muggy', cls: 'muggy', lo: 65, hi: 70 },
+  { key: 'oppressive', label: 'Oppressive', cls: 'oppressive', lo: 70, hi: 75 },
+  { key: 'miserable', label: 'Miserable', cls: 'miserable', lo: 75, hi: 90 },
 ]
-
-function erf(x: number): number {
-  const sign = x < 0 ? -1 : 1
-  const ax = Math.abs(x)
-  const t = 1 / (1 + 0.3275911 * ax)
-  const y =
-    1 -
-    ((((1.061405429 * t - 1.453152027) * t + 1.421413741) * t - 0.284496736) *
-      t +
-      0.254829592) *
-      t *
-      Math.exp(-ax * ax)
-  return sign * y
-}
-
-function phi(x: number, mean: number): number {
-  return 0.5 * (1 + erf((x - mean) / (SIGMA * Math.SQRT2)))
-}
-
-function bandFractions(dewPoint: number): number[] {
-  const edges = [55, 60, 65, 70, 75]
-  const cdfs = edges.map((edge) => phi(edge, dewPoint))
-  return [
-    cdfs[0] * 100,
-    (cdfs[1] - cdfs[0]) * 100,
-    (cdfs[2] - cdfs[1]) * 100,
-    (cdfs[3] - cdfs[2]) * 100,
-    (cdfs[4] - cdfs[3]) * 100,
-    (1 - cdfs[4]) * 100,
-  ]
-}
-
-function stackedArea(
-  climate: ClimateMonth[],
-  fractions: number[][],
-  xAt: (i: number) => number,
-  yPct: (p: number) => number,
-  catIndex: number,
-): string {
-  const n = climate.length
-  const parts: string[] = []
-  for (let i = 0; i < n; i++) {
-    let bottom = 0
-    for (let k = 0; k < catIndex; k++) bottom += fractions[i][k]
-    parts.push(
-      `${i === 0 ? 'M' : 'L'}${xAt(i).toFixed(1)} ${yPct(bottom).toFixed(1)}`,
-    )
-  }
-  for (let i = n - 1; i >= 0; i--) {
-    let top = 0
-    for (let k = 0; k <= catIndex; k++) top += fractions[i][k]
-    parts.push(`L${xAt(i).toFixed(1)} ${yPct(top).toFixed(1)}`)
-  }
-  parts.push('Z')
-  return parts.join(' ')
-}
 
 export function HumidityComfortChart({
   name,
@@ -98,12 +43,16 @@ export function HumidityComfortChart({
   const n = climate.length
   const slot = PLOT_W / n
 
+  const xDay = (d: number) => ML + (d / YEAR) * PLOT_W
   const xAt = (i: number) => ML + slot * (i + 0.5)
-  const yPct = (p: number) => MT + ((100 - p) / 100) * PLOT_H
+  const yFloor = 35
+  const yCeil = 80
+  const yAt = (v: number) => MT + ((yCeil - v) / (yCeil - yFloor)) * PLOT_H
 
-  const fractions = climate.map((m) => bandFractions(m.dewPoint))
+  const dews = climate.map((m) => m.dewPoint)
+  const series = sampleYear(dews)
 
-  const grid = [0, 25, 50, 75, 100]
+  const grid = [40, 50, 60, 70, 80]
 
   const driestMonth = climate.reduce((a, b) =>
     b.dewPoint < a.dewPoint ? b : a,
@@ -118,27 +67,29 @@ export function HumidityComfortChart({
       aria-labelledby={captionId}
     >
       <h2 className="forecast-title" id={captionId}>
-        Humidity Comfort Levels
+        Dew Point &amp; Comfort
       </h2>
       <p className="sr-only" id={descId}>
-        {name} percentage of time spent in each dew-point comfort band &mdash;
-        dry below 55 degrees, comfortable 55 to 60, humid 60 to 65, muggy 65 to
-        70, oppressive 70 to 75, and miserable 75 and above &mdash; from
-        January through December. Categories stack to 100%.
+        {name} monthly mean dew point from January through December, shown as
+        a line over comfort zones. Dry below 55 degrees, comfortable 55 to 60,
+        humid 60 to 65, muggy 65 to 70, oppressive 70 to 75, and miserable 75
+        and above.
       </p>
 
       <ul className="hourly-legend">
-        {BANDS.slice()
-          .reverse()
-          .map((band) => (
-            <li key={band.key}>
-              <span
-                className={`swatch hc-swatch ${band.cls}`}
-                aria-hidden="true"
-              />
-              {band.label}
-            </li>
-          ))}
+        <li>
+          <span className="swatch hc-line-swatch" aria-hidden="true" />
+          Dew point
+        </li>
+        {ZONES.slice().reverse().map((zone) => (
+          <li key={zone.key}>
+            <span
+              className={`swatch hc-swatch ${zone.cls}`}
+              aria-hidden="true"
+            />
+            {zone.label}
+          </li>
+        ))}
       </ul>
 
       <div className="hourly-chart-wrap">
@@ -148,10 +99,27 @@ export function HumidityComfortChart({
           role="img"
           aria-labelledby={`${captionId} ${descId}`}
         >
-          {grid.map((p) => {
-            const y = yPct(p)
+          {ZONES.map((zone) => {
+            const yTop = yAt(Math.min(zone.hi, yCeil))
+            const yBot = yAt(Math.max(zone.lo, yFloor))
             return (
-              <g key={`grid-${p}`}>
+              <rect
+                key={zone.key}
+                className={`hc-zone ${zone.cls}`}
+                x={ML}
+                y={yTop}
+                width={PLOT_W}
+                height={Math.max(0, yBot - yTop)}
+              >
+                <title>{zone.label} ({zone.lo}–{zone.hi}°)</title>
+              </rect>
+            )
+          })}
+
+          {grid.map((v) => {
+            const y = yAt(v)
+            return (
+              <g key={`grid-${v}`}>
                 <line
                   className="hourly-grid"
                   x1={ML}
@@ -165,39 +133,26 @@ export function HumidityComfortChart({
                   y={y + 4}
                   textAnchor="end"
                 >
-                  {p}%
+                  {v}°
                 </text>
               </g>
             )
           })}
 
-          {BANDS.map((band, bi) => (
-            <path
-              key={band.key}
-              className={`hc-area ${band.cls}`}
-              d={stackedArea(climate, fractions, xAt, yPct, bi)}
-            >
-              <title>{band.label}</title>
-            </path>
-          ))}
+          <path className="hc-line" d={lineFrom(series, xDay, yAt)}>
+            <title>Monthly mean dew point</title>
+          </path>
 
           {climate.map((m, i) => (
-            <rect
-              key={`hit-${m.month}`}
-              className="hc-hit"
-              x={xAt(i) - slot / 2}
-              y={MT}
-              width={slot}
-              height={PLOT_H}
+            <circle
+              key={`dot-${m.month}`}
+              className="hc-dot"
+              cx={xDay(MID_DAY[i])}
+              cy={yAt(m.dewPoint)}
+              r={3.5}
             >
-              <title>
-                {m.month} &mdash; dew point {m.dewPoint}&deg; &mdash;{' '}
-                {BANDS.map(
-                  (band, bi) =>
-                    `${band.label}: ${fractions[i][bi].toFixed(0)}%`,
-                ).join(', ')}
-              </title>
-            </rect>
+              <title>{m.month}: {m.dewPoint}° dew point</title>
+            </circle>
           ))}
 
           {climate.map((m, i) => (
@@ -225,33 +180,30 @@ export function HumidityComfortChart({
       </p>
 
       <details className="hourly-details">
-        <summary>View humidity comfort data</summary>
+        <summary>View dew point data</summary>
         <div className="hourly-table-wrap" tabIndex={0}>
           <table>
             <caption className="sr-only">
-              {name} monthly percentage of time in each dew-point comfort band
+              {name} monthly mean dew point
             </caption>
             <thead>
               <tr>
                 <th scope="col">Month</th>
-                {BANDS.map((band) => (
-                  <th key={band.key} scope="col">
-                    {band.label}
-                  </th>
-                ))}
                 <th scope="col">Dew point</th>
+                <th scope="col">Comfort</th>
               </tr>
             </thead>
             <tbody>
-              {climate.map((m, i) => (
-                <tr key={m.month}>
-                  <th scope="row">{m.month}</th>
-                  {fractions[i].map((f, bi) => (
-                    <td key={BANDS[bi].key}>{f.toFixed(0)}%</td>
-                  ))}
-                  <td>{m.dewPoint}&deg;</td>
-                </tr>
-              ))}
+              {climate.map((m) => {
+                const zone = ZONES.find((z) => m.dewPoint >= z.lo && m.dewPoint < z.hi) ?? ZONES[0]
+                return (
+                  <tr key={m.month}>
+                    <th scope="row">{m.month}</th>
+                    <td>{m.dewPoint}&deg;</td>
+                    <td>{zone.label}</td>
+                  </tr>
+                )
+              })}
             </tbody>
           </table>
         </div>

@@ -405,6 +405,47 @@
   background: var(--cc-overcast);
 }
 
+.cc-overcast-band {
+  fill: var(--cc-overcast);
+  opacity: 0.12;
+}
+
+.cc-overcast-swatch {
+  height: 10px;
+  border-radius: 3px;
+  background: var(--cc-overcast);
+  opacity: 0.5;
+}
+
+.cc-line {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.cc-dot {
+  fill: var(--accent);
+  stroke: var(--bg);
+  stroke-width: 1.5;
+}
+
+.cc-line-swatch {
+  height: 0;
+  width: 18px;
+  border-radius: 0;
+  background: transparent;
+  border-top: 2px solid var(--accent);
+}
+
+.cc-threshold {
+  stroke: var(--cc-overcast);
+  stroke-width: 1;
+  stroke-dasharray: 4 3;
+  opacity: 0.5;
+}
+
 .cc-hit {
   fill: transparent;
   pointer-events: all;
@@ -859,6 +900,56 @@
 
 .hc-swatch.miserable {
   background: var(--hc-miserable);
+}
+
+.hc-zone {
+  opacity: 0.15;
+}
+
+.hc-zone.dry {
+  fill: var(--hc-dry);
+}
+
+.hc-zone.comfortable {
+  fill: var(--hc-comfortable);
+}
+
+.hc-zone.humid {
+  fill: var(--hc-humid);
+}
+
+.hc-zone.muggy {
+  fill: var(--hc-muggy);
+}
+
+.hc-zone.oppressive {
+  fill: var(--hc-oppressive);
+}
+
+.hc-zone.miserable {
+  fill: var(--hc-miserable);
+}
+
+.hc-line {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.hc-dot {
+  fill: var(--accent);
+  stroke: var(--bg);
+  stroke-width: 1.5;
+}
+
+.hc-line-swatch {
+  height: 0;
+  width: 18px;
+  border-radius: 0;
+  background: transparent;
+  border-top: 2px solid var(--accent);
 }
 
 .hc-hit {
