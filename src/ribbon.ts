@@ -22,6 +22,11 @@ export const RIBBON_STOPS: readonly RampStop[] = [
 
 export const RIBBON_MISSING_FILL = 'rgb(139, 135, 148)'
 
+// Sub-pixel overlap applied to each slice's trailing edge so that
+// anti-aliasing at the seam blends into the neighbouring fill instead of
+// transparent background, eliminating visible white stripes between slices.
+const SEAM_OVERLAP = 0.5
+
 export function clamp01(v: number): number {
   if (!Number.isFinite(v)) return 0
   return Math.min(1, Math.max(0, v))
@@ -119,7 +124,8 @@ export function ribbonSlices(
     const d0 = i * STEP
     const d1 = Math.min(d0 + STEP, YEAR)
     const x0 = xAt(d0).toFixed(1)
-    const x1 = xAt(d1).toFixed(1)
+    const x1Raw = xAt(d1)
+    const x1 = (x1Raw + SEAM_OVERLAP).toFixed(1)
     const top0 = (midY - half[i]).toFixed(1)
     const bot0 = (midY + half[i]).toFixed(1)
     const j = Math.min(i + 1, half.length - 1)
