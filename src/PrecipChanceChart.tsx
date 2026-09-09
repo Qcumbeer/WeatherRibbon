@@ -11,57 +11,20 @@ const PLOT_W = WIDTH - ML - MR
 const PLOT_H = HEIGHT - MT - MB
 
 const SPARSE = new Set(['Jan', 'Mar', 'May', 'Jul', 'Sep', 'Nov'])
+const Y_MAX = 100
+const Y_TICKS = [0, 25, 50, 75, 100]
 
-interface Series {
-  key: 'rain' | 'mixed' | 'snow'
+interface Segment {
+  key: 'rain' | 'mixed' | 'snow' | 'dry'
   label: string
-  cls: string
-  value: (m: ClimateMonth) => number
+  pct: (m: ClimateMonth) => number
 }
 
-const SERIES: Series[] = [
-  { key: 'rain', label: 'Rain', cls: 'rain', value: (m) => m.rain },
-  { key: 'mixed', label: 'Mixed', cls: 'mixed', value: (m) => m.mixed },
-  { key: 'snow', label: 'Snow', cls: 'snow', value: (m) => m.snow },
+const SEGMENTS: Segment[] = [
+  { key: 'rain', label: 'Rainy', pct: (m) => m.rain },
+  { key: 'mixed', label: 'Mixed', pct: (m) => m.mixed },
+  { key: 'snow', label: 'Snowy', pct: (m) => m.snow },
 ]
-
-function niceTicks(lo: number, hi: number, step: number) {
-  const start = Math.ceil(lo / step) * step
-  const end = Math.floor(hi / step) * step
-  const out: number[] = []
-  for (let v = start; v <= end + 1e-9; v += step) out.push(v)
-  return out
-}
-
-function linePath(
-  climate: ClimateMonth[],
-  xAt: (i: number) => number,
-  yPct: (p: number) => number,
-  value: (m: ClimateMonth) => number,
-): string {
-  return climate
-    .map(
-      (m, i) =>
-        `${i === 0 ? 'M' : 'L'}${xAt(i).toFixed(1)} ${yPct(value(m)).toFixed(1)}`,
-    )
-    .join(' ')
-}
-
-function areaPath(
-  climate: ClimateMonth[],
-  xAt: (i: number) => number,
-  yPct: (p: number) => number,
-  value: (m: ClimateMonth) => number,
-): string {
-  const n = climate.length
-  const fwd = climate
-    .map(
-      (m, i) =>
-        `${i === 0 ? 'M' : 'L'}${xAt(i).toFixed(1)} ${yPct(value(m)).toFixed(1)}`,
-    )
-    .join(' ')
-  return `${fwd} L${xAt(n - 1).toFixed(1)} ${yPct(0).toFixed(1)} L${xAt(0).toFixed(1)} ${yPct(0).toFixed(1)} Z`
-}
 
 export function PrecipChanceChart({
   name,
@@ -75,17 +38,16 @@ export function PrecipChanceChart({
   const descId = `${uid}-desc`
   const n = climate.length
   const slot = PLOT_W / n
-
-  const highs = climate.map((m) => Math.max(m.rain, m.mixed, m.snow))
-  const dataHi = Math.max(...highs, 10)
-  const yHi = Math.ceil(dataHi / 10) * 10
-  const grid = niceTicks(0, yHi, 10)
+  const barW = slot * 0.55
 
   const xAt = (i: number) => ML + slot * (i + 0.5)
-  const yPct = (p: number) => MT + ((yHi - p) / yHi) * PLOT_H
+  const yPct = (v: number) => MT + ((Y_MAX - v) / Y_MAX) * PLOT_H
 
-  const wettest = climate.reduce((a, b) => (b.rain > a.rain ? b : a))
-  const driest = climate.reduce((a, b) => (b.rain < a.rain ? b : a))
+  const wetPct = climate.map((m) =>
+    Math.min(100, m.rain + m.mixed + m.snow),
+  )
+  const wettestIdx = wetPct.indexOf(Math.max(...wetPct))
+  const driestIdx = wetPct.indexOf(Math.min(...wetPct))
 
   return (
     <section
@@ -93,20 +55,24 @@ export function PrecipChanceChart({
       aria-labelledby={captionId}
     >
       <h2 className="forecast-title" id={captionId}>
-        Daily Chance of Precipitation
+        Wet vs Dry Days
       </h2>
       <p className="sr-only" id={descId}>
-        {name} daily chance of precipitation as rain, snow, or mixed from
-        January through December.
+        {name} share of days that are rainy, mixed, snowy, or dry in each
+        month from January through December. Each bar is 100% of the month.
       </p>
 
       <ul className="hourly-legend">
-        {SERIES.map((s) => (
+        {SEGMENTS.map((s) => (
           <li key={s.key}>
-            <span className={`swatch precip-swatch ${s.cls}`} aria-hidden="true" />
+            <span className={`swatch wd-swatch ${s.key}`} aria-hidden="true" />
             {s.label}
           </li>
         ))}
+        <li>
+          <span className="swatch wd-swatch dry" aria-hidden="true" />
+          Dry
+        </li>
       </ul>
 
       <div className="hourly-chart-wrap">
@@ -116,63 +82,66 @@ export function PrecipChanceChart({
           role="img"
           aria-labelledby={`${captionId} ${descId}`}
         >
-          {grid.map((p) => {
-            const y = yPct(p)
+          {Y_TICKS.map((v) => (
+            <g key={`grid-${v}`}>
+              <line
+                className="hourly-grid"
+                x1={ML}
+                x2={ML + PLOT_W}
+                y1={yPct(v)}
+                y2={yPct(v)}
+              />
+              <text
+                className="hourly-axis"
+                x={ML - 8}
+                y={yPct(v) + 4}
+                textAnchor="end"
+              >
+                {v}%
+              </text>
+            </g>
+          ))}
+
+          {climate.map((m, i) => {
+            const wet = wetPct[i]
+            const dry = Math.max(0, 100 - wet)
+            const x = xAt(i) - barW / 2
+            let bottom = 0
             return (
-              <g key={`grid-${p}`}>
-                <line
-                  className="hourly-grid"
-                  x1={ML}
-                  x2={ML + PLOT_W}
-                  y1={y}
-                  y2={y}
-                />
-                <text
-                  className="hourly-axis"
-                  x={ML - 8}
-                  y={y + 4}
-                  textAnchor="end"
-                >
-                  {p}%
-                </text>
+              <g key={`bar-${m.month}`}>
+                {SEGMENTS.map((s) => {
+                  const p = s.pct(m)
+                  if (p <= 0) return null
+                  const yTop = yPct(bottom + p)
+                  const yBot = yPct(bottom)
+                  bottom += p
+                  return (
+                    <rect
+                      key={s.key}
+                      className={`wd-bar ${s.key}`}
+                      x={x}
+                      y={yTop}
+                      width={barW}
+                      height={Math.max(0, yBot - yTop)}
+                    >
+                      <title>{`${m.month} ${s.label.toLowerCase()}: ${p.toFixed(0)}%`}</title>
+                    </rect>
+                  )
+                })}
+                {dry > 0 && (
+                  <rect
+                    className="wd-bar dry"
+                    x={x}
+                    y={yPct(100)}
+                    width={barW}
+                    height={Math.max(0, yPct(wet) - yPct(100))}
+                  >
+                    <title>{`${m.month} dry: ${dry.toFixed(0)}%`}</title>
+                  </rect>
+                )}
               </g>
             )
           })}
-
-          <path
-            className="precip-area rain"
-            d={areaPath(climate, xAt, yPct, (m) => m.rain)}
-          >
-            <title>Chance of rain</title>
-          </path>
-
-          {SERIES.map((s) => (
-            <path
-              key={`line-${s.key}`}
-              className={`precip-line ${s.cls}`}
-              d={linePath(climate, xAt, yPct, s.value)}
-            >
-              <title>{s.label} chance</title>
-            </path>
-          ))}
-
-          {climate.map((m, i) => (
-            <g key={`dots-${m.month}`}>
-              {SERIES.map((s) => (
-                <circle
-                  key={s.key}
-                  className={`precip-dot ${s.cls}`}
-                  cx={xAt(i)}
-                  cy={yPct(s.value(m))}
-                  r={s.key === 'rain' ? 3.5 : 2.5}
-                >
-                  <title>
-                    {m.month} {s.label.toLowerCase()}: {s.value(m)}%
-                  </title>
-                </circle>
-              ))}
-            </g>
-          ))}
 
           {climate.map((m, i) => (
             <text
@@ -193,34 +162,35 @@ export function PrecipChanceChart({
       </div>
 
       <p className="panel-note cc-note">
-        Wettest {wettest.month} ({wettest.rain}% rain) &middot; Driest{' '}
-        {driest.month} ({driest.rain}% rain)
+        Wettest {climate[wettestIdx].month} ({wetPct[wettestIdx].toFixed(0)}% of
+        days wet) &middot; Driest {climate[driestIdx].month} (
+        {wetPct[driestIdx].toFixed(0)}%)
       </p>
 
       <details className="hourly-details">
-        <summary>View precipitation chance data</summary>
+        <summary>View wet vs dry data</summary>
         <div className="hourly-table-wrap" tabIndex={0}>
           <table>
             <caption className="sr-only">
-              {name} monthly daily chance of rain, mixed, and snow
+              {name} share of rainy, mixed, snowy, and dry days per month
             </caption>
             <thead>
               <tr>
                 <th scope="col">Month</th>
-                <th scope="col">Rain</th>
+                <th scope="col">Rainy</th>
                 <th scope="col">Mixed</th>
-                <th scope="col">Snow</th>
-                <th scope="col">Any precip</th>
+                <th scope="col">Snowy</th>
+                <th scope="col">Dry</th>
               </tr>
             </thead>
             <tbody>
-              {climate.map((m) => (
+              {climate.map((m, i) => (
                 <tr key={m.month}>
                   <th scope="row">{m.month}</th>
-                  <td>{m.rain}%</td>
-                  <td>{m.mixed}%</td>
-                  <td>{m.snow}%</td>
-                  <td>{m.rain + m.mixed + m.snow}%</td>
+                  <td>{m.rain.toFixed(0)}%</td>
+                  <td>{m.mixed.toFixed(0)}%</td>
+                  <td>{m.snow.toFixed(0)}%</td>
+                  <td>{Math.max(0, 100 - wetPct[i]).toFixed(0)}%</td>
                 </tr>
               ))}
             </tbody>

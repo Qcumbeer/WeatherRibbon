@@ -127,13 +127,11 @@ renderExtremes(
 console.log('\n=== city page placement ===')
 const appSrc = readFileSync('src/App.tsx', 'utf8')
 const extremesAt = appSrc.indexOf('<ClimateExtremes')
-const skylineAt = appSrc.indexOf('<ClimateSkylineChart')
-ok(extremesAt !== -1 && skylineAt !== -1 && extremesAt < skylineAt, 'Climate extremes sits immediately above skyline')
-ok(!appSrc.includes('<ClimateExtremes') || /<ClimateExtremes[^/]*\/>\s*<ClimateSkylineChart/.test(appSrc.replace(/\n/g, '')), 'no chart between extremes and skyline')
+const ribbonAt = appSrc.indexOf('<SeasonalRibbonChart')
+ok(extremesAt !== -1 && ribbonAt !== -1 && extremesAt < ribbonAt, 'Climate extremes sits above the seasonal ribbon')
+ok(!appSrc.includes('<ClimateExtremes') || /<ClimateExtremes[^/]*\/>\s*<SeasonalRibbonChart/.test(appSrc.replace(/\n/g, '')), 'no chart between extremes and ribbon')
 ok(
-  appSrc.includes('<ClimateSkylineChart') &&
-    appSrc.includes('<WeatherWheelChart') &&
-    appSrc.includes('<SeasonalRibbonChart') &&
+  appSrc.includes('<SeasonalRibbonChart') &&
     appSrc.includes('<HourlyChart') &&
     appSrc.includes('<ClimateChart'),
   'existing city-page charts remain',

@@ -12,6 +12,8 @@ const PLOT_W = WIDTH - ML - MR
 const PLOT_H = HEIGHT - MT - MB
 
 const SPARSE = new Set(['Jan', 'Mar', 'May', 'Jul', 'Sep', 'Nov'])
+const Y_MAX = 100
+const Y_TICKS = [0, 25, 50, 75, 100]
 
 interface Zone {
   key: string
@@ -21,6 +23,7 @@ interface Zone {
   hi: number
 }
 
+<<<<<<< HEAD
 const ZONES: Zone[] = [
   { key: 'dry', label: 'Dry', cls: 'dry', lo: 0, hi: 55 },
   { key: 'comfortable', label: 'Comfortable', cls: 'comfortable', lo: 55, hi: 60 },
@@ -30,6 +33,44 @@ const ZONES: Zone[] = [
   { key: 'miserable', label: 'Miserable', cls: 'miserable', lo: 75, hi: 90 },
 ]
 
+=======
+const BANDS: Band[] = [
+  { key: 'dry', label: 'Dry', cls: 'dry' },
+  { key: 'comfortable', label: 'Comfortable', cls: 'comfortable' },
+  { key: 'humid', label: 'Humid', cls: 'humid' },
+  { key: 'muggy', label: 'Muggy', cls: 'muggy' },
+]
+
+function erf(x: number): number {
+  const sign = x < 0 ? -1 : 1
+  const ax = Math.abs(x)
+  const t = 1 / (1 + 0.3275911 * ax)
+  const y =
+    1 -
+    ((((1.061405429 * t - 1.453152027) * t + 1.421413741) * t - 0.284496736) *
+      t +
+      0.254829592) *
+      t *
+      Math.exp(-ax * ax)
+  return sign * y
+}
+
+function phi(x: number, mean: number): number {
+  return 0.5 * (1 + erf((x - mean) / (SIGMA * Math.SQRT2)))
+}
+
+function bandFractions(dewPoint: number): number[] {
+  const edges = [55, 65, 75]
+  const cdfs = edges.map((edge) => phi(edge, dewPoint))
+  return [
+    cdfs[0] * 100,
+    (cdfs[1] - cdfs[0]) * 100,
+    (cdfs[2] - cdfs[1]) * 100,
+    (1 - cdfs[2]) * 100,
+  ]
+}
+
+>>>>>>> 3812df9 (Differentiate climate charts from WeatherSpark and drop redundant views.)
 export function HumidityComfortChart({
   name,
   climate,
@@ -42,18 +83,26 @@ export function HumidityComfortChart({
   const descId = `${uid}-desc`
   const n = climate.length
   const slot = PLOT_W / n
+  const barW = slot * 0.55
 
   const xDay = (d: number) => ML + (d / YEAR) * PLOT_W
   const xAt = (i: number) => ML + slot * (i + 0.5)
+<<<<<<< HEAD
   const yFloor = 35
   const yCeil = 80
   const yAt = (v: number) => MT + ((yCeil - v) / (yCeil - yFloor)) * PLOT_H
+=======
+  const yPct = (p: number) => MT + ((Y_MAX - p) / Y_MAX) * PLOT_H
+>>>>>>> 3812df9 (Differentiate climate charts from WeatherSpark and drop redundant views.)
 
   const dews = climate.map((m) => m.dewPoint)
   const series = sampleYear(dews)
 
+<<<<<<< HEAD
   const grid = [40, 50, 60, 70, 80]
 
+=======
+>>>>>>> 3812df9 (Differentiate climate charts from WeatherSpark and drop redundant views.)
   const driestMonth = climate.reduce((a, b) =>
     b.dewPoint < a.dewPoint ? b : a,
   )
@@ -67,6 +116,7 @@ export function HumidityComfortChart({
       aria-labelledby={captionId}
     >
       <h2 className="forecast-title" id={captionId}>
+<<<<<<< HEAD
         Dew Point &amp; Comfort
       </h2>
       <p className="sr-only" id={descId}>
@@ -74,6 +124,15 @@ export function HumidityComfortChart({
         a line over comfort zones. Dry below 55 degrees, comfortable 55 to 60,
         humid 60 to 65, muggy 65 to 70, oppressive 70 to 75, and miserable 75
         and above.
+=======
+        Dew Point Comfort
+      </h2>
+      <p className="sr-only" id={descId}>
+        {name} percentage of time spent in each dew-point comfort band &mdash;
+        dry below 55 degrees, comfortable 55 to 65, humid 65 to 75, and muggy
+        75 and above &mdash; from January through December. Categories stack
+        to 100%.
+>>>>>>> 3812df9 (Differentiate climate charts from WeatherSpark and drop redundant views.)
       </p>
 
       <ul className="hourly-legend">
@@ -99,9 +158,14 @@ export function HumidityComfortChart({
           role="img"
           aria-labelledby={`${captionId} ${descId}`}
         >
+<<<<<<< HEAD
           {ZONES.map((zone) => {
             const yTop = yAt(Math.min(zone.hi, yCeil))
             const yBot = yAt(Math.max(zone.lo, yFloor))
+=======
+          {Y_TICKS.map((p) => {
+            const y = yPct(p)
+>>>>>>> 3812df9 (Differentiate climate charts from WeatherSpark and drop redundant views.)
             return (
               <rect
                 key={zone.key}
@@ -139,6 +203,7 @@ export function HumidityComfortChart({
             )
           })}
 
+<<<<<<< HEAD
           <path className="hc-line" d={lineFrom(series, xDay, yAt)}>
             <title>Monthly mean dew point</title>
           </path>
@@ -154,6 +219,37 @@ export function HumidityComfortChart({
               <title>{m.month}: {m.dewPoint}° dew point</title>
             </circle>
           ))}
+=======
+          {climate.map((m, i) => {
+            const x = xAt(i) - barW / 2
+            let bottom = 0
+            return (
+              <g key={`bar-${m.month}`}>
+                {BANDS.map((band, bi) => {
+                  const p = fractions[i][bi]
+                  if (p <= 0) return null
+                  const yTop = yPct(bottom + p)
+                  const yBot = yPct(bottom)
+                  bottom += p
+                  return (
+                    <rect
+                      key={band.key}
+                      className={`hc-bar ${band.cls}`}
+                      x={x}
+                      y={yTop}
+                      width={barW}
+                      height={Math.max(0, yBot - yTop)}
+                    >
+                      <title>
+                        {`${m.month} ${band.label.toLowerCase()}: ${p.toFixed(0)}%`}
+                      </title>
+                    </rect>
+                  )
+                })}
+              </g>
+            )
+          })}
+>>>>>>> 3812df9 (Differentiate climate charts from WeatherSpark and drop redundant views.)
 
           {climate.map((m, i) => (
             <text

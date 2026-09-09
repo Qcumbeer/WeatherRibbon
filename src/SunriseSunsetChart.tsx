@@ -29,32 +29,6 @@ const MID_DAY = (() => {
 
 const DST_DAYS = { start: 66, end: 304 }
 
-interface Phase {
-  key: string
-  label: string
-  cls: string
-}
-
-const BANDS: Phase[] = [
-  { key: 'night', label: 'Night', cls: 'night' },
-  { key: 'astro', label: 'Astronomical twilight', cls: 'astro' },
-  { key: 'nautical', label: 'Nautical twilight', cls: 'nautical' },
-  { key: 'civil', label: 'Civil twilight', cls: 'civil' },
-  { key: 'daylight', label: 'Daylight', cls: 'daylight' },
-  { key: 'civil', label: 'Civil twilight', cls: 'civil' },
-  { key: 'nautical', label: 'Nautical twilight', cls: 'nautical' },
-  { key: 'astro', label: 'Astronomical twilight', cls: 'astro' },
-  { key: 'night', label: 'Night', cls: 'night' },
-]
-
-const LEGEND: Phase[] = [
-  { key: 'daylight', label: 'Daylight', cls: 'daylight' },
-  { key: 'civil', label: 'Civil twilight', cls: 'civil' },
-  { key: 'nautical', label: 'Nautical twilight', cls: 'nautical' },
-  { key: 'astro', label: 'Astronomical twilight', cls: 'astro' },
-  { key: 'night', label: 'Night', cls: 'night' },
-]
-
 const GRID_HOURS = [0, 3, 6, 9, 12, 15, 18, 21, 24]
 
 function hourLabel(h: number): string {
@@ -72,23 +46,6 @@ function clockTime(hours: number): string {
   const period = hr24 < 12 ? 'am' : 'pm'
   const disp = hr24 % 12 === 0 ? 12 : hr24 % 12
   return `${disp}:${String(m).padStart(2, '0')} ${period}`
-}
-
-function bandPath(
-  rows: number[][],
-  k: number,
-  xDay: (d: number) => number,
-  yHour: (h: number) => number,
-): string {
-  const n = rows.length
-  const fwd = rows
-    .map((row, i) => `${i === 0 ? 'M' : 'L'}${xDay(i * STEP).toFixed(1)} ${yHour(row[k]).toFixed(1)}`)
-    .join(' ')
-  const back: string[] = []
-  for (let i = n - 1; i >= 0; i--) {
-    back.push(`L${xDay(i * STEP).toFixed(1)} ${yHour(rows[i][k + 1]).toFixed(1)}`)
-  }
-  return `${fwd} ${back.join(' ')} Z`
 }
 
 function curvePath(
@@ -131,11 +88,8 @@ export function SunriseSunsetChart({
   const yHour = (h: number) => MT + ((24 - h) / 24) * PLOT_H
   const slot = PLOT_W / 12
 
-  const boundaryRows = events.map((e) => e.boundaries)
   const sunriseVals = events.map((e) => e.sunrise)
   const sunsetVals = events.map((e) => e.sunset)
-  const noonVals = events.map((e) => e.solarNoon)
-  const midnightVals = events.map((e) => e.solarMidnight)
 
   const monthly = MID_DAY.map((d) => dayEvents(latitude, longitude, d))
 
@@ -148,34 +102,27 @@ export function SunriseSunsetChart({
       aria-labelledby={captionId}
     >
       <h2 className="forecast-title" id={captionId}>
-        Sunrise and Sunset with Twilight and Daylight Saving Time
+        Sunrise and Sunset
       </h2>
       <p className="sr-only" id={descId}>
-        {name} sunrise, sunset, solar noon, solar midnight, and twilight
-        bands in local clock time (Pacific) from January through December
-        2026, with daylight saving time transitions shown as discontinuities.
-        Computed for latitude {latitude.toFixed(2)}&deg;N, longitude{' '}
+        {name} sunrise and sunset in local clock time (Pacific) from January
+        through December 2026. The shaded band marks the daylight saving time
+        period. Computed for latitude {latitude.toFixed(2)}&deg;N, longitude{' '}
         {Math.abs(longitude).toFixed(2)}&deg;W.
       </p>
 
       <ul className="hourly-legend">
-        {LEGEND.map((p) => (
-          <li key={p.key}>
-            <span className={`swatch dl-swatch ${p.cls}`} aria-hidden="true" />
-            {p.label}
-          </li>
-        ))}
         <li>
           <span className="swatch dl-curve sunrise" aria-hidden="true" />
-          Sunrise / Sunset
+          Sunrise
         </li>
         <li>
-          <span className="swatch dl-curve noon" aria-hidden="true" />
-          Solar noon / midnight
+          <span className="swatch dl-curve sunset" aria-hidden="true" />
+          Sunset
         </li>
         <li>
           <span className="swatch dl-dst-mark" aria-hidden="true" />
-          DST shift
+          Daylight saving time
         </li>
       </ul>
 
@@ -186,6 +133,14 @@ export function SunriseSunsetChart({
           role="img"
           aria-labelledby={`${captionId} ${descId}`}
         >
+          <rect
+            className="dl-dst-area"
+            x={xDay(DST_DAYS.start)}
+            y={MT}
+            width={xDay(DST_DAYS.end) - xDay(DST_DAYS.start)}
+            height={PLOT_H}
+          />
+
           {GRID_HOURS.map((h) => {
             const y = yHour(h)
             return (
@@ -209,39 +164,6 @@ export function SunriseSunsetChart({
             )
           })}
 
-          {BANDS.map((band, k) => (
-            <path
-              key={`band-${k}`}
-              className={`dl-area ${band.cls}`}
-              d={bandPath(boundaryRows, k, xDay, yHour)}
-            >
-              <title>{band.label}</title>
-            </path>
-          ))}
-
-          {[DST_DAYS.start, DST_DAYS.end].map((d) => (
-            <line
-              key={`dst-${d}`}
-              className="dl-dst"
-              x1={xDay(d)}
-              x2={xDay(d)}
-              y1={MT}
-              y2={MT + PLOT_H}
-            />
-          ))}
-
-          <path
-            className="dl-curve-line midnight"
-            d={curvePath(midnightVals, xDay, yHour)}
-          >
-            <title>Solar midnight</title>
-          </path>
-          <path
-            className="dl-curve-line noon"
-            d={curvePath(noonVals, xDay, yHour)}
-          >
-            <title>Solar noon</title>
-          </path>
           <path
             className="dl-curve-line sunrise"
             d={curvePath(sunriseVals, xDay, yHour)}
@@ -275,7 +197,7 @@ export function SunriseSunsetChart({
 
       <p className="panel-note cc-note">
         Earliest sunrise {clockTime(earliestSunrise)} &middot; Latest sunset{' '}
-        {clockTime(latestSunset)} &middot; DST starts Mar 8, ends Nov 1
+        {clockTime(latestSunset)} &middot; DST Mar 8&ndash;Nov 1
       </p>
 
       <details className="hourly-details">
@@ -283,14 +205,12 @@ export function SunriseSunsetChart({
         <div className="hourly-table-wrap" tabIndex={0}>
           <table>
             <caption className="sr-only">
-              {name} monthly sunrise, sunset, solar noon, and daylight hours
-              for 2026
+              {name} monthly sunrise, sunset, and daylight hours for 2026
             </caption>
             <thead>
               <tr>
                 <th scope="col">Month</th>
                 <th scope="col">Sunrise</th>
-                <th scope="col">Solar noon</th>
                 <th scope="col">Sunset</th>
                 <th scope="col">Daylight</th>
               </tr>
@@ -300,7 +220,6 @@ export function SunriseSunsetChart({
                 <tr key={i}>
                   <th scope="row">{MONTHS[i]}</th>
                   <td>{clockTime(m.sunrise)}</td>
-                  <td>{clockTime(m.solarNoon)}</td>
                   <td>{clockTime(m.sunset)}</td>
                   <td>{m.daylight.toFixed(1)} h</td>
                 </tr>

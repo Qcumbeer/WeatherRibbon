@@ -12,6 +12,8 @@ const PLOT_H = HEIGHT - MT - MB
 
 const SPARSE = new Set(['Jan', 'Mar', 'May', 'Jul', 'Sep', 'Nov'])
 
+const FREEZING = 32
+
 function niceTicks(lo: number, hi: number, step: number) {
   const start = Math.ceil(lo / step) * step
   const end = Math.floor(hi / step) * step
@@ -60,13 +62,11 @@ export function ClimateChart({
   const n = climate.length
   const highs = climate.map((m) => m.high)
   const lows = climate.map((m) => m.low)
-  const feelsHighs = climate.map((m) => m.feelsHigh)
-  const feelsLows = climate.map((m) => m.feelsLow)
   const bandTop = climate.map((m) => m.highBand[1])
   const bandBottom = climate.map((m) => m.lowBand[0])
 
-  const dataLo = Math.min(...lows, ...feelsLows, ...bandBottom)
-  const dataHi = Math.max(...highs, ...feelsHighs, ...bandTop)
+  const dataLo = Math.min(...lows, ...bandBottom)
+  const dataHi = Math.max(...highs, ...bandTop)
   const tLo = Math.floor(dataLo / 10) * 10
   const tHi = Math.ceil(dataHi / 10) * 10
   const tRange = tHi - tLo || 1
@@ -77,8 +77,6 @@ export function ClimateChart({
 
   const highLine = linePath(climate, xAt, (m) => yTemp(m.high))
   const lowLine = linePath(climate, xAt, (m) => yTemp(m.low))
-  const feelsHighLine = linePath(climate, xAt, (m) => yTemp(m.feelsHigh))
-  const feelsLowLine = linePath(climate, xAt, (m) => yTemp(m.feelsLow))
   const highBand = bandPath(
     climate,
     xAt,
@@ -93,6 +91,10 @@ export function ClimateChart({
   )
 
   const grid = niceTicks(tLo, tHi, 10)
+  const freezingVisible = FREEZING >= tLo && FREEZING <= tHi
+
+  const swings = climate.map((m) => m.high - m.low)
+  const swingIdx = swings.indexOf(Math.max(...swings))
 
   return (
     <section className="hourly climate temp-chart" aria-labelledby={captionId}>
@@ -101,8 +103,8 @@ export function ClimateChart({
       </h2>
       <p className="sr-only" id={descId}>
         {name} monthly average high and low temperatures in degrees Fahrenheit
-        from January through December, with 25th to 75th percentile variability
-        bands and perceived (feels-like) temperatures.
+        from January through December, with 20th to 80th percentile variability
+        bands. A dashed line marks freezing.
       </p>
 
       <ul className="hourly-legend">
@@ -115,16 +117,8 @@ export function ClimateChart({
           Avg low (&deg;F)
         </li>
         <li>
-          <span className="swatch climate-feels climate-feels-high" aria-hidden="true" />
-          Perceived high
-        </li>
-        <li>
-          <span className="swatch climate-feels climate-feels-low" aria-hidden="true" />
-          Perceived low
-        </li>
-        <li>
           <span className="swatch climate-band" aria-hidden="true" />
-          Variability (25th&ndash;75th)
+          Variability (20th&ndash;80th)
         </li>
       </ul>
 
@@ -154,18 +148,31 @@ export function ClimateChart({
           })}
 
           <path className="climate-band hot" d={highBand}>
-            <title>High temperature 25th&ndash;75th percentile band</title>
+            <title>High temperature 20th&ndash;80th percentile band</title>
           </path>
           <path className="climate-band cold" d={lowBand}>
-            <title>Low temperature 25th&ndash;75th percentile band</title>
+            <title>Low temperature 20th&ndash;80th percentile band</title>
           </path>
 
-          <path className="climate-line feels hot" d={feelsHighLine}>
-            <title>Perceived (feels-like) high temperature</title>
-          </path>
-          <path className="climate-line feels cold" d={feelsLowLine}>
-            <title>Perceived (feels-like) low temperature</title>
-          </path>
+          {freezingVisible && (
+            <g>
+              <line
+                className="temp-freeze-line"
+                x1={ML}
+                x2={ML + PLOT_W}
+                y1={yTemp(FREEZING)}
+                y2={yTemp(FREEZING)}
+              />
+              <text
+                className="temp-freeze-label"
+                x={ML + PLOT_W}
+                y={yTemp(FREEZING) - 4}
+                textAnchor="end"
+              >
+                freezing
+              </text>
+            </g>
+          )}
 
           <path className="climate-line hot" d={highLine}>
             <title>Average high temperature</title>
@@ -217,20 +224,23 @@ export function ClimateChart({
         </svg>
       </div>
 
+      <p className="panel-note cc-note">
+        Biggest day&ndash;night swing: {climate[swingIdx].month} (
+        {Math.round(swings[swingIdx])}&deg;F)
+      </p>
+
       <details className="hourly-details">
         <summary>View climate data</summary>
         <div className="hourly-table-wrap" tabIndex={0}>
           <table>
             <caption className="sr-only">
-              {name} monthly average high, low, perceived, and precipitation
+              {name} monthly average high, low, and precipitation
             </caption>
             <thead>
               <tr>
                 <th scope="col">Month</th>
                 <th scope="col">Avg high</th>
                 <th scope="col">Avg low</th>
-                <th scope="col">Feels high</th>
-                <th scope="col">Feels low</th>
                 <th scope="col">Precipitation</th>
               </tr>
             </thead>
@@ -240,8 +250,6 @@ export function ClimateChart({
                   <th scope="row">{m.month}</th>
                   <td>{m.high}&deg;F</td>
                   <td>{m.low}&deg;F</td>
-                  <td>{m.feelsHigh}&deg;F</td>
-                  <td>{m.feelsLow}&deg;F</td>
                   <td>{m.precip.toFixed(1)} in</td>
                 </tr>
               ))}

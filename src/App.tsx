@@ -3,21 +3,15 @@ import { AirQualityChart } from './AirQualityChart'
 import { AqiCategoryDaysChart } from './AqiCategoryDaysChart'
 import { ClimateChart } from './ClimateChart'
 import { ClimateExtremes } from './ClimateExtremes'
-import { ClimateOverviewChart } from './ClimateOverviewChart'
-import { ClimateSkylineChart } from './ClimateSkylineChart'
 import { CloudCoverChart } from './CloudCoverChart'
-import { DaylightChart } from './DaylightChart'
 import { HourlyChart } from './HourlyChart'
 import { PrecipChanceChart } from './PrecipChanceChart'
 import { RainfallChart } from './RainfallChart'
-import { RainIntensityChart } from './RainIntensityChart'
 import { SeasonalRibbonChart } from './SeasonalRibbonChart'
 import { SnowfallChart } from './SnowfallChart'
 import { HumidityComfortChart } from './HumidityComfortChart'
 import { SunriseSunsetChart } from './SunriseSunsetChart'
 import { WindChart } from './WindChart'
-import { WeatherWheelChart } from './WeatherWheelChart'
-import { CloudCoverPanel, SunshinePanel } from './SunCloudPanels'
 import { CityIndex } from './CityIndex'
 import { loadCity, type CityData, type CityRef } from './dataService'
 import { useHashRoute } from './useHashRoute'
@@ -74,15 +68,11 @@ function CityView({
           </section>
 
           <ClimateExtremes climate={data.climate} />
-          <ClimateSkylineChart name={data.name} climate={data.climate} />
-          <WeatherWheelChart name={data.name} climate={data.climate} />
           <SeasonalRibbonChart name={data.name} climate={data.climate} />
           <HourlyChart name={data.name} climate={data.climate} hourlyTemp={data.hourlyTemp} />
           <ClimateChart name={data.name} climate={data.climate} />
-          <ClimateOverviewChart name={data.name} climate={data.climate} />
           <PrecipChanceChart name={data.name} climate={data.climate} />
           <RainfallChart name={data.name} climate={data.climate} />
-          <RainIntensityChart name={data.name} climate={data.climate} />
           <SnowfallChart name={data.name} climate={data.climate} />
           <HumidityComfortChart name={data.name} climate={data.climate} />
           <CloudCoverChart name={data.name} climate={data.climate} />
@@ -90,13 +80,11 @@ function CityView({
           <AirQualityChart name={data.name} city={city} />
           <AqiCategoryDaysChart name={data.name} city={city} />
 
-          <div className="duo">
-            <SunshinePanel name={data.name} climate={data.climate} />
-            <CloudCoverPanel name={data.name} climate={data.climate} />
-          </div>
-
-          <WindChart name={data.name} climate={data.climate} />
-          <DaylightChart name={data.name} latitude={data.latitude} />
+          <WindChart
+            name={data.name}
+            climate={data.climate}
+            windRose={data.windRose}
+          />
           <SunriseSunsetChart
             name={data.name}
             latitude={data.latitude}

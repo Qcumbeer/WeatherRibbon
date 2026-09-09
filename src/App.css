@@ -220,20 +220,6 @@
   background: var(--cold);
 }
 
-.swatch.climate-feels {
-  height: 0;
-  border-radius: 0;
-  background: transparent;
-}
-
-.swatch.climate-feels-high {
-  border-top: 2px dotted var(--hot);
-}
-
-.swatch.climate-feels-low {
-  border-top: 2px dotted var(--cold);
-}
-
 .swatch.climate-band {
   height: 8px;
   border-radius: 999px;
@@ -304,6 +290,19 @@
   stroke: none;
 }
 
+.temp-freeze-line {
+  stroke: var(--cold);
+  stroke-width: 1;
+  stroke-dasharray: 2 4;
+  opacity: 0.7;
+}
+
+.temp-freeze-label {
+  fill: var(--cold);
+  font-size: 9px;
+  opacity: 0.9;
+}
+
 .climate-band.hot {
   fill: var(--hot-band);
 }
@@ -324,20 +323,6 @@
 }
 
 .climate-line.cold {
-  stroke: var(--cold);
-}
-
-.climate-line.feels {
-  stroke-width: 1.5;
-  stroke-dasharray: 2 4;
-  opacity: 0.75;
-}
-
-.climate-line.feels.hot {
-  stroke: var(--hot);
-}
-
-.climate-line.feels.cold {
   stroke: var(--cold);
 }
 
@@ -455,161 +440,133 @@
   margin-top: 12px;
 }
 
-.precip-area.rain {
-  fill: var(--precip-rain-fill);
-  stroke: none;
+.wd-bar {
+  stroke: var(--bg);
+  stroke-width: 0.5;
 }
 
-.precip-line {
-  fill: none;
-  stroke-width: 2;
-  stroke-linejoin: round;
-  stroke-linecap: round;
+.wd-bar.rain {
+  fill: var(--precip-rain);
 }
 
-.precip-line.rain {
-  stroke: var(--precip-rain);
+.wd-bar.mixed {
+  fill: var(--precip-mixed);
 }
 
-.precip-line.mixed {
-  stroke: var(--precip-mixed);
-  stroke-dasharray: 5 4;
+.wd-bar.snow {
+  fill: var(--precip-snow);
 }
 
-.precip-line.snow {
-  stroke: var(--precip-snow);
-  stroke-dasharray: 2 3;
+.wd-bar.dry {
+  fill: var(--border);
+  opacity: 0.5;
 }
 
-.precip-dot {
-  fill: var(--bg);
-  stroke-width: 2;
+.swatch.wd-swatch {
+  height: 10px;
+  border-radius: 3px;
 }
 
-.precip-dot.rain {
-  stroke: var(--precip-rain);
-}
-
-.precip-dot.mixed {
-  stroke: var(--precip-mixed);
-}
-
-.precip-dot.snow {
-  stroke: var(--precip-snow);
-}
-
-.precip-swatch.rain {
+.swatch.wd-swatch.rain {
   background: var(--precip-rain);
 }
 
-.precip-swatch.mixed {
-  height: 0;
-  border-radius: 0;
-  background: transparent;
-  border-top: 2px dashed var(--precip-mixed);
+.swatch.wd-swatch.mixed {
+  background: var(--precip-mixed);
 }
 
-.precip-swatch.snow {
-  height: 0;
-  border-radius: 0;
-  background: transparent;
-  border-top: 2px dotted var(--precip-snow);
-}
-
-.swatch.rain-avg {
-  height: 3px;
-  border-radius: 999px;
-  background: var(--precip-rain);
-}
-
-.swatch.rain-pct {
-  height: 8px;
-  border-radius: 999px;
-  background: var(--precip-rain-fill);
-  border: 1px solid var(--border);
-}
-
-.rain-band {
-  fill: var(--precip-rain-fill);
-  stroke: none;
-}
-
-.rain-avg-line {
-  fill: none;
-  stroke: var(--precip-rain);
-  stroke-width: 2;
-  stroke-linejoin: round;
-  stroke-linecap: round;
-}
-
-.rain-dot {
-  fill: var(--bg);
-  stroke: var(--precip-rain);
-  stroke-width: 2;
-}
-
-.swatch.snow-avg {
-  height: 3px;
-  border-radius: 999px;
+.swatch.wd-swatch.snow {
   background: var(--precip-snow);
 }
 
-.swatch.snow-pct {
-  height: 8px;
-  border-radius: 999px;
-  background: var(--precip-snow-fill);
-  border: 1px solid var(--border);
+.swatch.wd-swatch.dry {
+  background: var(--border);
 }
 
-.snow-band {
-  fill: var(--precip-snow-fill);
-  stroke: none;
+.swatch.rain-bar-swatch {
+  height: 10px;
+  border-radius: 3px;
+  background: var(--precip-rain);
 }
 
-.snow-avg-line {
-  fill: none;
-  stroke: var(--precip-snow);
-  stroke-width: 2;
-  stroke-linejoin: round;
+.swatch.rain-whisker-swatch {
+  height: 0;
+  border-radius: 0;
+  background: transparent;
+  border-top: 2px solid var(--precip-rain);
+}
+
+.rain-bar {
+  fill: var(--precip-rain);
+  opacity: 0.75;
+}
+
+.rain-whisker {
+  stroke: var(--precip-rain);
+  stroke-width: 1.5;
   stroke-linecap: round;
 }
 
-.snow-dot {
-  fill: var(--bg);
-  stroke: var(--precip-snow);
-  stroke-width: 2;
+.swatch.snow-bar-swatch {
+  height: 10px;
+  border-radius: 3px;
+  background: var(--precip-snow);
 }
 
-.swatch.wind-avg {
-  height: 3px;
-  border-radius: 999px;
+.swatch.snow-whisker-swatch {
+  height: 0;
+  border-radius: 0;
+  background: transparent;
+  border-top: 2px solid var(--precip-snow);
+}
+
+.snow-bar {
+  fill: var(--precip-snow);
+  opacity: 0.75;
+}
+
+.snow-whisker {
+  stroke: var(--precip-snow);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+.swatch.wind-bar-swatch {
+  height: 10px;
+  border-radius: 3px;
   background: var(--wind);
 }
 
-.swatch.wind-pct {
-  height: 8px;
-  border-radius: 999px;
-  background: var(--wind-fill);
-  border: 1px solid var(--border);
+.swatch.wind-whisker-swatch {
+  height: 0;
+  border-radius: 0;
+  background: transparent;
+  border-top: 2px solid var(--wind);
 }
 
-.wind-band {
-  fill: var(--wind-fill);
-  stroke: none;
+.swatch.wind-arrow-swatch {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 9px solid var(--wind);
+  background: transparent;
+  border-radius: 0;
 }
 
-.wind-avg-line {
-  fill: none;
+.wind-bar {
+  fill: var(--wind);
+  opacity: 0.75;
+}
+
+.wind-whisker {
   stroke: var(--wind);
-  stroke-width: 2;
-  stroke-linejoin: round;
+  stroke-width: 1.5;
   stroke-linecap: round;
 }
 
-.wind-dot {
-  fill: var(--bg);
-  stroke: var(--wind);
-  stroke-width: 2;
+.wind-arrow {
+  fill: var(--text-h);
 }
 
 .swatch.ri-bar {
@@ -679,125 +636,8 @@
   fill: var(--text);
 }
 
-.swatch.ov-rain {
-  height: 10px;
-  border-radius: 3px;
-  background: var(--precip-rain-fill);
-  border: 1px solid var(--precip-rain);
-}
-
-.swatch.ov-temp {
-  height: 3px;
-  border-radius: 999px;
-  background: var(--hot);
-}
-
-.swatch.ov-sun {
-  height: 3px;
-  border-radius: 999px;
-  background: var(--sun);
-  border-top: 2px dashed var(--sun);
-  border-bottom: 0;
-}
-
-.ov-rain-bar {
-  fill: var(--precip-rain-fill);
-  stroke: var(--precip-rain);
-  stroke-width: 1;
-}
-
-.ov-temp-line {
-  fill: none;
-  stroke: var(--hot);
-  stroke-width: 2.5;
-  stroke-linejoin: round;
-  stroke-linecap: round;
-}
-
-.ov-sun-line {
-  fill: none;
-  stroke: var(--sun);
-  stroke-width: 2;
-  stroke-dasharray: 5 3;
-  stroke-linejoin: round;
-  stroke-linecap: round;
-}
-
-.ov-temp-dot {
-  fill: var(--bg);
-  stroke: var(--hot);
-  stroke-width: 2;
-}
-
-.ov-sun-dot {
-  fill: var(--bg);
-  stroke: var(--sun);
-  stroke-width: 2;
-}
-
-.dl-area {
-  stroke: var(--bg);
-  stroke-width: 0.5;
-  stroke-linejoin: round;
-}
-
-.dl-area.daylight {
-  fill: var(--dl-daylight);
-}
-
-.dl-area.civil {
-  fill: var(--dl-civil);
-}
-
-.dl-area.nautical {
-  fill: var(--dl-nautical);
-}
-
-.dl-area.astro {
-  fill: var(--dl-astro);
-}
-
-.dl-area.night {
-  fill: var(--dl-night);
-}
-
-.dl-solstice {
-  stroke: var(--text-h);
-  stroke-width: 1;
-  stroke-dasharray: 3 4;
-  opacity: 0.35;
-}
-
-.swatch.dl-swatch {
-  height: 10px;
-  border-radius: 3px;
-}
-
-.swatch.dl-swatch.daylight {
-  background: var(--dl-daylight);
-}
-
-.swatch.dl-swatch.civil {
-  background: var(--dl-civil);
-}
-
-.swatch.dl-swatch.nautical {
-  background: var(--dl-nautical);
-}
-
-.swatch.dl-swatch.astro {
-  background: var(--dl-astro);
-}
-
-.swatch.dl-swatch.night {
-  background: var(--dl-night);
-}
-
-.dl-dst {
-  stroke: var(--accent);
-  stroke-width: 1.5;
-  stroke-dasharray: 4 3;
-  opacity: 0.55;
+.dl-dst-area {
+  fill: var(--accent-bg);
 }
 
 .dl-curve-line {
@@ -806,19 +646,14 @@
   stroke-linecap: round;
 }
 
-.dl-curve-line.sunrise,
-.dl-curve-line.sunset {
-  stroke: var(--text-h);
-  stroke-width: 1.5;
-  opacity: 0.85;
+.dl-curve-line.sunrise {
+  stroke: var(--cold);
+  stroke-width: 2;
 }
 
-.dl-curve-line.noon,
-.dl-curve-line.midnight {
-  stroke: var(--text-h);
-  stroke-width: 1;
-  stroke-dasharray: 4 3;
-  opacity: 0.5;
+.dl-curve-line.sunset {
+  stroke: var(--hot);
+  stroke-width: 2;
 }
 
 .swatch.dl-curve {
@@ -826,51 +661,43 @@
   width: 18px;
   border-radius: 0;
   background: transparent;
-  border-top: 2px solid var(--text-h);
 }
 
-.swatch.dl-curve.noon {
-  border-top-style: dashed;
-  opacity: 0.6;
+.swatch.dl-curve.sunrise {
+  border-top: 2px solid var(--cold);
+}
+
+.swatch.dl-curve.sunset {
+  border-top: 2px solid var(--hot);
 }
 
 .swatch.dl-dst-mark {
-  height: 0;
+  height: 10px;
   width: 18px;
-  border-radius: 0;
-  background: transparent;
-  border-top: 2px dashed var(--accent);
-  opacity: 0.7;
+  border-radius: 3px;
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-border);
 }
 
-.hc-area {
+.hc-bar {
   stroke: var(--bg);
   stroke-width: 0.5;
-  stroke-linejoin: round;
 }
 
-.hc-area.dry {
+.hc-bar.dry {
   fill: var(--hc-dry);
 }
 
-.hc-area.comfortable {
+.hc-bar.comfortable {
   fill: var(--hc-comfortable);
 }
 
-.hc-area.humid {
+.hc-bar.humid {
   fill: var(--hc-humid);
 }
 
-.hc-area.muggy {
+.hc-bar.muggy {
   fill: var(--hc-muggy);
-}
-
-.hc-area.oppressive {
-  fill: var(--hc-oppressive);
-}
-
-.hc-area.miserable {
-  fill: var(--hc-miserable);
 }
 
 .hc-swatch {
@@ -894,6 +721,7 @@
   background: var(--hc-muggy);
 }
 
+<<<<<<< HEAD
 .hc-swatch.oppressive {
   background: var(--hc-oppressive);
 }
@@ -957,6 +785,8 @@
   pointer-events: all;
 }
 
+=======
+>>>>>>> 3812df9 (Differentiate climate charts from WeatherSpark and drop redundant views.)
 
 .heatmap-border {
   fill: none;
@@ -1032,64 +862,10 @@
   text-align: left;
 }
 
-.duo {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 20px;
-}
-
-.panel-compact {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  min-width: 0;
-  padding: 20px;
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  background: var(--bg);
-  box-shadow: var(--shadow);
-}
-
-.panel-title {
-  margin: 0;
-  font-size: 16px;
-  color: var(--text-h);
-}
-
 .panel-note {
   margin: 0;
   font-size: 13px;
   color: var(--text);
-}
-
-.mini-svg {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.mini-grid {
-  stroke: var(--border);
-  stroke-width: 1;
-}
-
-.mini-axis {
-  fill: var(--text);
-  font-size: 10px;
-}
-
-.mini-bar.sun {
-  fill: var(--sun);
-  opacity: 0.55;
-}
-
-.mini-bar.cloud {
-  fill: var(--text);
-  opacity: 0.4;
-}
-
-.mini-bar.peak {
-  opacity: 1;
 }
 
 .card.muted h1,
@@ -1462,80 +1238,6 @@
   color: var(--text);
 }
 
-.swatch.skyline-height {
-  height: 14px;
-  width: 10px;
-  border-radius: 2px 2px 0 0;
-  background: var(--text);
-}
-
-.swatch.skyline-temp {
-  background: linear-gradient(to right, #2848b0, #5ac8c0, #ebbe46, #aa232d);
-}
-
-.swatch.skyline-zero {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--cold);
-}
-
-.swatch.skyline-missing {
-  background: transparent;
-  border: 1.5px dashed #94949c;
-}
-
-.skyline-baseline {
-  stroke: var(--text);
-  stroke-width: 1.25;
-}
-
-.skyline-building {
-  stroke: none;
-}
-
-.skyline-mark {
-  outline: none;
-}
-
-.skyline-mark:focus-visible .skyline-building,
-.skyline-mark.is-focused .skyline-building {
-  stroke: var(--text-h);
-  stroke-width: 2;
-}
-
-.skyline-hit {
-  fill: transparent;
-  pointer-events: all;
-}
-
-.skyline-zero-dot {
-  stroke: var(--bg);
-  stroke-width: 1.5;
-}
-
-.skyline-mark:focus-visible .skyline-zero-dot,
-.skyline-mark.is-focused .skyline-zero-dot {
-  stroke: var(--text-h);
-  stroke-width: 2;
-}
-
-.skyline-missing-stub {
-  fill: none;
-  stroke: #94949c;
-  stroke-width: 1.5;
-  stroke-dasharray: 3 2;
-}
-
-.skyline-legend-bar {
-  stroke: var(--border);
-  stroke-width: 1;
-}
-
-.skyline-readout {
-  min-height: 1.4em;
-}
-
 .swatch.ribbon-ramp {
   width: 56px;
   height: 10px;
@@ -1601,80 +1303,6 @@
 
 .ribbon-readout {
   min-height: 1.4em;
-}
-
-.ww-wrap,
-.ww-svg {
-  overflow: visible;
-}
-
-.ww-hub-disk {
-  fill: var(--bg);
-  stroke: var(--border);
-  stroke-width: 1;
-}
-
-.ww-ring {
-  fill: none;
-  stroke: var(--border);
-  stroke-width: 1;
-  opacity: 0.85;
-}
-
-.ww-ring-label {
-  font-size: 10px;
-}
-
-.ww-petal {
-  stroke: var(--bg);
-  stroke-width: 1.5;
-  cursor: pointer;
-}
-
-.ww-petal:focus {
-  outline: none;
-}
-
-.ww-petal:focus-visible,
-.ww-petal-focus {
-  stroke: var(--text-h);
-  stroke-width: 2.5;
-}
-
-.ww-month {
-  font-size: 12px;
-  font-weight: 600;
-  fill: var(--text-h);
-}
-
-.ww-hub-month {
-  fill: var(--text-h);
-  font-size: 15px;
-  font-weight: 650;
-}
-
-.ww-hub-temp,
-.ww-hub-precip {
-  fill: var(--text);
-  font-size: 11px;
-}
-
-.ww-temp-legend {
-  margin: 0 0 12px;
-}
-
-.ww-temp-bar {
-  height: 10px;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-}
-
-.ww-temp-ticks {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 4px;
-  font-size: 11px;
-  color: var(--text);
 }
 
 .climate-extremes {
@@ -1756,12 +1384,6 @@
     padding: 20px;
   }
 
-  .duo {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-
-  .panel-compact,
   .climate-extremes {
     padding: 16px;
   }
@@ -1769,10 +1391,6 @@
   .hourly-tick-minor,
   .climate-tick-minor {
     display: none;
-  }
-
-  .ww-month {
-    display: inherit;
   }
 
   .index-hero {

@@ -13,7 +13,55 @@ const PLOT_H = HEIGHT - MT - MB
 
 const SPARSE = new Set(['Jan', 'Mar', 'May', 'Jul', 'Sep', 'Nov'])
 
+<<<<<<< HEAD
 const OVERCAST_THRESHOLD = 50
+=======
+const SIGMA = 28
+
+interface Category {
+  key: string
+  label: string
+  center: number
+  cls: string
+}
+
+const CATS: Category[] = [
+  { key: 'clear', label: 'Clear', center: 15, cls: 'clear' },
+  { key: 'partly-cloudy', label: 'Partly cloudy', center: 50, cls: 'partly' },
+  { key: 'overcast', label: 'Overcast', center: 85, cls: 'overcast' },
+]
+
+function categoryFractions(cloud: number): number[] {
+  const weights = CATS.map((cat) =>
+    Math.exp(-((cloud - cat.center) ** 2) / (2 * SIGMA * SIGMA)),
+  )
+  const sum = weights.reduce((a, b) => a + b, 0) || 1
+  return weights.map((w) => (w / sum) * 100)
+}
+
+function stackedArea(
+  climate: ClimateMonth[],
+  fractions: number[][],
+  xAt: (i: number) => number,
+  yPct: (p: number) => number,
+  catIndex: number,
+): string {
+  const n = climate.length
+  const parts: string[] = []
+  for (let i = 0; i < n; i++) {
+    let bottom = 0
+    for (let k = 0; k < catIndex; k++) bottom += fractions[i][k]
+    parts.push(`${i === 0 ? 'M' : 'L'}${xAt(i).toFixed(1)} ${yPct(bottom).toFixed(1)}`)
+  }
+  for (let i = n - 1; i >= 0; i--) {
+    let top = 0
+    for (let k = 0; k <= catIndex; k++) top += fractions[i][k]
+    parts.push(`L${xAt(i).toFixed(1)} ${yPct(top).toFixed(1)}`)
+  }
+  parts.push('Z')
+  return parts.join(' ')
+}
+>>>>>>> 3812df9 (Differentiate climate charts from WeatherSpark and drop redundant views.)
 
 export function CloudCoverChart({
   name,
@@ -48,12 +96,21 @@ export function CloudCoverChart({
       aria-labelledby={captionId}
     >
       <h2 className="forecast-title" id={captionId}>
+<<<<<<< HEAD
         Cloud Cover
       </h2>
       <p className="sr-only" id={descId}>
         {name} monthly mean cloud cover percentage from January through
         December, shown as a line. Months above 50% cloud cover are shaded
         as overcast season.
+=======
+        Sky Conditions
+      </h2>
+      <p className="sr-only" id={descId}>
+        {name} percentage of time spent in each sky condition &mdash; clear,
+        partly cloudy, and overcast &mdash; from January through December.
+        Categories stack to 100%.
+>>>>>>> 3812df9 (Differentiate climate charts from WeatherSpark and drop redundant views.)
       </p>
 
       <ul className="hourly-legend">

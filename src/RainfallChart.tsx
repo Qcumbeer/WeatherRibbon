@@ -9,16 +9,9 @@ const MT = 14
 const MB = 40
 const PLOT_W = WIDTH - ML - MR
 const PLOT_H = HEIGHT - MT - MB
-const YEAR = 365
-const STEP = 2
 
 const SPARSE = new Set(['Jan', 'Mar', 'May', 'Jul', 'Sep', 'Nov'])
-const DAYS_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-const MID_DAY = DAYS_IN_MONTH.reduce<number[]>((acc, days, i) => {
-  const start = i === 0 ? 0 : acc[i - 1] + DAYS_IN_MONTH[i - 1] / 2 + days / 2
-  acc.push(i === 0 ? days / 2 : start)
-  return acc
-}, [])
+const CAP_W = 8
 
 function niceTicks(lo: number, hi: number, step: number) {
   const start = Math.ceil(lo / step) * step
@@ -28,57 +21,19 @@ function niceTicks(lo: number, hi: number, step: number) {
   return out
 }
 
-function smoothstep(t: number) {
-  return t * t * (3 - 2 * t)
-}
-
-function sampleYear(values: number[]): number[] {
-  const out: number[] = []
-  for (let d = 0; d < YEAR; d += STEP) {
-    let i = 11
-    for (let k = 0; k < 12; k++) {
-      const a = MID_DAY[k]
-      const b = MID_DAY[(k + 1) % 12] + (k === 11 ? YEAR : 0)
-      const dd = d < MID_DAY[0] ? d + YEAR : d
-      if (dd >= a && dd <= b) {
-        i = k
-        break
-      }
+function wettestWindow(climate: ClimateMonth[], span: number) {
+  const n = climate.length
+  let best = 0
+  let bestSum = -1
+  for (let i = 0; i < n; i++) {
+    let sum = 0
+    for (let k = 0; k < span; k++) sum += climate[(i + k) % n].precip
+    if (sum > bestSum) {
+      bestSum = sum
+      best = i
     }
-    const a = MID_DAY[i]
-    const b = MID_DAY[(i + 1) % 12] + (i === 11 ? YEAR : 0)
-    const dd = d < MID_DAY[0] ? d + YEAR : d
-    const t = smoothstep((dd - a) / (b - a))
-    out.push(values[i] * (1 - t) + values[(i + 1) % 12] * t)
   }
-  return out
-}
-
-function lineFrom(samples: number[], xAt: (d: number) => number, yAt: (v: number) => number) {
-  return samples
-    .map((v, i) => {
-      const x = xAt(i * STEP)
-      const y = yAt(v)
-      return `${i === 0 ? 'M' : 'L'}${x.toFixed(1)} ${y.toFixed(1)}`
-    })
-    .join(' ')
-}
-
-function bandFrom(
-  lo: number[],
-  hi: number[],
-  xAt: (d: number) => number,
-  yAt: (v: number) => number,
-) {
-  const n = lo.length
-  const fwd = lo
-    .map((v, i) => `${i === 0 ? 'M' : 'L'}${xAt(i * STEP).toFixed(1)} ${yAt(v).toFixed(1)}`)
-    .join(' ')
-  const back: string[] = []
-  for (let i = n - 1; i >= 0; i--) {
-    back.push(`L${xAt(i * STEP).toFixed(1)} ${yAt(hi[i]).toFixed(1)}`)
-  }
-  return `${fwd} ${back.join(' ')} Z`
+  return { start: best, sum: bestSum }
 }
 
 export function RainfallChart({
@@ -93,44 +48,48 @@ export function RainfallChart({
   const descId = `${uid}-desc`
   const n = climate.length
   const slot = PLOT_W / n
+  const barW = slot * 0.5
 
   const avgs = climate.map((m) => m.precip)
   const lows = climate.map((m) => m.precipBand[0])
   const highs = climate.map((m) => m.precipBand[1])
-  const avgSeries = sampleYear(avgs)
-  const loSeries = sampleYear(lows)
-  const hiSeries = sampleYear(highs)
 
   const dataHi = Math.max(...highs, ...avgs, 1)
   const yHi = Math.max(2, Math.ceil(dataHi))
   const step = yHi > 8 ? 2 : 1
   const grid = niceTicks(0, yHi, step)
 
-  const xDay = (d: number) => ML + (d / YEAR) * PLOT_W
   const xAt = (i: number) => ML + slot * (i + 0.5)
   const yIn = (v: number) => MT + ((yHi - v) / yHi) * PLOT_H
 
+  const annual = avgs.reduce((a, b) => a + b, 0)
   const wettest = climate.reduce((a, b) => (b.precip > a.precip ? b : a))
   const driest = climate.reduce((a, b) => (b.precip < a.precip ? b : a))
+  const window = wettestWindow(climate, 3)
+  const windowShare = annual > 0 ? (window.sum / annual) * 100 : 0
+  const windowLabel = `${climate[window.start].month}\u2013${
+    climate[(window.start + 2) % n].month
+  }`
 
   return (
     <section className="hourly climate rainfall-chart" aria-labelledby={captionId}>
       <h2 className="forecast-title" id={captionId}>
-        Average Monthly Rainfall
+        Monthly Rainfall
       </h2>
       <p className="sr-only" id={descId}>
-        {name} average sliding 31-day rainfall total in inches from January
-        through December, with 25th to 75th percentile shading.
+        {name} average monthly rainfall in inches from January through
+        December, drawn as bars with whiskers spanning the 20th to 80th
+        percentile range across years.
       </p>
 
       <ul className="hourly-legend">
         <li>
-          <span className="swatch rain-avg" aria-hidden="true" />
-          Average (31-day total)
+          <span className="swatch rain-bar-swatch" aria-hidden="true" />
+          Monthly average
         </li>
         <li>
-          <span className="swatch rain-pct" aria-hidden="true" />
-          Variability (25th&ndash;75th)
+          <span className="swatch rain-whisker-swatch" aria-hidden="true" />
+          20th&ndash;80th percentile
         </li>
       </ul>
 
@@ -159,29 +118,46 @@ export function RainfallChart({
             )
           })}
 
-          <path
-            className="rain-band"
-            d={bandFrom(loSeries, hiSeries, xDay, yIn)}
-          >
-            <title>25th&ndash;75th percentile rainfall band</title>
-          </path>
-          <path className="rain-avg-line" d={lineFrom(avgSeries, xDay, yIn)}>
-            <title>Average rainfall (31-day total)</title>
-          </path>
-
-          {climate.map((m, i) => (
-            <circle
-              key={`dot-${m.month}`}
-              className="rain-dot"
-              cx={xDay(MID_DAY[i])}
-              cy={yIn(m.precip)}
-              r={3.5}
-            >
-              <title>
-                {m.month}: {m.precip.toFixed(1)} in
-              </title>
-            </circle>
-          ))}
+          {climate.map((m, i) => {
+            const h = Math.max(1.5, (m.precip / yHi) * PLOT_H)
+            const x = xAt(i)
+            return (
+              <g key={`bar-${m.month}`}>
+                <rect
+                  className="rain-bar"
+                  x={x - barW / 2}
+                  y={MT + PLOT_H - h}
+                  width={barW}
+                  height={h}
+                >
+                  <title>
+                    {`${m.month}: ${m.precip.toFixed(2)} in (${lows[i].toFixed(1)}\u2013${highs[i].toFixed(1)} in)`}
+                  </title>
+                </rect>
+                <line
+                  className="rain-whisker"
+                  x1={x}
+                  x2={x}
+                  y1={yIn(highs[i])}
+                  y2={yIn(lows[i])}
+                />
+                <line
+                  className="rain-whisker"
+                  x1={x - CAP_W / 2}
+                  x2={x + CAP_W / 2}
+                  y1={yIn(highs[i])}
+                  y2={yIn(highs[i])}
+                />
+                <line
+                  className="rain-whisker"
+                  x1={x - CAP_W / 2}
+                  x2={x + CAP_W / 2}
+                  y1={yIn(lows[i])}
+                  y2={yIn(lows[i])}
+                />
+              </g>
+            )
+          })}
 
           {climate.map((m, i) => (
             <text
@@ -204,6 +180,12 @@ export function RainfallChart({
       <p className="panel-note cc-note">
         Wettest {wettest.month} ({wettest.precip.toFixed(1)} in) &middot; Driest{' '}
         {driest.month} ({driest.precip.toFixed(1)} in)
+        {annual > 0 && (
+          <>
+            {' '}
+            &middot; {windowShare.toFixed(0)}% of annual rain falls {windowLabel}
+          </>
+        )}
       </p>
 
       <details className="hourly-details">
@@ -211,14 +193,15 @@ export function RainfallChart({
         <div className="hourly-table-wrap" tabIndex={0}>
           <table>
             <caption className="sr-only">
-              {name} monthly rolling 31-day rainfall totals in inches
+              {name} monthly rainfall totals in inches with 20th to 80th
+              percentile range
             </caption>
             <thead>
               <tr>
                 <th scope="col">Month</th>
                 <th scope="col">Average</th>
-                <th scope="col">25th</th>
-                <th scope="col">75th</th>
+                <th scope="col">20th</th>
+                <th scope="col">80th</th>
               </tr>
             </thead>
             <tbody>

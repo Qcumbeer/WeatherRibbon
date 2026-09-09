@@ -26,6 +26,18 @@ export interface ClimateMonth {
   dewPoint: number
 }
 
+export interface WindRoseMonth {
+  month: string
+  n: number
+  ne: number
+  e: number
+  se: number
+  s: number
+  sw: number
+  w: number
+  nw: number
+}
+
 export interface CityData {
   name: string
   region: string
@@ -34,6 +46,7 @@ export interface CityData {
   source: string
   period: string
   climate: ClimateMonth[]
+<<<<<<< HEAD
   hourlyTemp?: number[][]
   windRose?: {
     month: string
@@ -46,6 +59,9 @@ export interface CityData {
     w: number
     nw: number
   }[]
+=======
+  windRose?: WindRoseMonth[]
+>>>>>>> 3812df9 (Differentiate climate charts from WeatherSpark and drop redundant views.)
 }
 
 // Lazy-load each city's climate JSON as a separate chunk.
