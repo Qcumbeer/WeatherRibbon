@@ -46,6 +46,7 @@ export interface CityData {
   source: string
   period: string
   climate: ClimateMonth[]
+  hourlyTemp?: number[][]
   windRose?: WindRoseMonth[]
 }
 
