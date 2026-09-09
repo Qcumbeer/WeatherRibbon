@@ -142,7 +142,7 @@ export function CityIndex({ query, onQueryChange, onNavigate }: IndexViewProps) 
           <svg className="index-brand-icon" aria-hidden="true">
             <use href="/icons.svg#brand-icon" />
           </svg>
-          ⛅ Weatherfork
+          Weatherfork ☀️
         </h1>
         <p className="index-subtitle">
           1991–2020 climate normals for {CITIES.length} cities worldwide.
