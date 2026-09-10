@@ -1,5 +1,4 @@
 import { useId } from 'react'
-import type { ClimateMonth } from './dataService'
 
 const WIDTH = 640
 const ML = 44
@@ -16,8 +15,6 @@ const LEGEND_Y = MONTH_LABEL_Y + 20
 const LEGEND_H = 12
 const LEGEND_LABEL_Y = LEGEND_Y + LEGEND_H + 12
 const HEIGHT = LEGEND_LABEL_Y + 6
-
-const PEAK_HOUR = 15
 
 const MONTH_LABELS = [
   'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
@@ -81,30 +78,19 @@ function niceRange(lo: number, hi: number, step: number): number[] {
   return out
 }
 
-function buildGrid(climate: ClimateMonth[]): number[][] {
-  return climate.map((m) => {
-    const avg = (m.high + m.low) / 2
-    const amp = (m.high - m.low) / 2
-    return Array.from(
-      { length: HOURS },
-      (_, h) => avg + amp * Math.cos((2 * Math.PI * (h - PEAK_HOUR)) / 24),
-    )
-  })
-}
 export function HourlyChart({
   name,
-  climate,
   hourlyTemp,
 }: {
   name: string
-  climate: ClimateMonth[]
   hourlyTemp?: number[][]
 }) {
   const uid = useId()
   const captionId = `${uid}-caption`
   const descId = `${uid}-desc`
   const gradId = `${uid}-legend`
-  const grid = hourlyTemp ?? buildGrid(climate)
+  if (!hourlyTemp) return null
+  const grid = hourlyTemp
 
   const allTemps = grid.flat()
   const minT = Math.min(...allTemps)

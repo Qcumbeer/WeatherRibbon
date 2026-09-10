@@ -31,6 +31,7 @@ export function AirQualityChart({
   const descId = `${uid}-desc`
 
   const months = useMemo(() => loadAirQuality(city), [city])
+  if (!months) return null
   const n = months.length
   const slot = PLOT_W / n
 

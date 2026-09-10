@@ -10,7 +10,7 @@ import { RainfallChart } from './RainfallChart'
 import { SeasonalRibbonChart } from './SeasonalRibbonChart'
 import { SnowfallChart } from './SnowfallChart'
 import { HumidityComfortChart } from './HumidityComfortChart'
-import { SunriseSunsetChart } from './SunriseSunsetChart'
+import { DaylightChart } from './DaylightChart'
 import { WindChart } from './WindChart'
 import { CityIndex } from './CityIndex'
 import { loadCity, type CityData, type CityRef } from './dataService'
@@ -69,7 +69,7 @@ function CityView({
 
           <ClimateExtremes climate={data.climate} />
           <SeasonalRibbonChart name={data.name} climate={data.climate} />
-          <HourlyChart name={data.name} climate={data.climate} hourlyTemp={data.hourlyTemp} />
+          <HourlyChart name={data.name} hourlyTemp={data.hourlyTemp} />
           <ClimateChart name={data.name} climate={data.climate} />
           <PrecipChanceChart name={data.name} climate={data.climate} />
           <RainfallChart name={data.name} climate={data.climate} />
@@ -85,11 +85,7 @@ function CityView({
             climate={data.climate}
             windRose={data.windRose}
           />
-          <SunriseSunsetChart
-            name={data.name}
-            latitude={data.latitude}
-            longitude={data.longitude}
-          />
+          <DaylightChart name={data.name} latitude={data.latitude} />
         </div>
       ) : (
         <article className="card muted">

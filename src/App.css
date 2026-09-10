@@ -595,8 +595,9 @@
   fill: var(--text);
 }
 
-.dl-dst-area {
-  fill: var(--accent-bg);
+.dl-daylight-fill {
+  fill: var(--dl-daylight);
+  opacity: 0.28;
 }
 
 .dl-curve-line {
@@ -605,13 +606,8 @@
   stroke-linecap: round;
 }
 
-.dl-curve-line.sunrise {
-  stroke: var(--cold);
-  stroke-width: 2;
-}
-
-.dl-curve-line.sunset {
-  stroke: var(--hot);
+.dl-curve-line.daylight {
+  stroke: var(--sun);
   stroke-width: 2;
 }
 
@@ -622,20 +618,8 @@
   background: transparent;
 }
 
-.swatch.dl-curve.sunrise {
-  border-top: 2px solid var(--cold);
-}
-
-.swatch.dl-curve.sunset {
-  border-top: 2px solid var(--hot);
-}
-
-.swatch.dl-dst-mark {
-  height: 10px;
-  width: 18px;
-  border-radius: 3px;
-  background: var(--accent-bg);
-  border: 1px solid var(--accent-border);
+.swatch.dl-curve.daylight {
+  border-top: 2px solid var(--sun);
 }
 
 .hc-bar {
