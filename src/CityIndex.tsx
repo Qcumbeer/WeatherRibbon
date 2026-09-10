@@ -7,15 +7,12 @@ import {
   type KeyboardEvent,
 } from 'react'
 import { CITIES, cityHref, type CityRef } from './cities'
-import { searchCities } from './geocoding'
 import { ribbonSrc } from './ribbonAssets'
 
 const RANKED: CityRef[] = CITIES
 const ALPHABETICAL: CityRef[] = [...CITIES].sort((a, b) =>
   a.name.localeCompare(b.name, 'en'),
 )
-
-type CityEntry = CityRef & { remote?: boolean }
 
 function CityCard({
   city,
@@ -52,45 +49,16 @@ export function CityIndex({ query, onQueryChange, onNavigate }: IndexViewProps) 
   const id = useId()
   const inputRef = useRef<HTMLInputElement>(null)
   const listRef = useRef<HTMLUListElement>(null)
-  const [remote, setRemote] = useState<CityRef[]>([])
   const [active, setActive] = useState(0)
 
-  const results: CityEntry[] = useMemo(() => {
+  const results: CityRef[] = useMemo(() => {
     const q = query.trim().toLowerCase()
     if (!q) return []
-    const localMatches = CITIES.filter(
+    return CITIES.filter(
       (c) =>
         c.name.toLowerCase().includes(q) ||
         c.region.toLowerCase().includes(q),
     )
-    const localKeys = new Set(
-      localMatches.map((c) => `${c.latitude.toFixed(2)},${c.longitude.toFixed(2)}`),
-    )
-    const remoteExtras = remote.filter(
-      (c) => !localKeys.has(`${c.latitude.toFixed(2)},${c.longitude.toFixed(2)}`),
-    )
-    return [...localMatches, ...remoteExtras.map((c) => ({ ...c, remote: true }))]
-  }, [query, remote])
-
-  useEffect(() => {
-    const q = query.trim()
-    if (q.length < 2) {
-      setRemote([])
-      return
-    }
-    const ctrl = new AbortController()
-    const timer = setTimeout(() => {
-      searchCities(q, ctrl.signal)
-        .then(setRemote)
-        .catch((err: unknown) => {
-          if (err instanceof DOMException && err.name === 'AbortError') return
-          setRemote([])
-        })
-    }, 200)
-    return () => {
-      clearTimeout(timer)
-      ctrl.abort()
-    }
   }, [query])
 
   useEffect(() => {
@@ -238,9 +206,6 @@ export function CityIndex({ query, onQueryChange, onNavigate }: IndexViewProps) 
                   >
                     <span className="index-result-name">{city.name}</span>
                     <span className="index-result-region">{city.region}</span>
-                    {city.remote && (
-                      <span className="index-result-badge">Search</span>
-                    )}
                   </button>
                 </li>
               ))}

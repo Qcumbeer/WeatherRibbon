@@ -167,9 +167,5 @@ export function citySlug(city: CityRef): string | undefined {
 
 export function cityHref(city: CityRef): string {
   const slug = citySlug(city)
-  if (slug) return `#/city/${slug}`
-  const name = encodeURIComponent(city.name || 'Location')
-  const region = encodeURIComponent(city.region || '')
-  const regionParam = region ? `&region=${region}` : ''
-  return `#/city/@${city.latitude.toFixed(2)},${city.longitude.toFixed(2)}?name=${name}${regionParam}`
+  return slug ? `#/city/${slug}` : '#/'
 }
