@@ -1,6 +1,6 @@
-import { useId, useMemo } from 'react'
+import { useId } from 'react'
 import type { CityRef } from './cities'
-import { AQI_CATEGORIES, loadAirQuality } from './airQuality'
+import { AQI_CATEGORIES, useAirQuality } from './airQuality'
 import { DAYS_IN_MONTH } from './seasonal'
 
 const WIDTH = 640
@@ -27,7 +27,7 @@ export function AqiCategoryDaysChart({
   const captionId = `${uid}-caption`
   const descId = `${uid}-desc`
 
-  const months = useMemo(() => loadAirQuality(city), [city])
+  const months = useAirQuality(city)
   if (!months) return null
   const n = months.length
   const slot = PLOT_W / n

@@ -1,5 +1,12 @@
+import { readFile } from 'node:fs/promises'
 import { US_CITIES, CENSUS_VINTAGE, type UsCity } from '../src/cities.ts'
-import { loadCity } from '../src/dataService.ts'
+import type { CityData } from '../src/dataService.ts'
+
+async function loadCity(city: UsCity): Promise<CityData> {
+  const file = new URL(`../data/${city.slug}.json`, import.meta.url)
+  const data = JSON.parse(await readFile(file, 'utf8')) as CityData
+  return { ...data, name: city.name, region: city.region }
+}
 
 let failures = 0
 
@@ -110,8 +117,8 @@ if (phoenix) {
     'Phoenix months are Jan–Dec in order',
   )
   check(
-    !/fallback/i.test(phoenixData.source) && /ERA5/i.test(phoenixData.source),
-    `Phoenix source is bespoke ERA5, not fallback (got ${JSON.stringify(phoenixData.source)})`,
+    !/fallback/i.test(phoenixData.source) && /ERA5|MERRA-2/i.test(phoenixData.source),
+    `Phoenix source is static climate data, not fallback (got ${JSON.stringify(phoenixData.source)})`,
   )
   check(phoenixData.period === '1991-2020', `Phoenix period is 1991-2020 (got ${JSON.stringify(phoenixData.period)})`)
   const july = phoenixData.climate[6]

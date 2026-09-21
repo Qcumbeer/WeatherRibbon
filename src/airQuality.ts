@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { FEATURED, sameCity, type CityRef } from './cities'
 
 export interface AirQualityMonth {
@@ -75,15 +76,16 @@ export function aqiCategory(aqi: number): AqiCategory {
   )
 }
 
-const aqiGlob = import.meta.glob('../data/aqi/*.json', { eager: true })
+interface AirQualityModule {
+  default: { months: AirQualityMonth[] }
+}
 
-const AQI_STATIC: Record<string, AirQualityMonth[]> = {}
-for (const [path, mod] of Object.entries(aqiGlob)) {
+const aqiGlob = import.meta.glob<AirQualityModule>('../data/aqi/*.json')
+
+const AQI_STATIC: Record<string, () => Promise<AirQualityModule>> = {}
+for (const [path, loader] of Object.entries(aqiGlob)) {
   const slug = path.match(/\/([^/]+)\.json$/)?.[1]
-  if (slug) {
-    const data = (mod as { default: { months: AirQualityMonth[] } }).default
-    AQI_STATIC[slug] = data.months
-  }
+  if (slug) AQI_STATIC[slug] = loader
 }
 
 function aqiSlug(city: CityRef): string | undefined {
@@ -91,7 +93,31 @@ function aqiSlug(city: CityRef): string | undefined {
   return FEATURED.find((f) => f.slug && AQI_STATIC[f.slug] && sameCity(f, city))?.slug
 }
 
-export function loadAirQuality(city: CityRef): AirQualityMonth[] | null {
+export async function loadAirQuality(city: CityRef): Promise<AirQualityMonth[] | null> {
   const slug = aqiSlug(city)
-  return slug ? AQI_STATIC[slug] : null
+  if (!slug) return null
+  const data = await AQI_STATIC[slug]()
+  return data.default.months
+}
+
+export function useAirQuality(city: CityRef): AirQualityMonth[] | null {
+  const [months, setMonths] = useState<AirQualityMonth[] | null>(null)
+
+  useEffect(() => {
+    let active = true
+    setMonths(null)
+    void loadAirQuality(city).then(
+      (data) => {
+        if (active) setMonths(data)
+      },
+      () => {
+        if (active) setMonths(null)
+      },
+    )
+    return () => {
+      active = false
+    }
+  }, [city])
+
+  return months
 }
